@@ -1,10 +1,12 @@
 Samples for the DoubleClick for Advertisers Reporting API
 =========================================================
-These code samples are organized by platform or language, and then API version.
+This respository contains a collection of command-line samples for interacting with the DFA Reporting API.
 
-* *dotnet* is a set of command-line samples that show how to make most calls against the API, written in C#.
-* *java* is a set of command-line samples that show how to make most calls against the API, written in Java.
-* *python* is a set of command-line samples that show how to make most calls against the API, written in Python.
-* *ruby* is a set of command-line samples that show how to make most calls against the API, written in Ruby.
+The code samples are organized by platform or language, and then API version. The following samples are available:
+
+* *dotnet* a collection of C# samples.
+* *java* a collection of Java samples.
+* *python* a collection of Python samples.
+* *ruby* a collection of Ruby samples.
 
 Please refer to the README.md file inside each directory for installation instructions.
