@@ -1,5 +1,5 @@
-Samples for the DFA Reporting REST API
-=======================================
+Samples for the DoubleClick for Advertisers Reporting API
+=========================================================
 These code samples are organized by platform or language, and then API version.
 
 * *dotnet* is a set of command-line samples that show how to make most calls against the API, written in C#.
