@@ -5,8 +5,11 @@ for your experimentation into the DFA Reporting API.
 
 ## Prerequisites
 
-Please make sure that you're running Ruby 1.9+ and you've run
-`bundle install` on the example directory to install all prerequisites.
+Please make sure that you're running the latest version of Python 2 and have pip installed. Use the following commands from the samples directory to install all dependencies:
+
+```Batchfile
+$ pip install --upgrade google-api-python-client
+```
 
 ## Setup Authentication
 
@@ -32,7 +35,7 @@ directory. If not check out the code to a local directory.
 
 1. Start up a sample, e.g.
 
-        $ bundle exec ruby create_report.rb <profile_id>
+        $ python create_report.rb <profile_id>
 
 2. Complete the authorization steps on your browser
 
