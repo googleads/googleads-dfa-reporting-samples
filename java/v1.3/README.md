@@ -1,101 +1,63 @@
-<html>
-<title>dfareporting-cmdline-sample</title>
-<body>
-  <h2>Instructions for the DFA Reporting API v1.2 Command-Line Sample</h2>
+# DFA Reporting Java Samples
 
-  <ul>
-    <li><a
-      href="http://code.google.com/p/google-api-java-client/source/browse?repo=samples#hg/dfareporting-cmdline-sample">Browse
-        Source</a>, or main file <a
-      href="http://code.google.com/p/google-api-java-client/source/browse/dfareporting-cmdline-sample/src/main/java/com/google/api/services/samples/dfareporting/cmdline/DfaReportingSample.java?repo=samples">DfaReportingSample.java</a>
-    </li>
-  </ul>
+This is a collection of samples written in Java which provide a starting place
+for your experimentation into the DFA Reporting API.
 
+## Prerequisites
 
-  <h3>Register Your Application</h3>
+Please make sure that you're running Java 6+ and have maven installed.
 
-  <ul>
-    <li>Visit the <a href="https://cloud.google.com/console/start/api?id=dfareporting">Google Cloud
-        console</a>. 
-    </li>
-    <li>If necessary, sign in to your Google Account, select or create a project,
-        and agree to the terms of service.  Click Continue.</li>
-    <li>Select "Installed application" and choose type "Other" under the Installed Application type.</li>
-    <li>Within "OAuth 2.0 Client ID", click on "Download JSON". Later on, after you check
-        out the sample project, you will copy this downloaded file (e.g. 
-        <code>~/Downloads/client_secrets.json</code>) to
-        <a href="src/main/resources/client_secrets.json">src/main/resources/client_secrets.json</a>.
-        If you skip this step, when trying to run the sample you will get a <code>400 
-        INVALID_CLIENT</code> error in the browser.
-    </li>
-  </ul>
+## Setup Authentication
 
-  <h3>Checkout Instructions</h3>
+This API uses OAuth 2.0. Learn more about Google APIs and OAuth 2.0 here:
+https://developers.google.com/accounts/docs/OAuth2
 
-  <p>
-    <b>Prerequisites:</b> install <a href="http://java.com">Java 6</a>, <a
-      href="http://mercurial.selenic.com/">Mercurial</a>, and <a
-      href="http://maven.apache.org/download.html">Maven</a>. You may need to
-    set your
-    <code>JAVA_HOME</code>
-    .
-  </p>
+Or, if you'd like to dive right in, follow these steps.
+ - Visit https://console.developers.google.com to register your application.
+ - From the APIs & Auth -> APIs screen, activate access to "DFA Reporting API".
+ - Click on "Credentials" in the left navigation menu
+ - Click the button labeled "Create an OAuth2 client ID"
+ - Give your application a name and click "Next"
+ - Select "Installed Application" as the "Application type"
+ - Under "Installed application type" select "Other"
+ - Click "Create client ID"
+ - Click "Download JSON" and save the file as `client_secrets.json` in the samples project directory
 
-  <pre>
-cd <i>[someDirectory]</i>
-hg clone https://code.google.com/p/google-api-java-client.samples/ google-api-java-client-samples
-cd google-api-java-client-samples/dfareporting-cmdline-sample
-cp ~/Downloads/client_secrets.json src/main/resources/client_secrets.json
-mvn compile
-mvn -q exec:java
-  </pre>
+## Set up your environment ##
+### Via the command line ###
 
-  <p>To enable logging of HTTP requests and responses (highly recommended
-    when developing), please take a look at <a href="logging.properties">logging.properties</a>.</p>
+1. Execute the following command:
 
-  <h3>Setup Project in Eclipse</h3>
+```Batchfile
+$ mvn compile
+```
 
-  <p>
-    <b>Prerequisites:</b> install <a href="http://www.eclipse.org/downloads/">Eclipse</a>,
-    the <a href="http://javaforge.com/project/HGE">Mercurial plugin</a>, and the
-    <a href="http://m2eclipse.sonatype.org/installing-m2eclipse.html">Maven
-      plugin</a>.
-  </p>
+### Via Eclipse ###
 
-  <ul>
-    <li>Setup Eclipse Preferences
-      <ul>
-        <li>Window &gt; Preferences... (or on Mac, Eclipse &gt;
-          Preferences...)</li>
-        <li>Select Maven
-          <ul>
-            <li>check on "Download Artifact Sources"</li>
-            <li>check on "Download Artifact JavaDoc"</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>Import <code>dfareporting-cmdline-sample</code> project
-      <ul>
-        <li>File &gt; Import...</li>
-        <li>Select "General &gt; Existing Project into Workspace" and click
-          "Next"</li>
-        <li>Click "Browse" next to "Select root directory", find <code>
-            <i>[someDirectory]</i>/google-api-java-client-samples/dfareporting-cmdline-sample
-          </code> and click "Next"
-        </li>
-        <li>Click "Finish"</li>
-      </ul>
-    </li>
-    <li>Run
-      <ul>
-        <li>Right-click on project dfareporting-cmdline-sample</li>
-        <li>Run As &gt; Java Application</li>
-        <li>If asked, type "DfaReportingSample" and click OK</li>
-      </ul>
-    </li>
-  </ul>
+1. Setup Eclipse preferences:
+    1. Window > Preferences .. (or on Mac, Eclipse > Preferences)
+    2. Select Maven
+    3. Select "Download Artifact Sources"
+    4. Select "Download Artifact JavaDoc"
+2. Import the sample project
+    1. File > Import...
+    2. Select General > Existing Project into Workspace and click "Next"
+    3. Click "Browse" next to "Select root directory", find the sample directory and click "Next"
+    4. Click "Finish"
+
+## Running the Examples
+
+Once you've checked out the code:
+
+1. Run DfaReportingSample.java
+    1. Via the command line, execute the following command:
+
+    ```Batchfile
+    $ mvn -q exec:java
+    ```
+    2. Via eclipse, right-click on the project and select Run As > Java Application
 
 
-</body>
-</html>
+2. Complete the authorization steps on your browser
+
+3. Examine the console output, be inspired and start hacking an amazing new app!
