@@ -28,9 +28,9 @@ Or, if you'd like to dive right in, follow these steps.
 
 1. Execute the following command:
 
-```Batchfile
-$ mvn compile
-```
+    ```Batchfile
+    $ mvn compile
+    ```
 
 ### Via Eclipse ###
 
@@ -51,10 +51,10 @@ Once you've checked out the code:
 
 1. Run DfaReportingSample.java
     1. Via the command line, execute the following command:
-
-    ```Batchfile
-    $ mvn -q exec:java
-    ```
+  
+        ```Batchfile
+        $ mvn -q exec:java
+        ```
     2. Via eclipse, right-click on the project and select Run As > Java Application
 
 
