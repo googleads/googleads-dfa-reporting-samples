@@ -6,6 +6,7 @@ The code samples are organized by platform or language, and then API version. Th
 
 * *dotnet* a collection of C# samples.
 * *java* a collection of Java samples.
+* *php* a collection of PHP samples.
 * *python* a collection of Python samples.
 * *ruby* a collection of Ruby samples.
 
