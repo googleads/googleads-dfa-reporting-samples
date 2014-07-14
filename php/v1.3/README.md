@@ -9,7 +9,7 @@ for your experimentation into the DFA Reporting API.
   - JSON PHP extension
   - Composer
 
-From the example directory, run 'composer install' to install all dependecies.
+From the example directory, run `composer install` to install all dependecies.
 
 ## Setup Authentication
 
