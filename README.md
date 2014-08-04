@@ -11,3 +11,7 @@ The code samples are organized by platform or language, and then API version. Th
 * *ruby* a collection of Ruby samples.
 
 Please refer to the README.md file inside each directory for installation instructions.
+
+Contributing
+============
+Pull requests are welcome! Please sign [this Google Code contributor agreement](https://developers.google.com/open-source/cla/individual?csw=1) before submitting.
