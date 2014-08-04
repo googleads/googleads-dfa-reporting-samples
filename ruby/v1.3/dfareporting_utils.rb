@@ -20,11 +20,11 @@
 #
 # Handles common tasks across all DFA Reporting API samples.
 
-require_relative 'google/api_client'
-require_relative 'google/api_client/client_secrets'
-require_relative 'google/api_client/service'
-require_relative 'google/api_client/auth/file_storage'
-require_relative 'google/api_client/auth/installed_app'
+require 'google/api_client'
+require 'google/api_client/client_secrets'
+require 'google/api_client/service'
+require 'google/api_client/auth/file_storage'
+require 'google/api_client/auth/installed_app'
 
 API_NAME = 'dfareporting'
 API_VERSION = 'v1.3'
