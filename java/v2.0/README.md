@@ -1,4 +1,4 @@
-# DFA Reporting Java Samples
+# DFA Reporting and Trafficking Java Samples
 
 This is a collection of samples written in Java which provide a starting place
 for your experimentation into the DFA Reporting and Trafficking API.
