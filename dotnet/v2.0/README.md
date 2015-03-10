@@ -27,10 +27,12 @@ Or, if you'd like to dive right in, follow these steps.
 
 Once you've checked out the code:
 
-1. Open the DfaReporting.Samples.csproj file and build the project
+1. Open the DfaReporting.Samples.csproj file.
 
-2. Choose a sample to run and add the class name as a command line argument
+2. Choose a sample and fill in any prerequisite values. Required values can be identified by the placeholder text: "ENTER_..._HERE".
 
-2. Run the sample and complete the authorization steps on your browser
+3. Add the sample name as a command line argument and build/run the project.
 
-3. Examine the console output, be inspired and start hacking an amazing new app!
+4. Complete the authorization steps on your browser.
+
+5. Examine the console output, be inspired and start hacking an amazing new app!
