@@ -21,9 +21,10 @@ Or, if you'd like to dive right in, follow these steps.
  - From the APIs & Auth -> APIs screen, activate access to "DFA Reporting API".
  - Click on "Credentials" in the left navigation menu
  - Click the button labeled "Create an OAuth2 client ID"
- - Give your application a name and click "Next"
- - Select "Installed Application" as the "Application type"
- - Under "Installed application type" select "Other"
+ - Select "Web Application" as the "Application type"
+ - Configure javascript origins and redirect URIs
+   - Authorized Javascript Origins: http://localhost
+   - Authorized Redirect URIs: http://localhost/path/to/index.php
  - Click "Create client ID"
  - Click "Download JSON" and save the file as `client_secrets.json` in your
    examples directory
