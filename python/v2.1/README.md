@@ -37,7 +37,7 @@ directory. If not check out the code to a local directory.
 
 1. Start up a sample, e.g.
 
-        $ python create_report.rb <profile_id>
+        $ python create_report.py <profile_id>
 
 2. Complete the authorization steps on your browser
 
