@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-require_once 'htmlHelper.php';
+require_once dirname(__DIR__) . '/htmlHelper.php';
 
 /**
  * Base class for all examples, contains helper methods to support gathering

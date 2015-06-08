@@ -62,9 +62,9 @@ function printExamplesIndex($actions) {
     printf('<li><b>%s</b><ul>', $action);
 
     foreach ($sub_actions as $sub_action) {
-      include_once 'examples/' . $sub_action . '.php';
+      include_once 'examples/' . $action . '/' . $sub_action . '.php';
       $class = ucfirst($sub_action);
-      printf('<li><a href="?action=%s">%s</a></li>', $sub_action,
+      printf('<li><a href="?action=%s:%s">%s</a></li>', $action, $sub_action,
           $class::getName());
     }
 

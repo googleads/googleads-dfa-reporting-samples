@@ -100,9 +100,9 @@ if(isset($authUrl)) {
 if ($client->getAccessToken()) {
   // If the action is set, dispatch the action if supported
   if (isset($_GET['action'])) {
-    $action = $_GET['action'];
+    $action = decodeActionString($_GET['action']);
     if (!isValidAction($action)) {
-      die('Unsupported action: ' . $action . "\n");
+      die('Unsupported action: ' . $_GET['action'] . "\n");
     }
 
     displayAction($action);
@@ -125,8 +125,8 @@ function displayAction($action) {
   global $service;
 
   // Render the required action.
-  include_once 'examples/' . $action . '.php';
-  $class = ucfirst($action);
+  include_once 'examples/' . $action[0] . '/' . $action[1] . '.php';
+  $class = $action[1];
   $example = new $class($service);
   printHtmlHeader($example->getName());
   try {
@@ -142,56 +142,48 @@ function displayAction($action) {
 /**
  * Determines whether the requested action is in our list of supported actions.
  */
-function isValidAction($requested_action) {
+function isValidAction($action) {
   $actions = getSupportedActions();
-  foreach ($actions as $action => $sub_actions) {
-    if (in_array($requested_action, $sub_actions)) {
+
+  if (array_key_exists($action[0], $actions)) {
+    $section = $actions[$action[0]];
+    if (in_array($action[1], $section)) {
       return true;
     }
   }
+
   return false;
+}
+
+/**
+ * Decodes an action string passed as a URL parameter into a section and action
+ * pair.
+ */
+function decodeActionString($action_string) {
+  $parts = explode(':', $action_string);
+  if (count($parts) != 2) {
+    die('Invalid action specified.');
+  }
+
+  return $parts;
 }
 
 /**
  * Builds an array containing the supported actions, separated into sections.
  */
 function getSupportedActions() {
-  return array(
-      'Ads' => array('CreateRotationGroup', 'GetAds'),
-      'Advertisers' => array('AssignAdvertisersToAdvertiserGroup',
-                             'CreateAdvertiser', 'CreateAdvertiserGroup',
-                             'GetAdvertisers', 'GetAdvertiserGroups'),
-      'Campaigns' => array('CreateCampaign', 'CreateCampaignEventTag',
-                            'GetCampaigns'),
-      'Creatives' => array('AssignCreativeToCampaign', 'CreateCreativeField',
-                           'CreateCreativeFieldValue', 'CreateCreativeGroup',
-                           'CreateEnhancedBannerCreative',
-                           'CreateEnhancedImageCreative',
-                           'CreateFlashInpageCreative',
-                           'CreateHTML5BannerCreative',
-                           'CreateInstreamVideoCreative',
-                           'CreateImageCreative', 'CreateRedirectCreative',
-                           'CreateTrackingCreative', 'GetCreativeFields',
-                           'GetCreativeFieldValues', 'GetCreativeGroups',
-                           'GetCreatives'),
-      'DimensionValues' => array('GetDimensionValues'),
-      'Floodlights' => array('CreateFloodlightActivity',
-                             'CreateFloodlightActivityGroup',
-                             'GetFloodlightActivities',
-                             'GetFloodlightActivityGroups'),
-      'Files' => array('CheckFileStatus', 'GetAllFiles'),
-      'Placements' => array('CreatePlacement', 'CreatePlacementGroup',
-                            'CreatePlacementStrategy', 'DownloadPlacementTags',
-                            'GetPlacements', 'GetPlacementStrategies'),
-      'Reports' => array('CreateStandardReport', 'CreateFloodlightReport',
-                         'DeleteReport', 'GenerateReportFile',
-                         'GetAllReports'),
-      'Reports.compatibleFields' => array('GetCompatibleFields'),
-      'Reports.files' => array('DownloadReportFile', 'GetAllReportFiles'),
-      'Subaccounts' => array('CreateSubaccount', 'GetSubaccounts',
-                             'GetSubaccountPermissions'),
-      'UserProfiles' => array('GetAllUserProfiles'),
-      'UserRoles' => array('CreateUserRole', 'GetUserRoles'),
-      'Misc' => array('GetChangeLogsForAdvertiser', 'GetSites', 'GetSize')
-  );
+  $actions = array();
+
+  foreach (glob('examples/*/*.php') as $file) {
+    $dir = dirname($file);
+    $section = substr($dir, strrpos($dir, '/') + 1);
+
+    if (!array_key_exists($section, $actions)) {
+      $actions[$section] = array();
+    }
+
+    $actions[$section][] = basename($file, '.php');
+  }
+
+  return $actions;
 }

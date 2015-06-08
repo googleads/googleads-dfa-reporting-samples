@@ -46,18 +46,22 @@ class DownloadReportFile extends BaseExample {
 
     print '<h2>Retrieving and printing report file</h2>';
 
-    $access_token = json_decode($_SESSION['access_token'])->access_token;
-    $authorization_header = 'Authorization: Bearer ' . $access_token;
+    $url = $values['file_url'];
 
-    // Download the file using curl.
-    $request = curl_init($values['file_url']);
-    curl_setopt($request, CURLOPT_HTTPHEADER, array($authorization_header));
-    curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
-    $report_file = curl_exec($request);
-    curl_close($request);
+    while(isset($url)) {
+      $req = new Google_Http_Request($url, 'GET');
+      $result =
+          $this->service->getClient()->getAuth()->authenticatedRequest($req);
 
-    print nl2br($report_file);
+      if ($result->getResponseHttpCode() == 307) {
+        // Handle temporary redirects.
+        $headers = $result->getResponseHeaders();
+        $url = $headers['location'];
+      } else {
+        $url = null;
+        print nl2br($result->getResponseBody());
+      }
+    }
   }
 
   /**
