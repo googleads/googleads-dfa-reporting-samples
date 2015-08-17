@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates a placement strategy with the given name.
-
-Tags: placementStrategies.insert
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example creates a placement strategy with the given name."""
 
 import argparse
 import sys

@@ -17,11 +17,7 @@
 """This example creates a new activity group for a floodlight configuration.
 
 To get a floodlight configuration ID, run get_advertisers.py.
-
-Tags: floodlightActivityGroups.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

@@ -18,8 +18,6 @@
 
 """
 
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
-
 import argparse
 import httplib2
 import sys

@@ -17,11 +17,7 @@
 """This example creates a creative field value for a given creative field.
 
 To get the creative field ID, run get_creative_fields.py.
-
-Tags: creativeFieldValues.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

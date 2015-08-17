@@ -17,11 +17,7 @@
 """This example creates a floodlight activity in a given activity group.
 
 To create an activity group, run create_floodlight_activity_group.py.
-
-Tags: floodlightActivities.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

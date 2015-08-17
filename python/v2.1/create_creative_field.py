@@ -17,11 +17,7 @@
 """This example creates a creative field associated with a given advertiser.
 
 To get an advertiser ID, run get_advertisers.py.
-
-Tags: creativeFields.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

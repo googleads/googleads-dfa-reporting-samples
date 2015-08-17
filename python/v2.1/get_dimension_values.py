@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to get all dimension values for a dimension.
-
-Tags: dimensionValues.query
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example illustrates how to get all dimension values for a dimension."""
 
 import argparse
 import sys

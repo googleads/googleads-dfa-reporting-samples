@@ -18,11 +18,7 @@
 
 A similar pattern can be applied to get change logs for many other object
 types.
-
-Tags: changelogs.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

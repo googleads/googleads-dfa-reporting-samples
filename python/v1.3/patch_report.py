@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to patch a standard report.
-
-Tags: reports.patch
-"""
-
-__author__ = ('jimper@google.com (Jonathon Imperiosi)')
+"""This example illustrates how to patch a standard report."""
 
 import argparse
 import pprint

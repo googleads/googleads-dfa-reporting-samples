@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates a tracking creative associated with a given advertiser.
-
-Tags: creatives.insert
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example creates a tracking creative associated with a given advertiser."""
 
 import argparse
 import sys

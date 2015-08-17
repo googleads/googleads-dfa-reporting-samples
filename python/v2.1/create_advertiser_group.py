@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates an advertiser group.
-
-Tags: advertiserGroups.insert
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example creates an advertiser group."""
 
 import argparse
 import sys

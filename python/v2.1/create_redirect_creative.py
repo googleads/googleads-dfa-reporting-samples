@@ -17,11 +17,7 @@
 """This example creates a redirect creative associated with a given advertiser.
 
 To get a size ID, run get_size.py.
-
-Tags: creatives.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

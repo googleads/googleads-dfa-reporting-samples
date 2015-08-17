@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates an event tag for the specified campaign.
-
-Tags: eventTags.insert
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example creates an event tag for the specified campaign."""
 
 import argparse
 import sys

@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Shares an existing remarketing list with the specified advertiser.
-
-Tags: remarketingListShares.update
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""Shares an existing remarketing list with the specified advertiser."""
 
 import argparse
 import sys

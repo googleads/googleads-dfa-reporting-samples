@@ -20,11 +20,7 @@ Note: the RemarketingLists resource will only return lists owned by the
 specified advertiser. To see all lists that can be used for targeting ads
 (including those shared from other accounts or advertisers), use the
 TargetableRemarketingLists resource instead.
-
-Tags: remarketingLists.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to get a user profile.
-
-Tags: userProfiles.get
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example illustrates how to get a user profile."""
 
 import argparse
 import sys

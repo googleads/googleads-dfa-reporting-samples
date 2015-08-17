@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example lists all existing sites.
-
-Tags: sites.list
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example lists all existing sites."""
 
 import argparse
 import sys

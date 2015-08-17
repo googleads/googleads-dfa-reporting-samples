@@ -17,11 +17,7 @@
 """This example lists all existing active creatives for a given advertiser.
 
 To get an advertiser ID, run get_advertisers.py.
-
-Tags: creatives.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

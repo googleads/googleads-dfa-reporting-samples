@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example lists all existing campaigns for the specified user profile.
-
-Tags: campaigns.list
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example lists all existing campaigns for the specified user profile."""
 
 import argparse
 import sys

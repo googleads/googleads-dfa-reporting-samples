@@ -18,11 +18,7 @@
 
 CAUTION: An advertiser that has campaigns associated with it cannot be
 removed from an advertiser group once assigned.
-
-Tags: advertisers.patch
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

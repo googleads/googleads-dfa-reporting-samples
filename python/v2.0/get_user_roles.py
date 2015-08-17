@@ -17,11 +17,7 @@
 """This example displays all user roles.
 
 The output is limited to include only ID, name, account ID and subaccount ID.
-
-Tags: userRoles.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

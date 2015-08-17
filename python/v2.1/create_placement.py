@@ -19,11 +19,7 @@
 Requires the DFA site ID and campaign ID in which the placement will be created
 into. To create a campaign, run create_campaign.py. To get DFA site ID, run
 get_site.py.
-
-Tags: campaigns.get, placements.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

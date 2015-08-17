@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example lists all creative fields.
-
-Tags: creativeFields.list
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example lists all creative fields."""
 
 import argparse
 import sys

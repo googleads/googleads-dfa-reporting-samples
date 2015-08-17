@@ -18,11 +18,7 @@
 
 Note that both the creative and campaign must be associated with the same
 advertiser.
-
-Tags: campaignCreativeAssociations.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

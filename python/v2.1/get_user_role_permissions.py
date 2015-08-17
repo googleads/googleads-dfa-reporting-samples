@@ -17,11 +17,7 @@
 """This example displays all of the available subaccount permissions.
 
 To get a subaccount ID, run get_subaccounts.py.
-
-Tags: subaccounts.get, userRolePermissions.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

@@ -18,11 +18,7 @@
 
 To create campaigns, run create_campaign.py. To create placements, run
 create_placement.py.
-
-Tags: placements.generatetags
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

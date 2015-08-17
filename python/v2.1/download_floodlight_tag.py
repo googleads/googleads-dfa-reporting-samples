@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example downloads activity tags for a given floodlight activity.
-
-Tags: floodlightActivities.generatetag
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example downloads activity tags for a given floodlight activity."""
 
 import argparse
 import sys

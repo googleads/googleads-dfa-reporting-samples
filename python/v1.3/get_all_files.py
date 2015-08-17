@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to get a list of all the files for a profile.
-
-Tags: files.list
-"""
-
-__author__ = ('jimper@google.com (Jonathon Imperiosi)')
+"""This example illustrates how to get a list of all the files for a profile."""
 
 import argparse
 import pprint

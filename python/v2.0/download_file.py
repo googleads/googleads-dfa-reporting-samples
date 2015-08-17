@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to download a report file.
-
-Tags: files.get
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example illustrates how to download a report file."""
 
 import argparse
 import sys

@@ -17,11 +17,7 @@
 """This example lists all advertisers.
 
 Only advertiser name, ID and floodlight config ID will be returned.
-
-Tags: advertisers.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

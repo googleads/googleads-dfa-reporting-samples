@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to get a list of all reports.
-
-Tags: reports.list
-"""
-
-__author__ = ('jimper@google.com (Jonathon Imperiosi)')
+"""This example illustrates how to get a list of all reports."""
 
 import argparse
 import pprint

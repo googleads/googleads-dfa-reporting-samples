@@ -18,11 +18,7 @@
 
 To get an advertiser ID, run get_advertisers.py. Valid group numbers are
 limited to 1 or 2.
-
-Tags: creativeGroups.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

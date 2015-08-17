@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example displays all sizes for a given width and height.
-
-Tags: sizes.get
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example displays all sizes for a given width and height."""
 
 import argparse
 import sys

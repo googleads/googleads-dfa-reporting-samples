@@ -19,11 +19,7 @@
 Note that the permissions assigned to a subaccount are not returned in a
 human-readable format with this example. Run get_available_permissions.py to
 see what permissions are available on a subaccount.
-
-Tags: subaccounts.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

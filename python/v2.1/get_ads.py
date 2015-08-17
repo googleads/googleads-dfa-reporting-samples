@@ -17,11 +17,7 @@
 """This example displays all active ads your DFA user profile can see.
 
 Only name and ID are returned.
-
-Tags: ads.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates a content category with the given name and description.
-
-Tags: contentCategories.insert
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example creates a content category with the given name and description."""
 
 import argparse
 import sys

@@ -17,11 +17,7 @@
 """This example displays floodlight activity groups for a given advertiser.
 
 To create an advertiser, run create_advertiser.py.
-
-Tags: floodlightActivityGroups.list
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

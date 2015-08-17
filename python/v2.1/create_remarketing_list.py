@@ -18,11 +18,7 @@
 
 Note: this sample assumes that the floodlight activity specified has a U1 custom
 floodlight variable.
-
-Tags: remarketingLists.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

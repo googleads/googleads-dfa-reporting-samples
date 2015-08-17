@@ -18,11 +18,7 @@
 
 To get the account ID, run get_all_userprofiles.py. To get the parent user role
 ID, run get_user_roles.py.
-
-Tags: userRoles.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

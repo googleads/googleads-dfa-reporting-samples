@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to get a list of all user profiles.
-
-Tags: userProfiles.list
-"""
-
-__author__ = ('jimper@google.com (Jonathon Imperiosi)')
+"""This example illustrates how to get a list of all user profiles."""
 
 import pprint
 import sys
@@ -30,7 +25,7 @@ from oauth2client import client
 
 def main(argv):
   # Authenticate and construct service.
-  service, flags = sample_tools.init(
+  service, _ = sample_tools.init(
       argv, 'dfareporting', 'v1.3', __doc__, __file__,
       scope='https://www.googleapis.com/auth/dfareporting')
 

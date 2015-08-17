@@ -17,11 +17,7 @@
 """This example creates a campaign in a given advertiser.
 
 To create an advertiser, run create_advertiser.py.
-
-Tags: campaigns.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

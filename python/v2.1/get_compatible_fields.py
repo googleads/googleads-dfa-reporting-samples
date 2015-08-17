@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to get the compatible fields for a report.
-
-Tags: reports.compatibleFields.query
-"""
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
+"""This example illustrates how to get the compatible fields for a report."""
 
 import argparse
 import sys

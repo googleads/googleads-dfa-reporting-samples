@@ -18,11 +18,7 @@
 
 To get the account ID, run get_all_userprofiles.py. To get the available
 permissions, run get_user_role_permissions.py.
-
-Tags: subaccounts.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys

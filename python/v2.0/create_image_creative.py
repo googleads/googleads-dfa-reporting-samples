@@ -18,11 +18,7 @@
 
 Requires an image asset and advertiser ID as input. To get an advertiser ID,
 run get_advertisers.py.
-
-Tags: creatives.insert
 """
-
-__author__ = ('api.jimper@gmail.com (Jonathon Imperiosi)')
 
 import argparse
 import sys
