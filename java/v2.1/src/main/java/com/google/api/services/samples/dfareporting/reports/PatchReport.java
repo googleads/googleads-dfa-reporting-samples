@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example illustrates how to patch a standard report. Patching a report will modify only the
  * fields you specify.
- *
- * Tags: reports.patch
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class PatchReport {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

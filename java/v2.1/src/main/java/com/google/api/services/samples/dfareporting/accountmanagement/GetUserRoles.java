@@ -24,10 +24,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  * This example displays all user roles.
  *
  * The output is limited to include only ID, name, account ID and subaccount ID.
- *
- * Tags: userRoles.list
- * 
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetUserRoles {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

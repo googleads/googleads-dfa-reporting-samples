@@ -29,8 +29,6 @@ import java.io.File;
 
 /**
  * This example shows how to authenticate and make a basic request using a service account.
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class AuthenticateUsingServiceAccount {
   private static final String PATH_TO_P12_FILE = "ENTER_PATH_TO_P12_FILE_HERE";

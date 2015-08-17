@@ -23,10 +23,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example retrieves available creative field values for a given string and displays the names
  * and IDs.
- *
- * Tags: creativefield.getCreativeFieldValues
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetCreativeFieldValues {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

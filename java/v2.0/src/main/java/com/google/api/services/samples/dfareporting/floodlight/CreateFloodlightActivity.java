@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example creates a floodlight activity in a given activity group. To create an activity
  * group, run CreateFloodlightActivityGroup.java.
- *
- * Tags: floodlightActivities.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateFloodlightActivity {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

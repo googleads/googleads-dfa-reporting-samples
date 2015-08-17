@@ -22,10 +22,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example creates an advertiser in a given DFA account. To get advertisers, see
  * GetAdvertisers.java.
- *
- * Tags: advertisers.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateAdvertiser {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

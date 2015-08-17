@@ -24,10 +24,6 @@ import com.google.api.services.dfareporting.model.DimensionValueRequest;
 /**
  * This example gets the first page of a particular type of dimension available for reporting in
  * the given date range. You can use a similar workflow to retrieve the values for any dimension.
- *
- * Tags: dimensionValues.query
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class GetDimensionValues {
 

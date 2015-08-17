@@ -20,10 +20,6 @@ import com.google.api.services.dfareporting.model.Report;
 
 /**
  * This example generates a report file from a report.
- *
- * Tags: reports.run
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class GenerateReportFile {
 

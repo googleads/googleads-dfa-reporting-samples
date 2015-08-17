@@ -20,10 +20,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example creates an event tag for the specified campaign.
- *
- * Tags: eventTags.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateCampaignEventTag {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

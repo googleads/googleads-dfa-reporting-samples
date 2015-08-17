@@ -24,10 +24,6 @@ import com.google.common.collect.ImmutableList;
 
 /**
  * This example creates a simple Floodlight report for the given Floodlight Configuration ID.
- *
- * Tags: reports.insert
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class CreateFloodlightReport {
 

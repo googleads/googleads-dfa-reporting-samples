@@ -24,10 +24,6 @@ import java.io.InputStreamReader;
 
 /**
  * This example illustrates how to download a file.
- *
- * Tags: files.get
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class DownloadFile {
   private static final String FILE_ID = "ENTER_FILE_ID_HERE";

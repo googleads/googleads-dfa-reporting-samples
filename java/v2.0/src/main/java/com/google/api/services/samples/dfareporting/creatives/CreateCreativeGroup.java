@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example creates a creative group associated with a given advertiser. To get an advertiser
  * ID, run getAdvertisers.java. Valid group numbers are limited to 1 or 2.
- *
- * Tags: creativeGroups.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateCreativeGroup {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

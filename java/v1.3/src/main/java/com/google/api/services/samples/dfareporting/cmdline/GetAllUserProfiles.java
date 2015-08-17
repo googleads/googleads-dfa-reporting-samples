@@ -21,10 +21,6 @@ import com.google.api.services.dfareporting.model.UserProfileList;
 
 /**
  * This example gets all DFA user profiles associated with the user's Google Account.
- * 
- * Tags: profiles.list
- * 
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class GetAllUserProfiles {
 

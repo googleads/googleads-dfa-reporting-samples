@@ -52,8 +52,6 @@ import java.util.List;
  * <li>Generating a new report file from a report</li>
  * <li>Downloading the contents of a report file</li>
  * </ul>
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class DfaReportingSample {
 

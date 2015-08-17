@@ -20,10 +20,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example creates a placement strategy with the given name.
- *
- * Tags: placementStrategies.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreatePlacementStrategy {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

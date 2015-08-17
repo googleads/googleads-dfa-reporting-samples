@@ -33,8 +33,6 @@ import java.util.List;
 
 /**
  * Utility methods used by all DFA Reporting and Trafficking API samples.
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class DfaReportingFactory {
   /** Directory to store user credentials. */

@@ -27,10 +27,6 @@ import java.net.URLConnection;
 
 /**
  * Creative asset utilities used by DFA Reporting and Trafficking API creative examples.
- *
- * Tags: creativeAssets.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreativeAssetUtils {
 

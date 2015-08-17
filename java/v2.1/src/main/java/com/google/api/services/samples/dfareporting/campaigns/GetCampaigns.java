@@ -22,10 +22,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example lists all existing campaigns for the specified user profile.
- *
- * Tags: campaigns.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetCampaigns {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

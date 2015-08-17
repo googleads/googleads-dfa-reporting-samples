@@ -26,10 +26,6 @@ import java.util.Calendar;
 
 /**
  * This example illustrates how to get all dimension values for a dimension.
- *
- * Tags: dimensionValues.query
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetDimensionValues {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

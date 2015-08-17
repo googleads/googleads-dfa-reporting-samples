@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example illustrates how to get a list of all user profiles.
- *
- * Tags: userProfiles.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetUserProfiles {
   public static void runExample(Dfareporting reporting) throws Exception {

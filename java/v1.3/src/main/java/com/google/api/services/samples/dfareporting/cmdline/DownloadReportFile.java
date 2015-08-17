@@ -24,8 +24,6 @@ import java.io.InputStreamReader;
 
 /**
  * This example downloads the contents of a report file.
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class DownloadReportFile {
 

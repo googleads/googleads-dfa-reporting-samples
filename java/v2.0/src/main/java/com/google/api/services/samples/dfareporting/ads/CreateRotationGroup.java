@@ -32,10 +32,6 @@ import java.util.Date;
  * This example creates a rotation group ad in a given campaign. Start and end date for the ad must
  * be within campaign start and end dates. To create creatives, run one of the Create*Creative.java
  * examples. To get available placements, run GetPlacements.java.
- *
- * Tags: ads.insert, campaigns.get
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateRotationGroup {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

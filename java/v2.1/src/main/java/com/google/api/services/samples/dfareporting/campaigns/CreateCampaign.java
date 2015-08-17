@@ -24,10 +24,6 @@ import java.util.Calendar;
 /**
  * This example creates a campaign associated with a given advertiser. To create an advertiser, run
  * CreateAdvertiser.java.
- * 
- * Tags: campaigns.insert
- * 
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateCampaign {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

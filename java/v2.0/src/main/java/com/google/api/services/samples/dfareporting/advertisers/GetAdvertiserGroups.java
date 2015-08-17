@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example displays all advertiser groups for the specified user profile.
- *
- * Tags: advertiserGroups.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetAdvertiserGroups {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

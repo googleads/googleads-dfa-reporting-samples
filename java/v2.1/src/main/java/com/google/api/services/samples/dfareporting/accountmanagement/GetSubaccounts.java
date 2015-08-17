@@ -26,10 +26,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  * Note that the permissions assigned to a subaccount are not returned in a human-readable format
  * with this example. Run GetUserRolePermissions.java to see what permissions are available on a
  * subaccount.
- *
- * Tags: subaccounts.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetSubaccounts {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

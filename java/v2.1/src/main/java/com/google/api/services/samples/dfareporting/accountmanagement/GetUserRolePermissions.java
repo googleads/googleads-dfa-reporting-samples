@@ -24,10 +24,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  * This example displays all of the available subaccount permissions.
  *
  * To get a subaccount ID, run get_subaccounts.py.
- *
- * Tags: subaccounts.get, userRolePermissions.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetUserRolePermissions {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

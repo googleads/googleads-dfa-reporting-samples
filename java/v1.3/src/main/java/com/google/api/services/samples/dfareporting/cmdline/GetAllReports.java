@@ -20,10 +20,6 @@ import com.google.api.services.dfareporting.model.ReportList;
 
 /**
  * This example gets all reports available to the given user profile.
- *
- * Tags: reports.list
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class GetAllReports {
 

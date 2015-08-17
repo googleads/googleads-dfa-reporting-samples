@@ -27,10 +27,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  * The first targetable remarketing list, either owned by or shared to the ad's advertiser, will be
  * used. To create a remarketing list, see CreateRemarketingList.java. To share a remarketing list
  * with the ad's advertiser, see ShareRemarketingListToAdvertiser.java.
- *
- * Tags: ads.get, ads.update, targetableRemarketingLists.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class TargetAdToRemarketingList {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

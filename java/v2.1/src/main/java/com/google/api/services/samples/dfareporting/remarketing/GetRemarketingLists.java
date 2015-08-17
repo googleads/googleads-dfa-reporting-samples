@@ -26,10 +26,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  * Note: the RemarketingLists resource will only return lists owned by the specified advertiser. To
  * see all lists that can be used for targeting ads (including those shared from other accounts or
  * advertisers), use the TargetableRemarketingLists resource instead.
- *
- * Tags: remarketingLists.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetRemarketingLists {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

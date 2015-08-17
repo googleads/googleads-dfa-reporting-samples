@@ -20,10 +20,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example illustrates how to get a user profile.
- *
- * Tags: userProfiles.get
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetUserProfile {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

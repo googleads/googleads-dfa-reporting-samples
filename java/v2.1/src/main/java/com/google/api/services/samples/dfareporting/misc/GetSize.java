@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example displays all sizes for a given width and height.
- *
- * Tags: sizes.get
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetSize {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

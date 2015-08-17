@@ -23,10 +23,6 @@ import java.util.ArrayList;
 
 /**
  * This example shares an existing remarketing list with the specified advertiser.
- *
- * Tags: remarketingListShares.update
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class ShareRemarketingListToAdvertiser {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

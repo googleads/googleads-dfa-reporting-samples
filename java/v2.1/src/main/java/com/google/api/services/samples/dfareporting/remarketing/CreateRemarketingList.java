@@ -28,10 +28,6 @@ import com.google.common.collect.ImmutableList;
  *
  * Note: this sample assumes that the floodlight activity specified has a U1 custom floodlight
  * variable.
- *
- * Tags: remarketingLists.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateRemarketingList {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

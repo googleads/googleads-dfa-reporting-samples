@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example assigns a given creative to a given campaign. Note that both the creative and
  * campaign must be associated with the same advertiser.
- *
- * Tags: campaignCreativeAssociations.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class AssignCreativeToCampaign {
   private static final String USER_PROFILE_ID = "INSERT_PROFILE_ID_HERE";

@@ -25,10 +25,6 @@ import com.google.common.collect.ImmutableList;
 /**
  * This example uploads creative assets and creates an in-stream video creative associated with a
  * given advertiser.
- *
- * Tags: creatives.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateInstreamVideoCreative {
   private static final String USER_PROFILE_ID = "INSERT_PROFILE_ID_HERE";

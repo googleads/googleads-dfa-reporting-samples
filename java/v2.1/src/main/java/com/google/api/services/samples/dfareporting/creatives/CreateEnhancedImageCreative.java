@@ -27,10 +27,6 @@ import com.google.common.collect.ImmutableList;
 /**
  * This example uploads creative assets and creates an enhanced image creative associated with a
  * given advertiser. To get a size ID, run GetSize.java.
- *
- * Tags: creatives.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateEnhancedImageCreative {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

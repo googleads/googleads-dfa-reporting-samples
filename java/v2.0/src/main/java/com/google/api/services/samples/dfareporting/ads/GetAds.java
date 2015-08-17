@@ -23,10 +23,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example displays the name, ID and advertiser ID for every active ad your DFA user profile
  * can see.
- *
- * Tags: ads.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetAds {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

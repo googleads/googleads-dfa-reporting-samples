@@ -24,10 +24,6 @@ import com.google.common.collect.ImmutableList;
 
 /**
  * This example illustrates how to create a report.
- *
- * Tags: reports.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateReport {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

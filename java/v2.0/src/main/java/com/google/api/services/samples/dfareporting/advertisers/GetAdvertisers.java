@@ -23,10 +23,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example displays the name, ID and spotlight configuration ID for every advertiser your DFA
  * user profile can see.
- *
- * Tags: advertisers.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetAdvertisers {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

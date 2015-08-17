@@ -24,10 +24,6 @@ import com.google.common.collect.ImmutableList;
 
 /**
  * This example creates a simple standard report for the given advertiser.
- *
- * Tags: reports.insert
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class CreateStandardReport {
 

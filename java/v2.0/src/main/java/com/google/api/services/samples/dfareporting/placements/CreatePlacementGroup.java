@@ -24,10 +24,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  * This example creates a placement group in a given campaign. Requires the DFA site ID and campaign
  * ID in which the placement group will be created into. To create a campaign, run
  * CreateCampaign.java. To get DFA site ID, run GetSite.java.
- *
- * Tags: campaigns.get, placementGroups.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreatePlacementGroup {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

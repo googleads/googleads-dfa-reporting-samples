@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example creates a new activity group for a given floodlight configuration. To get a
  * floodlight tag configuration ID, run GetAdvertisers.java.
- *
- * Tags: floodlightActivityGroups.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateFloodlightActivityGroup {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

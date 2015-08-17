@@ -22,10 +22,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example displays all available content categories.
- *
- * Tags: contentcategories.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetContentCategories {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

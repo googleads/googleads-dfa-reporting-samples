@@ -26,10 +26,6 @@ import java.util.List;
  * This example creates a user role in a given DoubleClick Campaign Manager subaccount. To get the
  * subaccount ID, run GetSubaccounts.java. To get the available permissions, run
  * GetUserRolePermissions.java. To get the parent user role ID, run GetUserRoles.java.
- *
- * Tags: userRoles.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateUserRole {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

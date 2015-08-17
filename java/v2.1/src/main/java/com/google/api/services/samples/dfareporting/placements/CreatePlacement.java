@@ -26,10 +26,6 @@ import com.google.common.collect.ImmutableList;
  * This example creates a placement in a given campaign. Requires a DFA site ID and ID of the
  * campaign in which the placement will be created. To create a campaign, run CreateCampaign.java.
  * To get a DFA site ID, run GetSite.java. To get a size ID, run GetSize.java.
- *
- * Tags: placements.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreatePlacement {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

@@ -22,10 +22,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example lists all creative fields.
- *
- * Tags: creativeFields.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetCreativeFields {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

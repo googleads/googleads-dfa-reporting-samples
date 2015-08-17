@@ -23,10 +23,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  * This example displays floodlight activity groups for a given advertiser.
  *
  * To create an advertiser, run create_advertiser.py.
- *
- * Tags: floodlightActivityGroups.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetFloodlightActivityGroups {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

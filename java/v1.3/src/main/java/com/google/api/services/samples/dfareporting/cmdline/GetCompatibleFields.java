@@ -27,10 +27,6 @@ import com.google.api.services.dfareporting.model.ReportCompatibleFields;
  *
  * <ul><li>Your user profile doesn't have permission to view those fields</li>
  * <li>Your report contains a field which is incompatible with certain other fields</li></ul>
- *
- * Tags: compatibleFields.query
- *
- * @author jdilallo@google.com (Joseph DiLallo)
  */
 public class GetCompatibleFields {
 

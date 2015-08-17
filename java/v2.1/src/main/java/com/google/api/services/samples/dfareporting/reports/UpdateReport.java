@@ -20,10 +20,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example illustrates how to update a report. Updating a report will modify all fields.
- *
- * Tags: reports.update
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class UpdateReport {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

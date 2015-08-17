@@ -22,10 +22,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example displays all available placement strategies.
- *
- * Tags: placementStrategies.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetPlacementStrategies {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

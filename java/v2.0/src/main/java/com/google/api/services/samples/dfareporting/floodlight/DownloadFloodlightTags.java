@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example downloads activity tags for a given floodlight activity.
- *
- * Tags: floodlightActivities.generatetag
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class DownloadFloodlightTags {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

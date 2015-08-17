@@ -21,10 +21,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example creates a creative field value associated with a given creative field. To get the
  * creative field ID, run GetCreativeFields.java.
- *
- * Tags: creativeFieldValues.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateCreativeFieldValue {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

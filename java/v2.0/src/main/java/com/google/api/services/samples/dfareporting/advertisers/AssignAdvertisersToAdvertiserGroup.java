@@ -23,10 +23,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
  *
  * CAUTION: An advertiser that has campaigns associated with it cannot be removed from an
  * advertiser group once assigned.
- *
- * Tags: advertisers.patch
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class AssignAdvertisersToAdvertiserGroup {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

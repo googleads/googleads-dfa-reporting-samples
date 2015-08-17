@@ -22,10 +22,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example displays all available placements.
- *
- * Tags: placements.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetPlacements {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

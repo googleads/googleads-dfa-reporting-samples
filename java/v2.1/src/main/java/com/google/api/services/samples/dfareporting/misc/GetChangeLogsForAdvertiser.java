@@ -25,10 +25,6 @@ import com.google.common.collect.ImmutableList;
  * This example displays the change logs of a specified advertiser object.
  *
  * A similar pattern can be applied to get change logs for many other object types.
- *
- * Tags: changelogs.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetChangeLogsForAdvertiser {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

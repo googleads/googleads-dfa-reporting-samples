@@ -20,10 +20,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example creates a tracking creative associated with a given advertiser.
- *
- * Tags: creatives.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateTrackingCreative {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

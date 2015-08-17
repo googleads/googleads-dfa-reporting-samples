@@ -22,10 +22,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
  * This example illustrates how to get a list of all the files for a profile.
- *
- * Tags: files.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetFiles {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

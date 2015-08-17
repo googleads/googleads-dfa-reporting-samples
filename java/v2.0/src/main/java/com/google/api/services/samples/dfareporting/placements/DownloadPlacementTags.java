@@ -27,10 +27,6 @@ import java.util.List;
 /**
  * This example downloads HTML Tags for a given campaign and placement ID. To create campaigns, run
  * CreateCampaign.java. To create placements, run CreatePlacement.java.
- *
- * Tags: placements.generatetags
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class DownloadPlacementTags {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

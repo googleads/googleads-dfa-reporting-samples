@@ -26,10 +26,6 @@ import java.util.List;
 
 /**
  * This example illustrates how to get the compatible fields for a standard report.
- *
- * Tags: reports.compatibleFields.query
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetCompatibleFields {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";

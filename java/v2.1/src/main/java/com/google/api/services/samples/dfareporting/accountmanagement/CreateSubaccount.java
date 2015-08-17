@@ -24,10 +24,6 @@ import java.util.List;
 /**
  * This example creates a subaccount in a given DoubleClick Campaign Manager account. To get the
  * available permissions, run GetUserRolePermissions.java.
- *
- * Tags: subaccounts.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class CreateSubaccount {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

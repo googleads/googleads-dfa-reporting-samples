@@ -23,10 +23,6 @@ import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 /**
  * This example lists all existing active creatives for a given advertiser. To get an advertiser ID,
  * run GetAdvertisers.java.
- *
- * Tags: creatives.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 public class GetCreatives {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";
