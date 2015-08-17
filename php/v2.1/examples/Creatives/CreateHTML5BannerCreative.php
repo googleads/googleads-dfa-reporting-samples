@@ -22,10 +22,6 @@ require_once 'utils/CreativeAssetUtils.php';
 /**
  * This example uploads creative assets and creates an HTML5 banner creative
  * associated with a given advertiser. To get a size ID, run GetSize.
- *
- * Tags: creatives.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateHTML5BannerCreative extends BaseExample {
   /**

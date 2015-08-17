@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example displays all advertiser groups for the specified user profile.
- *
- * Tags: advertiserGroups.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetAdvertiserGroups extends BaseExample {
   /**

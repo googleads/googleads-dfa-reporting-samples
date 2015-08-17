@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates a creative field value associated with a given creative
  * field. To get the creative field ID, run GetCreativeFields.
- *
- * Tags: creativeFieldValues.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateCreativeFieldValue extends BaseExample {
   /**

@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example lists all existing sites.
- *
- * Tags: sites.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetSites extends BaseExample {
   /**

@@ -22,10 +22,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * This example creates a creative group associated with a given advertiser.
  * To get an advertiser ID, run GetAdvertisers. Valid group numbers are
  * limited to 1 or 2.
- *
- * Tags: creativeGroups.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateCreativeGroup extends BaseExample {
   /**

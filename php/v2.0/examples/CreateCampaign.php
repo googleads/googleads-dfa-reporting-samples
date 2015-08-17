@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates a campaign associated with a given advertiser. To
  * create an advertiser, run CreateAdvertiser.
- *
- * Tags: campaigns.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateCampaign extends BaseExample {
   /**

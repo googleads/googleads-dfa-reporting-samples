@@ -23,10 +23,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * subacount.
  *
  * To get a subaccount ID, run GetSubaccounts.
- *
- * Tags: subaccounts.get, userRolePermissions.listt
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetSubaccountPermissions extends BaseExample {
   /**

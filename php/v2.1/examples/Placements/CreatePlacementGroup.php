@@ -22,10 +22,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * This example creates a placement group in a given campaign. Requires the
  * site ID and campaign ID in which the placement group will be created into.
  * To create a campaign, run CreateCampaign. To get a site ID, run GetSite.
- *
- * Tags: campaigns.get, placementGroups.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreatePlacementGroup extends BaseExample {
   /**

@@ -17,8 +17,6 @@
 
 /**
  * Helper functions for HTML generation.
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 
 /**

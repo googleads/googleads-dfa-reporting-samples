@@ -21,10 +21,6 @@ require_once 'utils/CreativeAssetUtils.php';
 
 /**
  * This example creates a tracking creative associated with a given advertiser.
- *
- * Tags: creatives.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateTrackingCreative extends BaseExample {
   /**

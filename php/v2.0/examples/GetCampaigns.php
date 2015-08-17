@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example lists all existing campaigns for the specified user profile.
- *
- * Tags: campaigns.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetCampaigns extends BaseExample {
   /**

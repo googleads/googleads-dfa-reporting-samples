@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example shares an existing remarketing list with the specified
  * advertiser.
- *
- * Tags: remarketingListShares.update
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class ShareRemarketingList extends BaseExample {
   /**

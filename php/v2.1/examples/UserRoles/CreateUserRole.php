@@ -23,10 +23,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * subaccount. To get the subaccount ID, run GetSubaccounts. To get the
  * available permissions, run GetUserRolePermissions. To get the parent user
  * role ID, run GetUserRoles.
- *
- * Tags: userRoles.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateUserRole extends BaseExample {
   /**

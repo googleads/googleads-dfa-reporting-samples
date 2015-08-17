@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates an advertiser in a given DFA account. To get
  * advertisers, see GetAdvertisers.
- *
- * Tags: advertisers.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateAdvertiser extends BaseExample {
   /**

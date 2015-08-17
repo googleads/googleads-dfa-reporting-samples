@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example lists all creative groups.
- *
- * Tags: creativeGroups.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetCreativeGroups extends BaseExample {
   /**

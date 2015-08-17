@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates a creative field associated with a given advertiser.
  * To get an advertiser ID, run GetAdvertisers.
- *
- * Tags: creativeFields.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateCreativeField extends BaseExample {
   /**

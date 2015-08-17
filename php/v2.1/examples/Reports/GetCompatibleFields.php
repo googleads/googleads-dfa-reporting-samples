@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example lists the compatible fields for the specified report.
- *
- * Tags: reports.compatibleFields.query
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetCompatibleFields extends BaseExample {
   /**

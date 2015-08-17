@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example deletes a report.
- *
- * Tags: reports.delete
- *
- * @author Jonathon Imperiosi (jimper@google.com)
  */
 class DeleteReport extends BaseExample {
   /**

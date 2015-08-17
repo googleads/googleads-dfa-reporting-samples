@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates a new activity group for a given floodlight
  * configuration. To get a floodlight tag configuration ID, run GetAdvertisers.
- *
- * Tags: floodlightActivityGroups.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateFloodlightActivityGroup extends BaseExample {
   /**

@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example displays the name, ID and advertiser ID for every active ad
  * your DCM user profile can see.
- *
- * Tags: ads.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetAds extends BaseExample {
   /**

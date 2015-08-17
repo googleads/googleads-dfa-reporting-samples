@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example generates a report file from a report.
- *
- * Tags: reports.run
- *
- * @author Jonathon Imperiosi (jimper@google.com)
  */
 class GenerateReportFile extends BaseExample {
   /**

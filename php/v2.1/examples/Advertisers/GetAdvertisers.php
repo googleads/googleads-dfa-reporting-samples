@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example displays the name, ID and spotlight configuration ID for every
  * advertiser your DFA user profile can see.
- *
- * Tags: advertisers.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetAdvertisers extends BaseExample {
   /**

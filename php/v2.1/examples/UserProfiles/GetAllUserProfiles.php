@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example gets all DFA user profiles associated with the user's Google
  * Account.
- *
- * Tags: profiles.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetAllUserProfiles extends BaseExample {
   /**

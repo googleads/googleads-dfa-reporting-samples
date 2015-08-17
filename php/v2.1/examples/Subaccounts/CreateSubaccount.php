@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates a subaccount in a given DoubleClick Campaign Manager
  * account. To get available permissions, run GetUserRolePermissions.
- *
- * Tags: subaccounts.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateSubaccount extends BaseExample {
   /**

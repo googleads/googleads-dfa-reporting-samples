@@ -26,10 +26,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * specified advertiser. To see all lists that can be used for targeting ads
  * (including those shared from other accounts or advertisers), use the
  * TargetableRemarketingLists resource instead.
- *
- * Tags: remarketingLists.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetRemarketingLists extends BaseExample {
   /**

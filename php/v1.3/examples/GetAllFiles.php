@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example returns all files available to the specified user profile.
- *
- * Tags: files.list
- *
- * @author Jonathon Imperiosi (jimper@google.com)
  */
 class GetAllFiles extends BaseExample {
   /**

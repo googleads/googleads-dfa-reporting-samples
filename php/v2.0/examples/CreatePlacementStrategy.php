@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example creates a placement strategy with the given name.
- *
- * Tags: placementStrategies.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreatePlacementStrategy extends BaseExample {
   /**

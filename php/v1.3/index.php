@@ -18,8 +18,6 @@
 /**
  * Implements the examples execution flow.
  * Load this file with no parameters to get the list of available examples.
- *
- * @author Jonathon Imperiosi <jimper@google.com>
  */
 require_once __DIR__ . "/vendor/autoload.php";
 require_once 'htmlHelper.php';

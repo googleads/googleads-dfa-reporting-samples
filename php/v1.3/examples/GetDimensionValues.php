@@ -25,10 +25,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  *
  * For our examples, you need a "dfa:advertiser" to create a standard report and
  * a "dfa:floodlightConfigId" to create a Floodlight report.
- *
- * Tags: dimensionValues.query
- *
- * @author Jonathon Imperiosi (jimper@google.com)
  */
 class GetDimensionValues extends BaseExample {
   /**

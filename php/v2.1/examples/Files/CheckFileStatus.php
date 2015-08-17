@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example returns the status for a specified report.
- *
- * Tags: reports.files.get
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CheckFileStatus extends BaseExample {
   /**

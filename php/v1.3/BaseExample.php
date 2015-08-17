@@ -21,8 +21,6 @@ require_once 'htmlHelper.php';
 /**
  * Base class for all examples, contains helper methods to support gathering
  * input and rendering results.
- *
- * @author Jonathon Imperiosi <jimper@google.com>
  */
 abstract class BaseExample {
   /**

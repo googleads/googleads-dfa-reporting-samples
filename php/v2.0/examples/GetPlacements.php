@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example displays all available placements.
- *
- * Tags: placements.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetPlacements extends BaseExample {
   /**

@@ -20,8 +20,6 @@ require_once dirname(__DIR__) . '/htmlHelper.php';
 /**
  * Base class for all examples, contains helper methods to support gathering
  * input and rendering results.
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 abstract class BaseExample {
   /**

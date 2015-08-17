@@ -23,10 +23,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * date for the ad must be within campaign start and end dates. To create
  * creatives, run one of the Create*Creative examples. To get available
  * placements, run GetPlacements.
- *
- * Tags: ads.insert, campaigns.get
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateRotationGroup extends BaseExample {
   /**

@@ -23,10 +23,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  *
  * CAUTION: An advertiser that has campaigns associated with it cannot be
  * removed from an advertiser group once assigned.
- *
- * Tags: advertisers.patch
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class AssignAdvertisersToAdvertiserGroup extends BaseExample {
   /**

@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example creates a simple standard report for the given advertiser.
- *
- * Tags: reports.insert
- *
- * @author Jonathon Imperiosi (jimper@google.com)
  */
 class CreateStandardReport extends BaseExample {
   /**

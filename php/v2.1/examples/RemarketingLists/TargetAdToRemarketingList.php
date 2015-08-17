@@ -25,10 +25,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * advertiser, will be used. To create a remarketing list, see
  * CreateRemarketingList.php. To share a remarketing list with the ad's
  * advertiser, see ShareRemarketingListToAdvertiser.php.
- *
- * Tags: ads.get, ads.update, targetableRemarketingLists.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class TargetAdToRemarketingList extends BaseExample {
   /**

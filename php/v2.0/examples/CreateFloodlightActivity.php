@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates a floodlight activity in a given activity group. To
  * create an activity group, run CreateFloodlightActivityGroup.
- *
- * Tags: floodlightActivities.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateFloodlightActivity extends BaseExample {
   /**

@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example gets all reports available to the given user profile. It
  * demonstrates paging through results.
- *
- * Tags: reports.list
- *
- * @author Jonathon Imperiosi (jimper@google.com)
  */
 class GetAllReports extends BaseExample {
   /**

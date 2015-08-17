@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example assigns a given creative to a given campaign. Note that both
  * the creative and campaign must be associated with the same advertiser.
- *
- * Tags: campaignCreativeAssociations.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class AssignCreativeToCampaign extends BaseExample {
   /**

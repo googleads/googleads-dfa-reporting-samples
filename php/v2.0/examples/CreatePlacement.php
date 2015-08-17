@@ -23,10 +23,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * and ID of the campaign in which the placement will be created. To create a
  * campaign, run CreateCampaign. To get a site ID, run GetSite. To get a size
  * ID, run GetSize.
- *
- * Tags: campaigns.get, placements.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreatePlacement extends BaseExample {
   /**

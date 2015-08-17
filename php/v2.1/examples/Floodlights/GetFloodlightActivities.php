@@ -22,10 +22,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * This example displays floodlight activities for a given advertiser.
  *
  * To create an advertiser, run CreateAdvertiser.
- *
- * Tags: floodlightActivities.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetFloodlightActivities extends BaseExample {
   /**

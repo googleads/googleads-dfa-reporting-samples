@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example lists all creative fields.
- *
- * Tags: creativeFields.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetCreativeFields extends BaseExample {
   /**

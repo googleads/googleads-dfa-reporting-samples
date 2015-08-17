@@ -24,10 +24,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  *
  * Note: this sample assumes that the floodlight activity specified has a U1
  * custom floodlight variable.
- *
- * Tags: remarketingLists.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateRemarketingList extends BaseExample {
   /**

@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example displays all available placement strategies.
- *
- * Tags: placementStrategies.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetPlacementStrategies extends BaseExample {
   /**

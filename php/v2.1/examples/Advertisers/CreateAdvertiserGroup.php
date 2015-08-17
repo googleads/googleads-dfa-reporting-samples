@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates an advertiser group. To get advertiser groups, see
  * GetAdvertiserGroups.
- *
- * Tags: advertisergroups.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateAdvertiserGroup extends BaseExample {
   /**

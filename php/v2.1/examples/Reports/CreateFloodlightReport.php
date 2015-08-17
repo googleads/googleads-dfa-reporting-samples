@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example creates a simple Floodlight report for the given Floodlight
  * Configuration ID.
- *
- * Tags: reports.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateFloodlightReport extends BaseExample {
   /**

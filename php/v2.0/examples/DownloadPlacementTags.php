@@ -22,10 +22,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  * This example downloads HTML Tags for a given campaign and placement ID. To
  * create campaigns, run CreateCampaign. To create placements, run
  * CreatePlacement.
- *
- * Tags: placements.generatetags
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi))
  */
 class DownloadPlacementTags extends BaseExample {
   /**

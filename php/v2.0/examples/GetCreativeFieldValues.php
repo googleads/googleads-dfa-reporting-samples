@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example retrieves available creative field values for a given string
  * and displays the names and IDs.
- *
- * Tags: creativefield.getCreativeFieldValues
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetCreativeFieldValues extends BaseExample {
   /**

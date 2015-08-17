@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example displays all sizes for a given width and height.
- *
- * Tags: sizes.get
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetSize extends BaseExample {
   /**

@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example returns all files for the specified report.
- *
- * Tags: reports.files.list
- *
- * @author Jonathon Imperiosi (jimper@google.com)
  */
 class GetAllReportFiles extends BaseExample {
   /**

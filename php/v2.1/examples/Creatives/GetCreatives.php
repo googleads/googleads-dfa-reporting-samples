@@ -21,10 +21,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 /**
  * This example lists all existing active creatives for a given advertiser.
  * To get an advertiser ID, run GetAdvertisers.
- *
- * Tags: creatives.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetCreatives extends BaseExample {
   /**

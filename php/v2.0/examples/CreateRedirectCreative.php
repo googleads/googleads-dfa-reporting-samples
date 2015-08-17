@@ -22,10 +22,6 @@ require_once 'utils/CreativeAssetUtils.php';
 /**
  * This example creates a redirect creative associated with a given advertiser.
  * To get a size ID, run GetSize.
- *
- * Tags: creatives.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateRedirectCreative extends BaseExample {
   /**

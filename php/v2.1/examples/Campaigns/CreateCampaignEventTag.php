@@ -20,10 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example creates an event tag for the specified campaign.
- *
- * Tags: eventTags.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateCampaignEventTag extends BaseExample {
   /**

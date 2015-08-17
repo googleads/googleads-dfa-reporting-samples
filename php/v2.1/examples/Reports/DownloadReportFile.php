@@ -20,8 +20,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 
 /**
  * This example downloads the contents of a completed report file.
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class DownloadReportFile extends BaseExample {
   /**

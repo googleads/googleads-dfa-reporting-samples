@@ -23,10 +23,6 @@ require_once dirname(__DIR__) . "/BaseExample.php";
  *
  * A similar pattern can be applied to get change logs for many other object
  * types.
- *
- * Tags: changelogs.list
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class GetChangeLogsForAdvertiser extends BaseExample {
   /**

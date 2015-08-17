@@ -22,10 +22,6 @@ require_once 'utils/CreativeAssetUtils.php';
 /**
  * This example uploads creative assets and creates an in-stream video
  * creative associated with a given advertiser.
- *
- * Tags: creatives.insert
- *
- * @author api.jimper@gmail.com (Jonathon Imperiosi)
  */
 class CreateInstreamVideoCreative extends BaseExample {
   /**
