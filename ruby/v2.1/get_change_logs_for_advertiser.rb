@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,8 +20,6 @@
 #
 # A similar pattern can be applied to get change logs for many other object
 # types.
-#
-# Tags: changelogs.list
 
 require_relative 'dfareporting_utils'
 

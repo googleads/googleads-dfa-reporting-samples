@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,8 +20,6 @@
 #
 # To get the account ID, run get_all_userprofiles.rb. To get the available
 # permissions, run get_user_role_permissions.rb.
-#
-# Tags: subaccounts.insert
 
 require_relative 'dfareporting_utils'
 

@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,8 +21,6 @@
 # Note that the permissions assigned to a subaccount are not returned in a
 # human-readable format with this example. Run get_available_permissions.rb to
 # see what permissions are available on a subaccount.
-#
-# Tags: subaccounts.list
 
 require_relative 'dfareporting_utils'
 

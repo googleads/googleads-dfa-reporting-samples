@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,8 +21,6 @@
 # Requires the DCM site ID and campaign ID in which the placement will be
 # created. To create a campaign, run create_campaign.rb. To get DCM site ID,
 # run get_site.rb.
-#
-# Tags: campaigns.get, placements.insert
 
 require_relative 'dfareporting_utils'
 

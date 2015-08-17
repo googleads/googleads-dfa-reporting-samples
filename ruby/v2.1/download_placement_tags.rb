@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,8 +20,6 @@
 #
 # To create campaigns, run create_campaign.rb. To create placements, run
 # create_placement.rb.
-#
-# Tags: placements.generatetags
 
 require_relative 'dfareporting_utils'
 

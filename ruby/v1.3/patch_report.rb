@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: jimper@google.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2013, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,8 +17,6 @@
 #           limitations under the License.
 #
 # This example illustrates how to patch a report
-#
-# Tags: reports.patch
 
 require_relative 'dfareporting_utils'
 

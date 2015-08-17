@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,8 +20,6 @@
 #
 # Requires an image asset and advertiser ID as input. To get an advertiser ID,
 # run get_advertisers.rb.
-#
-# Tags: creatives.insert
 
 require_relative 'creative_asset_utils'
 require_relative 'dfareporting_utils'

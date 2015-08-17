@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +19,6 @@
 # This example creates a creative field value for a given creative field.
 #
 # To get the creative field ID, run get_creative_fields.rb.
-#
-# Tags: creativeFieldValues.insert
 
 require_relative 'dfareporting_utils'
 

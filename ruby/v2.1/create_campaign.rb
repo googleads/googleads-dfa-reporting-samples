@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Author:: api.jimper@gmail.com (Jonathon Imperiosi)
-#
 # Copyright:: Copyright 2015, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +19,6 @@
 # This example creates a campaign in a given advertiser.
 #
 # To create an advertiser, run create_advertiser.rb.
-#
-# Tags: campaigns.insert
 
 require_relative 'dfareporting_utils'
 
