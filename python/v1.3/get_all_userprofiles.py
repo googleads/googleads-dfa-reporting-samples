@@ -25,7 +25,7 @@ from oauth2client import client
 
 def main(argv):
   # Authenticate and construct service.
-  service, _ = sample_tools.init(
+  service, flags = sample_tools.init(
       argv, 'dfareporting', 'v1.3', __doc__, __file__,
       scope='https://www.googleapis.com/auth/dfareporting')
 
