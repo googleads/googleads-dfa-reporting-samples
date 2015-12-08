@@ -19,13 +19,13 @@
 """
 
 import argparse
-import httplib2
 import sys
 
 from apiclient import discovery
+import dfareporting_utils
+import httplib2
 from oauth2client import client
 from oauth2client import tools
-
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
@@ -41,8 +41,8 @@ argparser.add_argument(
 
 
 def main(argv):
-  # Retrieve commandline flags
-  flags = parse_arguments(argv)
+  # Retrieve command line arguments.
+  flags = dfareporting_utils.get_arguments(argv, __doc__, parents=[argparser])
 
   # Authenticate using the supplied service account credentials
   http_auth = authenticate_using_service_account(

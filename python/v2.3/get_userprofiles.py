@@ -18,16 +18,16 @@
 
 import sys
 
-from apiclient import sample_tools
+import dfareporting_utils
 from oauth2client import client
 
 
 def main(argv):
+  # Retrieve command line arguments.
+  flags = dfareporting_utils.get_arguments(argv, __doc__, parents=[])
+
   # Authenticate and construct service.
-  service, _ = sample_tools.init(
-      argv, 'dfareporting', 'v2.3', __doc__, __file__, parents=[],
-      scope=['https://www.googleapis.com/auth/dfareporting',
-             'https://www.googleapis.com/auth/dfatrafficking'])
+  service = dfareporting_utils.setup(flags)
 
   try:
     # Construct the request.

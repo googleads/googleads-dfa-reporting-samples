@@ -19,7 +19,7 @@
 import argparse
 import sys
 
-from apiclient import sample_tools
+import dfareporting_utils
 from oauth2client import client
 
 # Declare command-line flags.
@@ -33,11 +33,11 @@ argparser.add_argument(
 
 
 def main(argv):
+  # Retrieve command line arguments.
+  flags = dfareporting_utils.get_arguments(argv, __doc__, parents=[argparser])
+
   # Authenticate and construct service.
-  service, flags = sample_tools.init(
-      argv, 'dfareporting', 'v2.3', __doc__, __file__, parents=[argparser],
-      scope=['https://www.googleapis.com/auth/dfareporting',
-             'https://www.googleapis.com/auth/dfatrafficking'])
+  service = dfareporting_utils.setup(flags)
 
   report_id = flags.report_id
   file_id = flags.file_id
