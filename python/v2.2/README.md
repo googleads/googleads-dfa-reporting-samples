@@ -20,15 +20,11 @@ https://developers.google.com/accounts/docs/OAuth2
 
 Or, if you'd like to dive right in, follow these steps.
  - Visit https://console.developers.google.com to register your application.
- - From the APIs & Auth -> APIs screen, activate access to "DFA Reporting API".
+ - From the API Manager -> Google APIs screen, activate access to "DCM/DFA Reporting and Trafficking API".
  - Click on "Credentials" in the left navigation menu
- - Click the button labeled "Create an OAuth2 client ID"
- - Give your application a name and click "Next"
- - Select "Installed Application" as the "Application type"
- - Under "Installed application type" select "Other"
- - Click "Create client ID"
- - Click "Download JSON" and save the file as `client_secrets.json` in your
-   home directory
+ - Click the button labeled "Create credentials" and select "OAuth Client ID"
+ - Select "Other" as the "Application type", then "Create"
+ - From the Credentials page, click "Download JSON" next to the client ID you just created and save the file as `client_secrets.json` in the samples project directory
 
 ## Running the Examples
 
