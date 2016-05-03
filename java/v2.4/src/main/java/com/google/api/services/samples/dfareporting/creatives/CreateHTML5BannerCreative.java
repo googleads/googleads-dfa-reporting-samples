@@ -25,8 +25,8 @@ import com.google.api.services.samples.dfareporting.creatives.assets.CreativeAss
 import com.google.common.collect.ImmutableList;
 
 /**
- * This example uploads creative assets and creates an HTML5 banner creative associated with a given
- * advertiser. To get a size ID, run GetSize.java.
+ * This example uploads creative assets and creates an HTML5 display creative associated with a
+ * given advertiser. To get a size ID, run GetSize.java.
  */
 public class CreateHTML5BannerCreative {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";
@@ -47,9 +47,9 @@ public class CreateHTML5BannerCreative {
       long sizeId) throws Exception {
     Creative creative = new Creative();
     creative.setAdvertiserId(advertiserId);
-    creative.setName("Test HTML5 banner creative");
+    creative.setName("Test HTML5 display creative");
     creative.setSize(new Size().setId(sizeId));
-    creative.setType("HTML5_BANNER");
+    creative.setType("ENHANCED_BANNER");
 
     // Upload the HTML5 asset.
     CreativeAssetId html5AssetId = CreativeAssetUtils.uploadAsset(reporting, profileId,
@@ -68,14 +68,20 @@ public class CreateHTML5BannerCreative {
     // Add the creative assets.
     creative.setCreativeAssets(ImmutableList.of(html5Asset, backupImageAsset));
 
+    // Configure the backup image.
+    creative.setBackupImageClickThroughUrl("https://www.google.com");
+    creative.setBackupImageReportingLabel("backup");
+    creative.setBackupImageTargetWindow(new TargetWindow().setTargetWindowOption("NEW_WINDOW"));
+
     // Add a click tag.
-    ClickTag clickTag = new ClickTag().setName("clickTag");
+    ClickTag clickTag =
+        new ClickTag().setName("clickTag").setEventName("exit").setValue("https://www.google.com");
     creative.setClickTags(ImmutableList.of(clickTag));
 
     Creative result = reporting.creatives().insert(profileId, creative).execute();
 
     // Display the new creative ID.
-    System.out.printf("HTML5 banner creative with ID %d was created.%n", result.getId());
+    System.out.printf("HTML5 display creative with ID %d was created.%n", result.getId());
   }
 
   public static void main(String[] args) throws Exception {

@@ -25,8 +25,8 @@ import com.google.api.services.samples.dfareporting.creatives.assets.CreativeAss
 import com.google.common.collect.ImmutableList;
 
 /**
- * This example uploads creative assets and creates a flash in-page creative associated with a given
- * advertiser. To get a size ID, run GetSize.java.
+ * This example uploads creative assets and creates a flash display creative associated with a
+ * given advertiser. To get a size ID, run GetSize.java.
  */
 public class CreateFlashInpageCreative {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";
@@ -47,9 +47,9 @@ public class CreateFlashInpageCreative {
       long sizeId) throws Exception {
     Creative creative = new Creative();
     creative.setAdvertiserId(advertiserId);
-    creative.setName("Test flash in-page creative");
+    creative.setName("Test flash display creative");
     creative.setSize(new Size().setId(sizeId));
-    creative.setType("FLASH_INPAGE");
+    creative.setType("ENHANCED_BANNER");
 
     // Upload the flash asset.
     CreativeAssetId flashAssetId = CreativeAssetUtils.uploadAsset(reporting, profileId,
@@ -68,13 +68,15 @@ public class CreateFlashInpageCreative {
     // Add the creative assets.
     creative.setCreativeAssets(ImmutableList.of(flashAsset, backupImageAsset));
 
-    // Set the backup image target window option.
+    // Configure the backup image.
+    creative.setBackupImageClickThroughUrl("https://www.google.com");
+    creative.setBackupImageReportingLabel("backup");
     creative.setBackupImageTargetWindow(new TargetWindow().setTargetWindowOption("NEW_WINDOW"));
 
     Creative result = reporting.creatives().insert(profileId, creative).execute();
 
     // Display the new creative ID.
-    System.out.printf("Flash in-page creative with ID %d was created.%n", result.getId());
+    System.out.printf("Flash display creative with ID %d was created.%n", result.getId());
   }
 
   public static void main(String[] args) throws Exception {

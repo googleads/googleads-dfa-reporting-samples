@@ -24,8 +24,8 @@ import com.google.api.services.samples.dfareporting.creatives.assets.CreativeAss
 import com.google.common.collect.ImmutableList;
 
 /**
- * This example uploads creative assets and creates an image creative associated with a given
- * advertiser. To get a size ID, run GetSize.java.
+ * This example uploads creative assets and creates an image display creative associated with a
+ * given advertiser. To get a size ID, run GetSize.java.
  */
 public class CreateImageCreative {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";
@@ -43,13 +43,13 @@ public class CreateImageCreative {
       long sizeId) throws Exception {
     Creative creative = new Creative();
     creative.setAdvertiserId(advertiserId);
-    creative.setName("Test image creative");
+    creative.setName("Test image display creative");
     creative.setSize(new Size().setId(sizeId));
-    creative.setType("IMAGE");
+    creative.setType("ENHANCED_BANNER");
 
     // Upload the image asset.
     CreativeAssetId imageAssetId = CreativeAssetUtils.uploadAsset(reporting, profileId,
-        advertiserId, IMAGE_ASSET_NAME, PATH_TO_IMAGE_ASSET_FILE, "IMAGE");
+        advertiserId, IMAGE_ASSET_NAME, PATH_TO_IMAGE_ASSET_FILE, "HTML_IMAGE");
 
     CreativeAsset asset = new CreativeAsset().setAssetIdentifier(imageAssetId).setRole("PRIMARY");
 
@@ -59,7 +59,7 @@ public class CreateImageCreative {
     Creative result = reporting.creatives().insert(profileId, creative).execute();
 
     // Display the new creative ID.
-    System.out.printf("Image creative with ID %d was created.%n", result.getId());
+    System.out.printf("Image display creative with ID %d was created.%n", result.getId());
   }
 
   public static void main(String[] args) throws Exception {
