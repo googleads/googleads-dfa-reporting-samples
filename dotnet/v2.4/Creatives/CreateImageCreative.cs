@@ -22,7 +22,7 @@ using Google.Apis.Dfareporting.v2_4.Data;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example uploads creative assets and creates an image
+  /// This example uploads creative assets and creates an image display
   /// creative associated with a given advertiser. To get a size ID, run
   /// GetSize.cs.
   /// </summary>
@@ -32,7 +32,7 @@ namespace DfaReporting.Samples {
     /// </summary>
     public override string Description {
       get {
-        return "This example uploads creative assets and creates an image" +
+        return "This example uploads creative assets and creates an image display" +
             " creative associated with a given advertiser. To get a size ID," +
             " run GetSize.cs.\n";
       }
@@ -62,13 +62,13 @@ namespace DfaReporting.Samples {
 
       Creative creative = new Creative();
       creative.AdvertiserId = advertiserId;
-      creative.Name = "Test image creative";
+      creative.Name = "Test image display creative";
       creative.Size = new Size() { Id = sizeId };
-      creative.Type = "IMAGE";
+      creative.Type = "ENHANCED_BANNER";
 
       // Upload the image asset.
       CreativeAssetUtils assetUtils = new CreativeAssetUtils(service, profileId, advertiserId);
-      CreativeAssetId imageAssetId = assetUtils.uploadAsset(pathToImageAssetFile, "IMAGE");
+      CreativeAssetId imageAssetId = assetUtils.uploadAsset(pathToImageAssetFile, "HTML_IMAGE");
 
       CreativeAsset imageAsset = new CreativeAsset();
       imageAsset.AssetIdentifier = imageAssetId;
@@ -80,7 +80,7 @@ namespace DfaReporting.Samples {
       Creative result = service.Creatives.Insert(creative, profileId).Execute();
 
       // Display the new creative ID.
-      Console.WriteLine("Image creative with ID {0} was created.", result.Id);
+      Console.WriteLine("Image display creative with ID {0} was created.", result.Id);
     }
   }
 }

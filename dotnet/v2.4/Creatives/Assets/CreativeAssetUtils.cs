@@ -18,6 +18,7 @@ using System;
 using System.IO;
 using Google.Apis.Dfareporting.v2_4;
 using Google.Apis.Dfareporting.v2_4.Data;
+using Google.Apis.Upload;
 
 namespace DfaReporting.Samples {
   class CreativeAssetUtils {
@@ -55,12 +56,15 @@ namespace DfaReporting.Samples {
       String mimeType = determineMimeType(assetFile, assetType);
       CreativeAssetsResource.InsertMediaUpload request =
           Service.CreativeAssets.Insert(metaData, ProfileId, AdvertiserId, assetContent, mimeType);
-      request.Upload();
+
+      IUploadProgress progress = request.Upload();
+      if (UploadStatus.Failed.Equals(progress.Status)) {
+          throw progress.Exception;
+      }
 
       // Display the new asset name.
       Console.WriteLine("Creative asset was saved with name \"{0}\".",
-        request.ResponseBody.AssetIdentifier.Name);
-
+          request.ResponseBody.AssetIdentifier.Name);
       return request.ResponseBody.AssetIdentifier;
     }
 

@@ -21,9 +21,8 @@ using Google.Apis.Dfareporting.v2_4.Data;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example uploads creative assets and creates a flash in-page
-  /// creative associated with a given advertiser. To get a size ID, run
-  /// GetSize.cs.
+  /// This example uploads creative assets and creates a flash display creative
+  /// associated with a given advertiser. To get a size ID, run GetSize.cs.
   /// </summary>
   class CreateFlashInpageCreative : SampleBase {
     /// <summary>
@@ -32,7 +31,7 @@ namespace DfaReporting.Samples {
     public override string Description {
       get {
         return "This example uploads creative assets and creates a flash" +
-            " in-page creative associated with a given advertiser. To get a" +
+            " display creative associated with a given advertiser. To get a" +
             " size ID, run GetSize.cs.\n";
       }
     }
@@ -62,9 +61,9 @@ namespace DfaReporting.Samples {
 
       Creative creative = new Creative();
       creative.AdvertiserId = advertiserId;
-      creative.Name = "Test flash in-page creative";
+      creative.Name = "Test flash display creative";
       creative.Size = new Size() { Id = sizeId };
-      creative.Type = "FLASH_INPAGE";
+      creative.Type = "ENHANCED_BANNER";
 
       // Upload the flash asset.
       CreativeAssetUtils assetUtils = new CreativeAssetUtils(service, profileId, advertiserId);
@@ -85,13 +84,15 @@ namespace DfaReporting.Samples {
       // Add the creative assets.
       creative.CreativeAssets = new List<CreativeAsset>() { flashAsset, imageAsset };
 
-      // Set the backup image target window option.
+      // Configure the backup image.
+      creative.BackupImageClickThroughUrl = "https://www.google.com";
+      creative.BackupImageReportingLabel = "backup";
       creative.BackupImageTargetWindow = new TargetWindow() { TargetWindowOption = "NEW_WINDOW"};
 
       Creative result = service.Creatives.Insert(creative, profileId).Execute();
 
       // Display the new creative ID.
-      Console.WriteLine("Flash in-page creative with ID {0} was created.", result.Id);
+      Console.WriteLine("Flash display creative with ID {0} was created.", result.Id);
     }
   }
 }

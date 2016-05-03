@@ -21,7 +21,7 @@ using Google.Apis.Dfareporting.v2_4.Data;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example uploads creative assets and creates an HTML5 banner
+  /// This example uploads creative assets and creates an HTML5 display
   /// creative associated with a given advertiser. To get a size ID, run
   /// GetSize.cs.
   /// </summary>
@@ -32,7 +32,7 @@ namespace DfaReporting.Samples {
     public override string Description {
       get {
         return "This example uploads creative assets and creates an HTML5" +
-            " banner creative associated with a given advertiser. To get a" +
+            " display creative associated with a given advertiser. To get a" +
             " size ID, run GetSize.cs.\n";
       }
     }
@@ -62,9 +62,9 @@ namespace DfaReporting.Samples {
 
       Creative creative = new Creative();
       creative.AdvertiserId = advertiserId;
-      creative.Name = "Test HTML5 banner creative";
+      creative.Name = "Test HTML5 display creative";
       creative.Size = new Size() { Id = sizeId };
-      creative.Type = "HTML5_BANNER";
+      creative.Type = "ENHANCED_BANNER";
 
       // Upload the HTML5 asset.
       CreativeAssetUtils assetUtils = new CreativeAssetUtils(service, profileId, advertiserId);
@@ -84,14 +84,22 @@ namespace DfaReporting.Samples {
       // Add the creative assets.
       creative.CreativeAssets = new List<CreativeAsset>() { html5Asset, imageAsset };
 
+      // Configure the bacup image.
+      creative.BackupImageClickThroughUrl = "https://www.google.com";
+      creative.BackupImageReportingLabel = "backup";
+      creative.BackupImageTargetWindow = new TargetWindow() { TargetWindowOption = "NEW_WINDOW" };
+
       // Add a click tag.
-      ClickTag clickTag = new ClickTag() { Name = "clickTag" };
+      ClickTag clickTag = new ClickTag();
+      clickTag.Name = "clickTag";
+      clickTag.EventName = "exit";
+      clickTag.Value = "https://www.google.com";
       creative.ClickTags = new List<ClickTag>() { clickTag };
 
       Creative result = service.Creatives.Insert(creative, profileId).Execute();
 
       // Display the new creative ID.
-      Console.WriteLine("HTML5 banner creative with ID {0} was created.", result.Id);
+      Console.WriteLine("HTML5 display creative with ID {0} was created.", result.Id);
     }
   }
 }
