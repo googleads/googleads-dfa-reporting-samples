@@ -16,7 +16,7 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 #
-# This example creates a flash in-page creative.
+# This example creates a flash display creative.
 #
 # Requires a flash asset, backup image asset, and an advertiser ID as input.
 # To get an advertiser ID, run get_advertisers.rb.
@@ -38,8 +38,14 @@ def create_flash_inpage_creative(dfareporting, args)
   # Construct the creative structure
   creative = {
     :advertiserId => args[:advertiser_id],
+    :backupImageClickThroughUrl => 'https://www.google.com',
+    :backupImageReportingLabel => 'backup',
     :backupImageTargetWindow => { :targetWindowOption => 'NEW_WINDOW' },
-    :clickTags => [{ :name => 'click_tag' }],
+    :clickTags => [{
+      :eventName => 'exit',
+      :name => 'click_tag',
+      :value => 'https://www.google.com'
+    }],
     :creativeAssets => [
       {
         :assetIdentifier => flash_asset_id,
@@ -51,9 +57,9 @@ def create_flash_inpage_creative(dfareporting, args)
         :role => 'BACKUP_IMAGE'
       }
     ],
-    :name => 'Example flash in-page creative',
+    :name => 'Example flash display creative',
     :size => { :id => args[:size_id] },
-    :type => 'FLASH_INPAGE'
+    :type => 'ENHANCED_BANNER'
   }
 
   # Insert the creative
@@ -61,7 +67,7 @@ def create_flash_inpage_creative(dfareporting, args)
     :profileId => args[:profile_id]
   ).body(creative).execute()
 
-  puts 'Created flash in-page creative with ID %d and name "%s".' %
+  puts 'Created flash display creative with ID %d and name "%s".' %
       [result.data.id, result.data.name]
 end
 

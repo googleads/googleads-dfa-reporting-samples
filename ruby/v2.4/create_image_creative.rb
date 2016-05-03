@@ -16,7 +16,7 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 #
-# This example creates an image creative.
+# This example creates an image display creative.
 #
 # Requires an image asset and advertiser ID as input. To get an advertiser ID,
 # run get_advertisers.rb.
@@ -28,7 +28,7 @@ def create_image_creative(dfareporting, args)
   # Upload the creative asset
   util = CreativeAssetUtils.new(dfareporting, args[:profile_id])
   creative_asset_id = util.uploadAsset(args[:advertiser_id],
-      args[:path_to_image_file], 'IMAGE')
+      args[:path_to_image_file], 'HTML_IMAGE')
 
   # Construct the creative structure
   creative = {
@@ -39,9 +39,9 @@ def create_image_creative(dfareporting, args)
         :role => 'PRIMARY'
       }
     ],
-    :name => 'Example image creative',
+    :name => 'Example image display creative',
     :size => { :id => args[:size_id] },
-    :type => 'IMAGE'
+    :type => 'ENHANCED_BANNER'
   }
 
   # Insert the creative
@@ -49,7 +49,7 @@ def create_image_creative(dfareporting, args)
     :profileId => args[:profile_id]
   ).body(creative).execute()
 
-  puts 'Created image creative with ID %d and name "%s".' %
+  puts 'Created image display creative with ID %d and name "%s".' %
       [result.data.id, result.data.name]
 end
 

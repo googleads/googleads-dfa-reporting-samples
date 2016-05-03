@@ -16,7 +16,7 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 #
-# This example creates an HTML5 banner creative.
+# This example creates an HTML5 display creative.
 #
 # Requires an HTML5 asset, backup image asset, and an advertiser ID as input.
 # To get an advertiser ID, run get_advertisers.rb.
@@ -38,7 +38,14 @@ def create_html5_banner_creative(dfareporting, args)
   # Construct the creative structure
   creative = {
     :advertiserId => args[:advertiser_id],
-    :clickTags => [{ :name => 'click_tag' }],
+    :backupImageClickThroughUrl => 'https://www.google.com',
+    :backupImageReportingLabel => 'backup',
+    :backupImageTargetWindow => { :targetWindowOption => 'NEW_WINDOW' },
+    :clickTags => [{
+      :eventName => 'exit',
+      :name => 'click_tag',
+      :value => 'https://www.google.com'
+    }],
     :creativeAssets => [
       {
         :assetIdentifier => html5_asset_id,
@@ -49,9 +56,9 @@ def create_html5_banner_creative(dfareporting, args)
         :role => 'BACKUP_IMAGE'
       }
     ],
-    :name => 'Example HTML5 banner creative',
+    :name => 'Example HTML5 display creative',
     :size => { :id => args[:size_id] },
-    :type => 'HTML5_BANNER'
+    :type => 'ENHANCED_BANNER'
   }
 
   # Insert the creative
@@ -59,7 +66,7 @@ def create_html5_banner_creative(dfareporting, args)
     :profileId => args[:profile_id]
   ).body(creative).execute()
 
-  puts 'Created HTML5 banner creative with ID %d and name "%s".' %
+  puts 'Created HTML5 display creative with ID %d and name "%s".' %
       [result.data.id, result.data.name]
 end
 
