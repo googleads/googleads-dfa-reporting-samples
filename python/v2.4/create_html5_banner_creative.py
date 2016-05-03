@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates an HTML5 banner creative.
+"""This example creates an HTML5 display creative.
 
 Requires an HTML5 asset, backup image asset, and an advertiser ID as input.
 To get an advertiser ID, run get_advertisers.py.
@@ -24,8 +24,8 @@ import argparse
 import sys
 
 from apiclient.http import MediaFileUpload
-import dfareporting_utils
 from oauth2client import client
+import dfareporting_utils
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
@@ -81,14 +81,21 @@ def main(argv):
     # Construct the creative structure.
     creative = {
         'advertiserId': advertiser_id,
-        'clickTags': [{'name': 'click_tag'}],
+        'backupImageClickThroughUrl': 'https://www.google.com',
+        'backupImageReportingLabel': 'backup_image_exit',
+        'backupImageTargetWindow': {'targetWindowOption': 'NEW_WINDOW'},
+        'clickTags': [{
+            'eventName': 'exit',
+            'name': 'click_tag',
+            'value': 'https://www.google.com'
+        }],
         'creativeAssets': [
             {'assetIdentifier': html5_asset_id, 'role': 'PRIMARY'},
             {'assetIdentifier': backup_image_asset_id, 'role': 'BACKUP_IMAGE'},
         ],
-        'name': 'Test HTML5 banner creative',
+        'name': 'Test HTML5 display creative',
         'size': {'id': size_id},
-        'type': 'HTML5_BANNER'
+        'type': 'ENHANCED_BANNER'
     }
 
     request = service.creatives().insert(profileId=profile_id, body=creative)
@@ -96,7 +103,7 @@ def main(argv):
     # Execute request and print response.
     response = request.execute()
 
-    print ('Created HTML5 banner creative with ID %s and name "%s".'
+    print ('Created HTML5 display creative with ID %s and name "%s".'
            % (response['id'], response['name']))
 
   except client.AccessTokenRefreshError:

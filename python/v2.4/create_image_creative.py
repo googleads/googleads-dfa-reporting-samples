@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates an image creative.
+"""This example creates an image display creative.
 
 Requires an image asset and advertiser ID as input. To get an advertiser ID,
 run get_advertisers.py.
@@ -24,8 +24,8 @@ import argparse
 import sys
 
 from apiclient.http import MediaFileUpload
-import dfareporting_utils
 from oauth2client import client
+import dfareporting_utils
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
@@ -63,7 +63,7 @@ def main(argv):
     # Upload the creative asset
     creative_asset_id = upload_creative_asset(
         service, profile_id, advertiser_id, image_name, path_to_image_file,
-        'IMAGE')
+        'HTML_IMAGE')
 
     # Construct the creative structure.
     creative = {
@@ -71,9 +71,9 @@ def main(argv):
         'creativeAssets': [
             {'assetIdentifier': creative_asset_id, 'role': 'PRIMARY'}
         ],
-        'name': 'Test image creative',
+        'name': 'Test image display creative',
         'size': {'id': size_id},
-        'type': 'IMAGE'
+        'type': 'ENHANCED_BANNER'
     }
 
     request = service.creatives().insert(profileId=profile_id, body=creative)
@@ -81,7 +81,7 @@ def main(argv):
     # Execute request and print response.
     response = request.execute()
 
-    print ('Created image creative with ID %s and name "%s".'
+    print ('Created image display creative with ID %s and name "%s".'
            % (response['id'], response['name']))
 
   except client.AccessTokenRefreshError:

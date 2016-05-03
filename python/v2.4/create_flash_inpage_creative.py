@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates a flash in-page creative.
+"""This example creates a flash display creative.
 
 Requires a flash asset, backup image asset, and an advertiser ID as input.
 To get an advertiser ID, run get_advertisers.py.
@@ -24,8 +24,8 @@ import argparse
 import sys
 
 from apiclient.http import MediaFileUpload
-import dfareporting_utils
 from oauth2client import client
+import dfareporting_utils
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
@@ -81,16 +81,22 @@ def main(argv):
     # Construct the creative structure.
     creative = {
         'advertiserId': advertiser_id,
+        'backupImageClickThroughUrl': 'https://www.google.com',
+        'backupImageReportingLabel': 'backup_image_exit',
         'backupImageTargetWindow': {'targetWindowOption': 'NEW_WINDOW'},
-        'clickTags': [{'name': 'click_tag'}],
+        'clickTags': [{
+            'eventName': 'exit',
+            'name': 'click_tag',
+            'value': 'https://www.google.com'
+        }],
         'creativeAssets': [
             {'assetIdentifier': flash_asset_id, 'role': 'PRIMARY',
              'windowMode': 'TRANSPARENT'},
             {'assetIdentifier': backup_image_asset_id, 'role': 'BACKUP_IMAGE'},
         ],
-        'name': 'Test flash in-page creative',
+        'name': 'Test flash display creative',
         'size': {'id': size_id},
-        'type': 'FLASH_INPAGE'
+        'type': 'ENHANCED_BANNER'
     }
 
     request = service.creatives().insert(profileId=profile_id, body=creative)
@@ -98,7 +104,7 @@ def main(argv):
     # Execute request and print response.
     response = request.execute()
 
-    print ('Created flash in-page creative with ID %s and name "%s".'
+    print ('Created flash display creative with ID %s and name "%s".'
            % (response['id'], response['name']))
 
   except client.AccessTokenRefreshError:
