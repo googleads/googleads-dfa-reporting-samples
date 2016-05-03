@@ -20,7 +20,7 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 require_once 'utils/CreativeAssetUtils.php';
 
 /**
- * This example uploads creative assets and creates a flash in-page creative
+ * This example uploads creative assets and creates a flash display creative
  * associated with a given advertiser. To get a size ID, run GetSize.
  */
 class CreateFlashInpageCreative extends BaseExample {
@@ -59,15 +59,15 @@ class CreateFlashInpageCreative extends BaseExample {
     $values = $this->formValues;
 
     printf(
-        '<h2>Creating flash in-page banner creative from flash asset "%s"</h2>',
+        '<h2>Creating flash display creative from flash asset "%s"</h2>',
         $values['flash_asset_file']['name']
     );
 
     $creative = new Google_Service_Dfareporting_Creative();
     $creative->setAdvertiserId($values['advertiser_id']);
     $creative->setAutoAdvanceImages(true);
-    $creative->setName('Test flash in-page creative');
-    $creative->setType('FLASH_INPAGE');
+    $creative->setName('Test flash display creative');
+    $creative->setType('ENHANCED_BANNER');
 
     $size = new Google_Service_Dfareporting_Size();
     $size->setId($values['size_id']);
@@ -93,7 +93,10 @@ class CreateFlashInpageCreative extends BaseExample {
     // Add the creative assets.
     $creative->setCreativeAssets(array($flash_asset, $image_asset));
 
-    // Set up the backup image target window option.
+    // Configure the backup image.
+    $creative->setBackupImageClickThroughUrl('https://www.google.com');
+    $creative->setBackupImageReportingLabel('backup');
+
     $target_window = new Google_Service_Dfareporting_TargetWindow();
     $target_window->setTargetWindowOption('NEW_WINDOW');
     $creative->setBackupImageTargetWindow($target_window);
@@ -101,7 +104,7 @@ class CreateFlashInpageCreative extends BaseExample {
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('Flash in-page creative created.', array($result));
+    $this->printResultsTable('Flash display creative created.', array($result));
   }
 
   /**
@@ -110,7 +113,7 @@ class CreateFlashInpageCreative extends BaseExample {
    * @return string
    */
   public function getName() {
-    return 'Create Flash In-page Creative';
+    return 'Create Flash Display Creative';
   }
 
   /**

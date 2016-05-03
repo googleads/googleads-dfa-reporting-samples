@@ -20,7 +20,7 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 require_once 'utils/CreativeAssetUtils.php';
 
 /**
- * This example uploads creative assets and creates an image creative
+ * This example uploads creative assets and creates an image display creative
  * associated with a given advertiser. To get a size ID, run GetSize.
  */
 class CreateImageCreative extends BaseExample {
@@ -55,14 +55,14 @@ class CreateImageCreative extends BaseExample {
     $values = $this->formValues;
 
     printf(
-        '<h2>Creating image creative from image asset "%s"</h2>',
+        '<h2>Creating image display creative from image asset "%s"</h2>',
         $values['asset_file']['name']
     );
 
     $creative = new Google_Service_Dfareporting_Creative();
     $creative->setAdvertiserId($values['advertiser_id']);
-    $creative->setName('Test image creative');
-    $creative->setType('IMAGE');
+    $creative->setName('Test image display creative');
+    $creative->setType('ENHANCED_BANNER');
 
     $size = new Google_Service_Dfareporting_Size();
     $size->setId($values['size_id']);
@@ -70,7 +70,7 @@ class CreateImageCreative extends BaseExample {
 
     // Upload the image asset.
     $asset_id = uploadAsset($this->service, $values['user_profile_id'],
-        $values['advertiser_id'], $values['asset_file'], 'IMAGE');
+        $values['advertiser_id'], $values['asset_file'], 'HTML_IMAGE');
 
     $asset = new Google_Service_Dfareporting_CreativeAsset();
     $asset->setAssetIdentifier($asset_id);
@@ -82,7 +82,7 @@ class CreateImageCreative extends BaseExample {
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('Image creative created.', array($result));
+    $this->printResultsTable('Image display creative created.', array($result));
   }
 
   /**
@@ -91,7 +91,7 @@ class CreateImageCreative extends BaseExample {
    * @return string
    */
   public function getName() {
-    return 'Create Image Creative';
+    return 'Create Image Display Creative';
   }
 
   /**

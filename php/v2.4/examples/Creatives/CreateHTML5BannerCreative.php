@@ -20,7 +20,7 @@ require_once dirname(__DIR__) . "/BaseExample.php";
 require_once 'utils/CreativeAssetUtils.php';
 
 /**
- * This example uploads creative assets and creates an HTML5 banner creative
+ * This example uploads creative assets and creates an HTML5 display creative
  * associated with a given advertiser. To get a size ID, run GetSize.
  */
 class CreateHTML5BannerCreative extends BaseExample {
@@ -59,15 +59,15 @@ class CreateHTML5BannerCreative extends BaseExample {
     $values = $this->formValues;
 
     printf(
-        '<h2>Creating HTML5 banner banner creative from HTML5 asset "%s"</h2>',
+        '<h2>Creating HTML5 display creative from HTML5 asset "%s"</h2>',
         $values['html_asset_file']['name']
     );
 
     $creative = new Google_Service_Dfareporting_Creative();
     $creative->setAdvertiserId($values['advertiser_id']);
     $creative->setAutoAdvanceImages(true);
-    $creative->setName('Test HTML5 banner creative');
-    $creative->setType('HTML5_BANNER');
+    $creative->setName('Test HTML5 display creative');
+    $creative->setType('ENHANCED_BANNER');
 
     $size = new Google_Service_Dfareporting_Size();
     $size->setId($values['size_id']);
@@ -92,15 +92,25 @@ class CreateHTML5BannerCreative extends BaseExample {
     // Add the creative assets.
     $creative->setCreativeAssets(array($html_asset, $image_asset));
 
+    // Configure the backup image.
+    $creative->setBackupImageClickThroughUrl('https://www.google.com');
+    $creative->setBackupImageReportingLabel('backup');
+
+    $target_window = new Google_Service_Dfareporting_TargetWindow();
+    $target_window->setTargetWindowOption('NEW_WINDOW');
+    $creative->setBackupImageTargetWindow($target_window);
+
     // Add a click tag.
     $click_tag = new Google_Service_Dfareporting_ClickTag();
     $click_tag->setName('clickTag');
+    $click_tag->setEventName('exit');
+    $click_tag->setValue('https://www.google.com');
     $creative->setClickTags(array($click_tag));
 
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('HTML5 banner creative created.', array($result));
+    $this->printResultsTable('HTML5 display creative created.', array($result));
   }
 
   /**
@@ -109,7 +119,7 @@ class CreateHTML5BannerCreative extends BaseExample {
    * @return string
    */
   public function getName() {
-    return 'Create HTML5 Banner Creative';
+    return 'Create HTML5 Display Creative';
   }
 
   /**
