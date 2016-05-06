@@ -26,6 +26,7 @@ import dfareporting_utils
 import httplib2
 from oauth2client import client
 from oauth2client import tools
+from oauth2client.service_account import ServiceAccountCredentials
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
@@ -50,7 +51,8 @@ def main(argv):
       flags.p12_file)
 
   # Construct a service object via the discovery service.
-  service = discovery.build('dfareporting', 'v2.3', http=http_auth)
+  service = discovery.build(dfareporting_utils.API_NAME,
+                            dfareporting_utils.API_VERSION, http=http_auth)
 
   try:
     # Construct the request.
@@ -80,16 +82,14 @@ def parse_arguments(argv):
 
 def authenticate_using_service_account(
     service_account_email, impersonation_user_email, p12_file):
-  """Authorizes an Http instance using service account credentials"""
-  with open(p12_file) as f:
-    private_key = f.read()
+  """Authorizes an Http instance using service account credentials."""
+  credentials = ServiceAccountCredentials.from_p12_keyfile(
+      service_account_email, p12_file, scopes=dfareporting_utils.API_SCOPES)
 
-  credentials = client.SignedJwtAssertionCredentials(
-      service_account_email, private_key,
-      'https://www.googleapis.com/auth/dfareporting',
-      sub=impersonation_user_email)
+  # Delegate domain-wide authority.
+  delegated_credentials = credentials.create_delegated(impersonation_user_email)
 
-  return credentials.authorize(httplib2.Http())
+  return delegated_credentials.authorize(httplib2.Http())
 
 if __name__ == '__main__':
   main(sys.argv)
