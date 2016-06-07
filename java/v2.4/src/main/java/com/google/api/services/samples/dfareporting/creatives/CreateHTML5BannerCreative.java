@@ -20,6 +20,7 @@ import com.google.api.services.dfareporting.model.Creative;
 import com.google.api.services.dfareporting.model.CreativeAsset;
 import com.google.api.services.dfareporting.model.CreativeAssetId;
 import com.google.api.services.dfareporting.model.Size;
+import com.google.api.services.dfareporting.model.TargetWindow;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 import com.google.api.services.samples.dfareporting.creatives.assets.CreativeAssetUtils;
 import com.google.common.collect.ImmutableList;
