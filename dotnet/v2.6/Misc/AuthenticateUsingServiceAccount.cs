@@ -14,12 +14,13 @@
  * limitations under the License.
 */
 
-using System;
-using System.Security.Cryptography.X509Certificates;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Dfareporting.v2_6;
 using Google.Apis.Dfareporting.v2_6.Data;
+using Google.Apis.Json;
 using Google.Apis.Services;
+using System;
+using System.IO;
 
 namespace DfaReporting.Samples {
   /// <summary>
@@ -51,14 +52,13 @@ namespace DfaReporting.Samples {
     /// </summary>
     /// <param name="service">Unused</param>
     public override void Run(DfareportingService service) {
-      string accountToImpersonate = _T("ENTER_ACCOUNT_TO_IMPERSONATE_HERE");
-      string pathToP12File = _T("ENTER_PATH_TO_P12_FILE_HERE");
-      string serviceAccountEmail = _T("ENTER_SERVICE_ACCOUNT_EMAIL_HERE");
+      string emailToImpersonate = _T("ENTER_EMAIL_TO_IMPERSONATE_HERE");
+      string pathToJsonFile = _T("ENTER_PATH_TO_JSON_FILE_HERE");
 
       // Create the Dfareporting service using service account credentials.
       service = new DfareportingService(new BaseClientService.Initializer {
         HttpClientInitializer =
-            getServiceAccountCredential(pathToP12File, serviceAccountEmail, accountToImpersonate),
+            getServiceAccountCredential(pathToJsonFile, emailToImpersonate),
         ApplicationName = "DFA/DCM Reporting and Trafficking API Samples"
       });
 
@@ -70,17 +70,24 @@ namespace DfaReporting.Samples {
       }
     }
 
-    private ServiceAccountCredential getServiceAccountCredential(String pathToP12File,
-      String serviceAccountEmail, String accountToImpersonate) {
-      // Load the P12 file using a default password.
-      var certificate =
-          new X509Certificate2(pathToP12File, "notasecret", X509KeyStorageFlags.Exportable);
+    private ServiceAccountCredential getServiceAccountCredential(String pathToJsonFile,
+      String emailToImpersonate) {
+      // Load and deserialize the specified JSON file.
+      JsonCredentialParameters parameters;
+      using (Stream json = new FileStream(pathToJsonFile, FileMode.Open, FileAccess.Read)) {
+        parameters = NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(json);
+      }
 
+      // Generate a ServiceAccountCredential object with the correct scopes and impersonation info.
       return new ServiceAccountCredential(
-         new ServiceAccountCredential.Initializer(serviceAccountEmail) {
-           Scopes = new[] { DfareportingService.Scope.Dfareporting },
-           User = accountToImpersonate
-         }.FromCertificate(certificate));
+         new ServiceAccountCredential.Initializer(parameters.ClientEmail) {
+           Scopes = new[] {
+             DfareportingService.Scope.Dfareporting,
+             DfareportingService.Scope.Dfatrafficking,
+             DfareportingService.Scope.Ddmconversions
+           },
+           User = emailToImpersonate
+         }.FromPrivateKey(parameters.PrivateKey));
     }
   }
 }
