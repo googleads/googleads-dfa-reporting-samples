@@ -16,39 +16,35 @@ package com.google.api.services.samples.dfareporting.misc;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.dfareporting.Dfareporting;
 import com.google.api.services.dfareporting.DfareportingScopes;
 import com.google.api.services.dfareporting.model.UserProfileList;
-import com.google.common.collect.ImmutableList;
 
-import java.io.File;
+import java.io.FileInputStream;
 
 /**
  * This example shows how to authenticate and make a basic request using a service account.
  */
 public class AuthenticateUsingServiceAccount {
-  private static final String PATH_TO_P12_FILE = "ENTER_PATH_TO_P12_FILE_HERE";
-  private static final String SERVICE_ACCOUNT_EMAIL = "ENTER_SERVICE_ACCOUNT_EMAIL_HERE";
-  private static final String ACCOUNT_TO_IMPERSONATE = "ENTER_ACCOUNT_TO_IMPERSONATE_HERE";
+  private static final String PATH_TO_JSON_FILE = "ENTER_PATH_TO_JSON_FILE_HERE";
+  private static final String EMAIL_TO_IMPERSONATE = "ENTER_EMAIL_TO_IMPERSONATE_HERE";
 
-  private static Credential getServiceAccountCredential(HttpTransport httpTransport,
-      JsonFactory factory) throws Exception {
-    // Service account credential.
-    GoogleCredential credential = new GoogleCredential.Builder()
-      .setTransport(httpTransport)
-      .setJsonFactory(factory)
-      .setServiceAccountId(SERVICE_ACCOUNT_EMAIL)
-      .setServiceAccountScopes(ImmutableList.of(DfareportingScopes.DFAREPORTING))
-      .setServiceAccountPrivateKeyFromP12File(new File(PATH_TO_P12_FILE))
-      // Set the user you are impersonating (this can be yourself).
-      .setServiceAccountUser(ACCOUNT_TO_IMPERSONATE)
-      .build();
+  private static Credential getServiceAccountCredential(String pathToJsonFile,
+      String emailToImpersonate) throws Exception {
+    // Generate a credential object from the specified JSON file.
+    GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream(pathToJsonFile));
 
-    credential.refreshToken();
+    // Update the credential object with appropriate scopes and impersonation info.
+    credential = new GoogleCredential.Builder()
+        .setTransport(credential.getTransport())
+        .setJsonFactory(credential.getJsonFactory())
+        .setServiceAccountId(credential.getServiceAccountId())
+        .setServiceAccountPrivateKey(credential.getServiceAccountPrivateKey())
+        .setServiceAccountScopes(DfareportingScopes.all())
+        // Set the email of the user you are impersonating (this can be yourself).
+        .setServiceAccountUser(emailToImpersonate)
+        .build();
+
     return credential;
   }
 
@@ -61,15 +57,12 @@ public class AuthenticateUsingServiceAccount {
   }
 
   public static void main(String[] args) throws Exception {
-    HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-    JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-
     // Build service account credential.
-    Credential credential = getServiceAccountCredential(httpTransport, jsonFactory);
+    Credential credential = getServiceAccountCredential(PATH_TO_JSON_FILE, EMAIL_TO_IMPERSONATE);
 
-    Dfareporting reporting = new Dfareporting.Builder(httpTransport, jsonFactory, credential)
-      .setApplicationName("dfareporting-java-samples")
-      .build();
+    Dfareporting reporting = new Dfareporting.Builder(credential.getTransport(),
+        credential.getJsonFactory(), credential).setApplicationName("dfareporting-java-samples")
+        .build();
 
     runExample(reporting);
   }
