@@ -66,16 +66,6 @@ def main(argv):
            'application to re-authorize')
 
 
-def parse_arguments(argv):
-  """Parses command line arguments."""
-  parser = argparse.ArgumentParser(
-      description=__doc__,
-      formatter_class=argparse.RawDescriptionHelpFormatter,
-      parents=[tools.argparser, argparser])
-
-  return parser.parse_args(argv[1:])
-
-
 def authenticate_using_service_account(impersonation_user_email, json_file):
   """Authorizes an Http instance using service account credentials."""
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
