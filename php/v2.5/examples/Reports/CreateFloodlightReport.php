@@ -77,6 +77,11 @@ class CreateFloodlightReport extends BaseExample {
     $adv_dimension = new Google_Service_Dfareporting_SortedDimension();
     $adv_dimension->setName('dfa:advertiser');
 
+    $filter = new Google_Service_Dfareporting_DimensionValue();
+    $filter->setDimensionName('dfa:floodlightConfigId');
+    $filter->setMatchType('EXACT');
+    $filter->setValue($values['floodlight_config_id']);
+
     $criteria = new Google_Service_Dfareporting_ReportFloodlightCriteria();
     $criteria->setDateRange($date_range);
     $criteria->setDimensions(array($floodlight_config_dimension,
@@ -89,7 +94,7 @@ class CreateFloodlightReport extends BaseExample {
             'dfa:activityViewThroughRevenue'
         )
     );
-    $criteria->setDimensionFilters(array($values['floodlight_config_id']));
+    $criteria->setDimensionFilters(array($filter));
 
     $report->setFloodlightCriteria($criteria);
 

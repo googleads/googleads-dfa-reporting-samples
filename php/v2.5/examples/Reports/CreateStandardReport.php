@@ -68,11 +68,16 @@ class CreateStandardReport extends BaseExample {
     $dimension = new Google_Service_Dfareporting_SortedDimension();
     $dimension->setName('dfa:advertiser');
 
+    $filter = new Google_Service_Dfareporting_DimensionValue();
+    $filter->setDimensionName('dfa:advertiser');
+    $filter->setId($values['advertiser_id']);
+    $filter->setMatchType('EXACT');
+
     $criteria = new Google_Service_Dfareporting_ReportCriteria();
     $criteria->setDateRange($date_range);
     $criteria->setDimensions(array($dimension));
     $criteria->setMetricNames(array('dfa:clicks', 'dfa:impressions'));
-    $criteria->setDimensionFilters(array($values['advertiser_id']));
+    $criteria->setDimensionFilters(array($filter));
 
     $report->setCriteria($criteria);
 

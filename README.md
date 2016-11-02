@@ -1,6 +1,6 @@
-Samples for the DoubleClick for Advertisers Reporting and Trafficking API
-=========================================================================
-This respository contains a collection of samples for interacting with the DFA Reporting and Trafficking API. Documentation on this API can be found [here](https://developers.google.com/doubleclick-advertisers/reporting/).
+Samples for the DoubleClick for Advertisers Reporting API
+=========================================================
+This respository contains a collection of samples for interacting with the DFA Reporting API. Documentation on this API can be found [here](https://developers.google.com/doubleclick-advertisers/reporting/).
 
 The code samples are organized by platform or language, and then API version. The following samples are available:
 
@@ -11,7 +11,3 @@ The code samples are organized by platform or language, and then API version. Th
 * *ruby* a collection of Ruby samples.
 
 Please refer to the README.md file inside each directory for installation instructions.
-
-Contributing
-============
-Pull requests are welcome! Please sign [this Google Code contributor agreement](https://developers.google.com/open-source/cla/individual?csw=1) before submitting.
