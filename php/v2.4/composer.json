@@ -1,5 +1,0 @@
-{
-  "require": {
-    "google/apiclient": "dev-v1-master@dev"
-  }
-}
