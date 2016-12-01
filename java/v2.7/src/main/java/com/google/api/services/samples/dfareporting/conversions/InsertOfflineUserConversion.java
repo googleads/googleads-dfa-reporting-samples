@@ -55,6 +55,7 @@ public class InsertOfflineUserConversion {
     conversion.setOrdinal(String.valueOf(currentTimeInMilliseconds));
     conversion.setTimestampMicros(currentTimeInMilliseconds * 1000);
 
+    // Create the encryption info.
     EncryptionInfo encryptionInfo = new EncryptionInfo();
     encryptionInfo.setEncryptionEntityId(encryptionEntityId);
     encryptionInfo.setEncryptionEntityType(encryptionEntityType);
@@ -94,4 +95,3 @@ public class InsertOfflineUserConversion {
         ENCRYPTION_ENTITY_TYPE, ENCRYPTION_SOURCE);
   }
 }
-
