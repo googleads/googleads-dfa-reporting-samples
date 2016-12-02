@@ -46,7 +46,7 @@ def main(argv):
   activity_group_id = flags.activity_group_id
 
   try:
-    # Construct and save spotlight activity.
+    # Construct and save floodlight activity.
     floodlight_activity = {
         'countingMethod': 'STANDARD_COUNTING',
         'expectedUrl': 'http://www.google.com',

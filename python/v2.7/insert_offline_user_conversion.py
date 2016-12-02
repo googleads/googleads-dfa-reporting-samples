@@ -94,10 +94,10 @@ def main(argv):
 
     if not response['hasFailures']:
       print ('Successfully inserted conversion for encrypted user ID %s.'
-          % encrypted_user_id)
+             % encrypted_user_id)
     else:
       print ('Error(s) inserting conversion for encrypted user ID %s.'
-          % encrypted_user_id)
+             % encrypted_user_id)
 
       status = response['status'][0]
       for error in status['errors']:
