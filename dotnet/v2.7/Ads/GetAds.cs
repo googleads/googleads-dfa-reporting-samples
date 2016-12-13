@@ -53,6 +53,7 @@ namespace DfaReporting.Samples {
     public override void Run(DfareportingService service) {
       long profileId = long.Parse(_T("INSERT_PROFILE_ID_HERE"));
 
+      // [START get_ads] MOE:strip_line
       // Limit the fields returned.
       String fields = "nextPageToken,ads(advertiserId,id,name)";
 
@@ -76,6 +77,7 @@ namespace DfaReporting.Samples {
         // Update the next page token.
         nextPageToken = result.NextPageToken;
       } while (result.Ads.Any() && !String.IsNullOrEmpty(nextPageToken));
+      // [END get_ads] MOE:strip_line
     }
   }
 }

@@ -57,6 +57,7 @@ namespace DfaReporting.Samples {
       String landingPageName = _T("INSERT_LANDING_PAGE_NAME_HERE");
       String url = _T("INSERT_LANDING_PAGE_URL_HERE");
 
+      // [START create_campaign] MOE:strip_line
       // Create the campaign structure.
       Campaign campaign = new Campaign();
       campaign.Name = campaignName;
@@ -70,10 +71,13 @@ namespace DfaReporting.Samples {
       // Set the campaign end date. This example uses one month from today's date.
       campaign.EndDate =
           DfaReportingDateConverterUtil.convertToDateString(DateTime.Now.AddMonths(1));
+      // [END create_campaign] MOE:strip_line
 
+      // [START insert_campaign] MOE:strip_line
       // Insert the campaign.
       Campaign result =
           service.Campaigns.Insert(campaign, profileId, landingPageName, url).Execute();
+      // [END insert_campaign] MOE:strip_line
 
       // Display the new campaign ID.
       Console.WriteLine("Campaign with ID {0} was created.", result.Id);

@@ -66,6 +66,7 @@ namespace DfaReporting.Samples {
       // Retrieve the campaign.
       Campaign campaign = service.Campaigns.Get(profileId, campaignId).Execute();
 
+      // [START create_placement] MOE:strip_line
       // Create the placement.
       Placement placement = new Placement();
       placement.Name = placementName;
@@ -79,16 +80,21 @@ namespace DfaReporting.Samples {
       Size size = new Size();
       size.Id = sizeId;
       placement.Size = size;
+      // [END create_placement] MOE:strip_line
 
+      // [START create_pricing_schedule] MOE:strip_line
       // Set the pricing schedule for the placement.
       PricingSchedule pricingSchedule = new PricingSchedule();
       pricingSchedule.EndDate = campaign.EndDate;
       pricingSchedule.PricingType = "PRICING_TYPE_CPM";
       pricingSchedule.StartDate = campaign.StartDate;
       placement.PricingSchedule = pricingSchedule;
+      // [END create_pricing_schedule] MOE:strip_line
 
+      // [START insert_placement] MOE:strip_line
       // Insert the placement.
       Placement result = service.Placements.Insert(placement, profileId).Execute();
+      // [END insert_placement] MOE:strip_line
 
       // Display the new placement ID.
       Console.WriteLine("Placement with ID {0} was created.", result.Id);

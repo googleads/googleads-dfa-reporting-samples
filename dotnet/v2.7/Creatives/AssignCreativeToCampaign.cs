@@ -55,6 +55,7 @@ namespace DfaReporting.Samples {
       long creativeId = long.Parse(_T("INSERT_CREATIVE_ID_HERE"));
       long profileId = long.Parse(_T("INSERT_USER_PROFILE_ID_HERE"));
 
+      // [START create_association] MOE:strip_line
       // Create the campaign creative association structure.
       CampaignCreativeAssociation association = new CampaignCreativeAssociation();
       association.CreativeId = creativeId;
@@ -62,6 +63,7 @@ namespace DfaReporting.Samples {
       // Insert the association.
       CampaignCreativeAssociation result =
           service.CampaignCreativeAssociations.Insert(association, profileId, campaignId).Execute();
+      // [END create_association] MOE:strip_line
 
       // Display a success message.
       Console.WriteLine("Creative with ID {0} is now associated with campaign {1}.",

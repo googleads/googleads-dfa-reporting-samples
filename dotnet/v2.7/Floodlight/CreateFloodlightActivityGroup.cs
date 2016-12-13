@@ -58,15 +58,19 @@ namespace DfaReporting.Samples {
 
       String groupName = _T("INSERT_GROUP_NAME_HERE");
 
+      // [START create_group] MOE:strip_line
       // Create the floodlight activity group.
       FloodlightActivityGroup floodlightActivityGroup = new FloodlightActivityGroup();
       floodlightActivityGroup.Name = groupName;
       floodlightActivityGroup.FloodlightConfigurationId = floodlightConfigurationId;
       floodlightActivityGroup.Type = "COUNTER";
+      // [END create_group] MOE:strip_line
 
+      // [START insert_group] MOE:strip_line
       // Insert the activity group.
       FloodlightActivityGroup result =
           service.FloodlightActivityGroups.Insert(floodlightActivityGroup, profileId).Execute();
+      // [END insert_group] MOE:strip_line
 
       // Display the new activity group ID.
       if (result != null) {

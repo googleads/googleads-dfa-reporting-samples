@@ -56,6 +56,7 @@ namespace DfaReporting.Samples {
       long placementId = long.Parse(_T("ENTER_PLACEMENT_ID_HERE"));
       long profileId = long.Parse(_T("INSERT_USER_PROFILE_ID_HERE"));
 
+      // [START download_placement_tags] MOE:strip_line
       // Generate the placement activity tags.
       PlacementsResource.GeneratetagsRequest request =
           service.Placements.Generatetags(profileId);
@@ -65,6 +66,7 @@ namespace DfaReporting.Samples {
       request.PlacementIds = placementId.ToString();
 
       PlacementsGenerateTagsResponse response = request.Execute();
+      // [END download_placement_tags] MOE:strip_line
 
       // Display the placement activity tags.
       foreach (PlacementTag tag in response.PlacementTags) {

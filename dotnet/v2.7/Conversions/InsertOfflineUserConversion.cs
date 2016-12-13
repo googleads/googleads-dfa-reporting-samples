@@ -58,6 +58,7 @@ namespace DfaReporting.Samples {
       string encryptionEntityType = _T("INSERT_ENCRYPTION_ENTITY_TYPE_HERE");
       string encryptionSource = _T("INSERT_ENCRYPTION_SOURCE_HERE");
 
+      // [START create_conversion] MOE:strip_line
       // Generate a timestamp in milliseconds since Unix epoch.
       TimeSpan timeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1);
       long currentTimeInMilliseconds = (long) timeSpan.TotalMilliseconds;
@@ -74,13 +75,17 @@ namespace DfaReporting.Samples {
       conversion.FloodlightConfigurationId = floodlightConfigurationId;
       conversion.Ordinal = currentTimeInMilliseconds.ToString();
       conversion.TimestampMicros = currentTimeInMilliseconds * 1000;
+      // [END create_conversion] MOE:strip_line
 
+      // [START create_encryption_info] MOE:strip_line
       // Create the encryption info.
       EncryptionInfo encryptionInfo = new EncryptionInfo();
       encryptionInfo.EncryptionEntityId = encryptionEntityId;
       encryptionInfo.EncryptionEntityType = encryptionEntityType;
       encryptionInfo.EncryptionSource = encryptionSource;
+      // [END create_encryption_info] MOE:strip_line
 
+      // [START insert_conversion] MOE:strip_line
       // Insert the conversion.
       ConversionsBatchInsertRequest request = new ConversionsBatchInsertRequest();
       request.Conversions = new List<Conversion>() { conversion };
@@ -88,7 +93,9 @@ namespace DfaReporting.Samples {
 
       ConversionsBatchInsertResponse response =
           service.Conversions.Batchinsert(request, profileId).Execute();
+      // [END insert_conversion] MOE:strip_line
 
+      // [START process_response] MOE:strip_line
       // Handle the batchinsert response.
       if (!response.HasFailures.Value) {
         Console.WriteLine("Successfully inserted conversion for encrypted user ID {0}.",
@@ -102,6 +109,7 @@ namespace DfaReporting.Samples {
           Console.WriteLine("\t[{0}]: {1}", error.Code, error.Message);
         }
       }
+      // [END process_response] MOE:strip_line
     }
   }
 }
