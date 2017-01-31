@@ -19,17 +19,15 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.googleapis.util.Utils;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.Charsets;
+import com.google.api.client.util.store.DataStoreFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.dfareporting.Dfareporting;
 import com.google.api.services.dfareporting.DfareportingScopes;
-import com.google.common.collect.ImmutableList;
-
 import java.io.InputStreamReader;
-import java.util.List;
 
 /**
  * Utility methods used by all DFA Reporting and Trafficking API samples.
@@ -38,25 +36,24 @@ public class DfaReportingFactory {
   /** Directory to store user credentials. */
   private static final java.io.File DATA_STORE_DIR =
       new java.io.File(System.getProperty("user.home"), ".store/dfareporting_sample");
-  private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-  private static FileDataStoreFactory dataStoreFactory;
-  private static HttpTransport httpTransport;
+  private static final HttpTransport HTTP_TRANSPORT = Utils.getDefaultTransport();
+  private static final JsonFactory JSON_FACTORY = Utils.getDefaultJsonFactory();
 
-  /** The scopes used by the DFA Reporting and Trafficking API **/
-  private static final List<String> SCOPES =
-      ImmutableList.of(DfareportingScopes.DFAREPORTING, DfareportingScopes.DFATRAFFICKING,
-          DfareportingScopes.DDMCONVERSIONS);
   /**
    * Authorizes the installed application to access user's protected data.
-   * 
+   *
+   * @param dataStoreFactory The data store to use for caching credential information.
    * @return A {@link Credential} object initialized with the current user's credentials.
    */
-  private static Credential authorize() throws Exception {
-    // load client secrets
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-        JSON_FACTORY, new InputStreamReader(
-            DfaReportingFactory.class.getResourceAsStream("/client_secrets.json")));
+  private static Credential authorize(DataStoreFactory dataStoreFactory) throws Exception {
+    // Load client secrets JSON file.
+    GoogleClientSecrets clientSecrets =
+        GoogleClientSecrets.load(
+            JSON_FACTORY,
+            new InputStreamReader(
+                DfaReportingFactory.class.getResourceAsStream("/client_secrets.json"),
+                Charsets.UTF_8));
 
     if (clientSecrets.getDetails().getClientId().startsWith("Enter")
         || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
@@ -66,11 +63,14 @@ public class DfaReportingFactory {
       System.exit(1);
     }
 
-    // set up authorization code flow
-    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport,
-        JSON_FACTORY, clientSecrets, SCOPES).setDataStoreFactory(dataStoreFactory).build();
+    // Set up the authorization code flow.
+    GoogleAuthorizationCodeFlow flow =
+        new GoogleAuthorizationCodeFlow.Builder(
+                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, DfareportingScopes.all())
+            .setDataStoreFactory(dataStoreFactory)
+            .build();
 
-    // authorize
+    // Authorize and persist credential information to the data store.
     return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
   }
 
@@ -80,13 +80,13 @@ public class DfaReportingFactory {
    * @return An initialized {@link Dfareporting} service object.
    */
   public static Dfareporting getInstance() throws Exception {
-    httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-    dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+    FileDataStoreFactory dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
 
-    Credential credential = authorize();
+    Credential credential = authorize(dataStoreFactory);
 
-    // Create DFA Reporting client.
-    return new Dfareporting.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(
-        "dfareporting-java-samples").build();
+    // Create Dfareporting client.
+    return new Dfareporting.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        .setApplicationName("dfareporting-java-samples")
+        .build();
   }
 }
