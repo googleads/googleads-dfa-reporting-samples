@@ -73,7 +73,7 @@ class CreateHTML5DisplayCreative extends BaseExample {
     $size->setId($values['size_id']);
     $creative->setSize($size);
 
-    // Upload the flash asset.
+    // Upload the HTML5 asset.
     $html = uploadAsset($this->service, $values['user_profile_id'],
         $values['advertiser_id'], $values['html_asset_file'], 'HTML');
 

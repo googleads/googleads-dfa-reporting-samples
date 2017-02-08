@@ -45,10 +45,10 @@ class GetAds extends BaseExample {
 
     print '<h2>Listing all ads</h2>';
 
+    $this->printResultsTableHeader('Ads');
+
     $response = null;
     $pageToken = null;
-
-    $this->printResultsTableHeader('Ads');
 
     do {
       // Create and execute the ads list request.
