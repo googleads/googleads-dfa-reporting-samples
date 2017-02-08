@@ -55,7 +55,6 @@ class CreateAdvertiser extends BaseExample {
     $advertiser->setName($values['advertiser_name']);
     $advertiser->setStatus('APPROVED');
 
-
     $result = $this->service->advertisers->insert(
         $values['user_profile_id'], $advertiser
     );
