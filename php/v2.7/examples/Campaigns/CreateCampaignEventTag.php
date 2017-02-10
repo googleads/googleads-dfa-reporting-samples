@@ -28,20 +28,18 @@ class CreateCampaignEventTag extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'campaign_id',
-              'display' => 'Campaign ID',
-              'required' => true),
-        array('name' => 'event_tag_name',
-              'display' => 'Event Tag Name',
-              'required' => true),
-        array('name' => 'event_tag_url',
-              'display' => 'Event Tag URL',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'campaign_id',
+             'display' => 'Campaign ID',
+             'required' => true],
+            ['name' => 'event_tag_name',
+             'display' => 'Event Tag Name',
+             'required' => true],
+            ['name' => 'event_tag_url',
+             'display' => 'Event Tag URL',
+             'required' => true]];
   }
 
   /**
@@ -67,7 +65,7 @@ class CreateCampaignEventTag extends BaseExample {
         $values['user_profile_id'], $eventTag
     );
 
-    $this->printResultsTable('Campaign event tag created.', array($result));
+    $this->printResultsTable('Campaign event tag created.', [$result]);
   }
 
   /**
@@ -85,9 +83,7 @@ class CreateCampaignEventTag extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Event Tag ID',
-        'name' => 'Event Tag Name'
-    );
+    return ['id' => 'Event Tag ID',
+            'name' => 'Event Tag Name'];
   }
 }

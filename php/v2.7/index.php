@@ -94,7 +94,7 @@ printHtmlHeader($pageTitle);
 
 if(isset($authUrl)) {
   // No access token found, show the link to generate one
-  print "<a class='login' href='$authUrl'>Login!</a>";
+  printf("<a class='login' href='%s'>Login!</a>", $authUrl);
 } else {
   print "<a class='logout' href='?logout'>Logout</a>";
 }
@@ -174,14 +174,14 @@ function decodeActionString($actionString) {
  * Builds an array containing the supported actions, separated into sections.
  */
 function getSupportedActions() {
-  $actions = array();
+  $actions = [];
 
   foreach (glob('examples/*/*.php') as $file) {
     $dir = dirname($file);
     $section = substr($dir, strrpos($dir, '/') + 1);
 
     if (!array_key_exists($section, $actions)) {
-      $actions[$section] = array();
+      $actions[$section] = [];
     }
 
     $actions[$section][] = basename($file, '.php');

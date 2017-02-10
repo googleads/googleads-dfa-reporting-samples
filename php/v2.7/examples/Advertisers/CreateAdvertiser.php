@@ -29,14 +29,12 @@ class CreateAdvertiser extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_name',
-              'display' => 'Advertiser Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_name',
+             'display' => 'Advertiser Name',
+             'required' => true]];
   }
 
   /**
@@ -59,7 +57,7 @@ class CreateAdvertiser extends BaseExample {
         $values['user_profile_id'], $advertiser
     );
 
-    $this->printResultsTable('Advertiser created.', array($result));
+    $this->printResultsTable('Advertiser created.', [$result]);
   }
 
   /**
@@ -77,9 +75,7 @@ class CreateAdvertiser extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Advertiser ID',
-        'name' => 'Advertiser Name'
-    );
+    return ['id' => 'Advertiser ID',
+            'name' => 'Advertiser Name'];
   }
 }

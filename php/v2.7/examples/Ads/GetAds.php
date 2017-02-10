@@ -29,11 +29,9 @@ class GetAds extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -54,7 +52,7 @@ class GetAds extends BaseExample {
       // Create and execute the ads list request.
       $response = $this->service->ads->listAds(
           $values['user_profile_id'],
-          array('active' => true, 'pageToken' => $pageToken)
+          ['active' => true, 'pageToken' => $pageToken]
       );
 
       foreach ($response->getAds() as $ads) {
@@ -83,10 +81,8 @@ class GetAds extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Ad ID',
-        'name' => 'Ad Name',
-        'advertiserId' => 'Associated Advertiser ID'
-    );
+    return ['id' => 'Ad ID',
+            'name' => 'Ad Name',
+            'advertiserId' => 'Associated Advertiser ID'];
   }
 }

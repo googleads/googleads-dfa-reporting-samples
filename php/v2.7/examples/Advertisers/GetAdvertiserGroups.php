@@ -28,11 +28,9 @@ class GetAdvertiserGroups extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -53,7 +51,7 @@ class GetAdvertiserGroups extends BaseExample {
       // Create and execute the advertiser groups list request.
       $response = $this->service->advertiserGroups->listAdvertiserGroups(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getAdvertiserGroups() as $group) {
@@ -82,9 +80,7 @@ class GetAdvertiserGroups extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Advertiser Group ID',
-        'name' => 'Advertiser Group Name'
-    );
+    return ['id' => 'Advertiser Group ID',
+            'name' => 'Advertiser Group Name'];
   }
 }

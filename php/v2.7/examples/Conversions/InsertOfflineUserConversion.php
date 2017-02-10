@@ -30,26 +30,24 @@ class InsertOfflineUserConversion extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'encrypted_user_id',
-              'display' => 'Encrypted User ID',
-              'required' => true),
-        array('name' => 'encryption_entity_id',
-              'display' => 'Encryption Entity ID',
-              'required' => true),
-        array('name' => 'encryption_entity_type',
-              'display' => 'Encryption Entity Type',
-              'required' => true),
-        array('name' => 'encryption_source',
-              'display' => 'Encryption Source',
-              'required' => true),
-        array('name' => 'floodlight_activity_id',
-              'display' => 'Floodlight Activity ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'encrypted_user_id',
+             'display' => 'Encrypted User ID',
+             'required' => true],
+            ['name' => 'encryption_entity_id',
+             'display' => 'Encryption Entity ID',
+             'required' => true],
+            ['name' => 'encryption_entity_type',
+             'display' => 'Encryption Entity Type',
+             'required' => true],
+            ['name' => 'encryption_source',
+             'display' => 'Encryption Source',
+             'required' => true],
+            ['name' => 'floodlight_activity_id',
+             'display' => 'Floodlight Activity ID',
+             'required' => true]];
   }
 
   /**
@@ -84,7 +82,7 @@ class InsertOfflineUserConversion extends BaseExample {
     $encryptionInfo->setEncryptionSource($values['encryption_source']);
 
     $batch = new Google_Service_Dfareporting_ConversionsBatchInsertRequest();
-    $batch->setConversions(array($conversion));
+    $batch->setConversions([$conversion]);
     $batch->setEncryptionInfo($encryptionInfo);
 
     $result = $this->service->conversions->batchinsert(

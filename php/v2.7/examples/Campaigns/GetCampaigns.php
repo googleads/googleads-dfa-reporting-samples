@@ -28,11 +28,9 @@ class GetCampaigns extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -53,7 +51,7 @@ class GetCampaigns extends BaseExample {
       // Create and execute the ads list request.
       $response = $this->service->campaigns->listCampaigns(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getCampaigns() as $campaigns) {
@@ -82,9 +80,7 @@ class GetCampaigns extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Campaign ID',
-        'name' => 'Campaign Name'
-    );
+    return ['id' => 'Campaign ID',
+            'name' => 'Campaign Name'];
   }
 }

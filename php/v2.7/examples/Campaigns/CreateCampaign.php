@@ -29,23 +29,21 @@ class CreateCampaign extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'campaign_name',
-              'display' => 'Campaign Name',
-              'required' => true),
-        array('name' => 'landing_page_name',
-              'display' => 'Landing Page Name',
-              'required' => true),
-        array('name' => 'landing_page_url',
-              'display' => 'Landing Page URL',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'campaign_name',
+             'display' => 'Campaign Name',
+             'required' => true],
+            ['name' => 'landing_page_name',
+             'display' => 'Landing Page Name',
+             'required' => true],
+            ['name' => 'landing_page_url',
+             'display' => 'Landing Page URL',
+             'required' => true]];
   }
 
   /**
@@ -75,7 +73,7 @@ class CreateCampaign extends BaseExample {
         $campaign
     );
 
-    $this->printResultsTable('Campaign created.', array($result));
+    $this->printResultsTable('Campaign created.', [$result]);
   }
 
   /**
@@ -93,9 +91,7 @@ class CreateCampaign extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Campaign ID',
-        'name' => 'Campaign Name'
-    );
+    return ['id' => 'Campaign ID',
+            'name' => 'Campaign Name'];
   }
 }

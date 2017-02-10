@@ -29,11 +29,9 @@ class GetAdvertisers extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -54,7 +52,7 @@ class GetAdvertisers extends BaseExample {
       // Create and execute the advertisers list request.
       $response = $this->service->advertisers->listAdvertisers(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getAdvertisers() as $advertiser) {
@@ -83,10 +81,8 @@ class GetAdvertisers extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Advertiser ID',
-        'name' => 'Advertiser Name',
-        'floodlightConfigurationId' => 'Floodlight Configuration ID'
-    );
+    return ['id' => 'Advertiser ID',
+            'name' => 'Advertiser Name',
+            'floodlightConfigurationId' => 'Floodlight Configuration ID'];
   }
 }

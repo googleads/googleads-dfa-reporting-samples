@@ -31,23 +31,21 @@ class CreateRotationGroup extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'campaign_id',
-              'display' => 'Campaign ID',
-              'required' => true),
-        array('name' => 'creative_id',
-              'display' => 'Creative ID',
-              'required' => true),
-        array('name' => 'placement_id',
-              'display' => 'Placement ID',
-              'required' => true),
-        array('name' => 'ad_name',
-              'display' => 'Ad Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'campaign_id',
+             'display' => 'Campaign ID',
+             'required' => true],
+            ['name' => 'creative_id',
+             'display' => 'Creative ID',
+             'required' => true],
+            ['name' => 'placement_id',
+             'display' => 'Placement ID',
+             'required' => true],
+            ['name' => 'ad_name',
+             'display' => 'Ad Name',
+             'required' => true]];
   }
 
   /**
@@ -85,7 +83,7 @@ class CreateRotationGroup extends BaseExample {
 
     // Create a creative rotation.
     $creativeRotation = new Google_Service_Dfareporting_CreativeRotation();
-    $creativeRotation->setCreativeAssignments(array($creativeAssignment));
+    $creativeRotation->setCreativeAssignments([$creativeAssignment]);
 
     // Create a delivery schedule.
     $deliverySchedule = new Google_Service_Dfareporting_DeliverySchedule();
@@ -104,12 +102,12 @@ class CreateRotationGroup extends BaseExample {
     $ad->setStartTime($startDate->format('Y-m-d') . 'T23:59:59Z');
     $ad->setEndTime($endDate->format('Y-m-d') . 'T00:00:00Z');
     $ad->setName($values['ad_name']);
-    $ad->setPlacementAssignments(array($placementAssignment));
+    $ad->setPlacementAssignments([$placementAssignment]);
     $ad->setType('AD_SERVING_STANDARD_AD');
 
     $result = $this->service->ads->insert($values['user_profile_id'], $ad);
 
-    $this->printResultsTable('Rotation group ad created.', array($result));
+    $this->printResultsTable('Rotation group ad created.', [$result]);
   }
 
   /**
@@ -127,9 +125,7 @@ class CreateRotationGroup extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Ad ID',
-        'name' => 'Ad Name'
-    );
+    return ['id' => 'Ad ID',
+            'name' => 'Ad Name'];
   }
 }

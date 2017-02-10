@@ -31,17 +31,15 @@ class AssignAdvertisersToAdvertiserGroup extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'advertiser_group_id',
-              'display' => 'Advertiser Group ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'advertiser_group_id',
+             'display' => 'Advertiser Group ID',
+             'required' => true]];
   }
 
   /**
@@ -62,7 +60,7 @@ class AssignAdvertisersToAdvertiserGroup extends BaseExample {
     $result = $this->service->advertisers->patch($values['user_profile_id'],
         $values['advertiser_id'], $advertiser);
 
-    $this->printResultsTable('Advertiser', array($result));
+    $this->printResultsTable('Advertiser', [$result]);
   }
 
   /**
@@ -80,10 +78,8 @@ class AssignAdvertisersToAdvertiserGroup extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Advertiser ID',
-        'name' => 'Advertiser Name',
-        'advertiserGroupId' => 'Advertiser Group ID'
-    );
+    return ['id' => 'Advertiser ID',
+            'name' => 'Advertiser Name',
+            'advertiserGroupId' => 'Advertiser Group ID'];
   }
 }

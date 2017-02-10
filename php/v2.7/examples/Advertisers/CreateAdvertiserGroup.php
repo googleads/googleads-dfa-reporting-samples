@@ -29,14 +29,12 @@ class CreateAdvertiserGroup extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_group_name',
-              'display' => 'Advertiser Group Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_group_name',
+             'display' => 'Advertiser Group Name',
+             'required' => true]];
   }
 
   /**
@@ -59,7 +57,7 @@ class CreateAdvertiserGroup extends BaseExample {
         $values['user_profile_id'], $advertiser
     );
 
-    $this->printResultsTable('Advertiser group created.', array($result));
+    $this->printResultsTable('Advertiser group created.', [$result]);
   }
 
   /**
@@ -77,9 +75,7 @@ class CreateAdvertiserGroup extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Advertiser Group ID',
-        'name' => 'Advertiser Group Name'
-    );
+    return ['id' => 'Advertiser Group ID',
+            'name' => 'Advertiser Group Name'];
   }
 }

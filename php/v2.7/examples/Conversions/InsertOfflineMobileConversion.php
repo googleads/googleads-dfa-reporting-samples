@@ -30,17 +30,15 @@ class InsertOfflineMobileConversion extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'mobile_device_id',
-              'display' => 'Mobile Device ID',
-              'required' => true),
-        array('name' => 'floodlight_activity_id',
-              'display' => 'Floodlight Activity ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'mobile_device_id',
+             'display' => 'Mobile Device ID',
+             'required' => true],
+            ['name' => 'floodlight_activity_id',
+             'display' => 'Floodlight Activity ID',
+             'required' => true]];
   }
 
   /**
@@ -70,7 +68,7 @@ class InsertOfflineMobileConversion extends BaseExample {
     $conversion->setTimestampMicros($currentTimeInMicros);
 
     $batch = new Google_Service_Dfareporting_ConversionsBatchInsertRequest();
-    $batch->setConversions(array($conversion));
+    $batch->setConversions([$conversion]);
 
     $result = $this->service->conversions->batchinsert(
         $values['user_profile_id'], $batch
