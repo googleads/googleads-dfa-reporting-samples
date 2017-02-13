@@ -30,21 +30,19 @@ class CreateImageDisplayCreative extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'size_id',
-              'display' => 'Size ID',
-              'required' => true),
-        array('name' => 'asset_file',
-              'display' => 'Image Asset File',
-              'file' => true,
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'size_id',
+             'display' => 'Size ID',
+             'required' => true],
+            ['name' => 'asset_file',
+             'display' => 'Image Asset File',
+             'file' => true,
+             'required' => true]];
   }
 
   /**
@@ -77,12 +75,12 @@ class CreateImageDisplayCreative extends BaseExample {
     $asset->setRole('PRIMARY');
 
     // Add the creative asset.
-    $creative->setCreativeAssets(array($asset));
+    $creative->setCreativeAssets([$asset]);
 
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('Image display creative created.', array($result));
+    $this->printResultsTable('Image display creative created.', [$result]);
   }
 
   /**
@@ -100,10 +98,8 @@ class CreateImageDisplayCreative extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative ID',
-        'name' => 'Creative Name',
-        'type' => 'Creative type'
-    );
+    return ['id' => 'Creative ID',
+            'name' => 'Creative Name',
+            'type' => 'Creative type'];
   }
 }

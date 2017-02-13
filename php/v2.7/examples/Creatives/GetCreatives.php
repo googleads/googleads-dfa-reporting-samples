@@ -29,14 +29,12 @@ class GetCreatives extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true]];
   }
 
   /**
@@ -60,11 +58,9 @@ class GetCreatives extends BaseExample {
       // Create and execute the creative fields list request.
       $response = $this->service->creatives->listCreatives(
           $values['user_profile_id'],
-          array(
-              'active' => true,
-              'advertiserId' => $values['advertiser_id'],
-              'pageToken' => $pageToken
-          )
+          ['active' => true,
+           'advertiserId' => $values['advertiser_id'],
+           'pageToken' => $pageToken]
       );
 
       foreach ($response->getCreatives() as $creatives) {
@@ -93,10 +89,8 @@ class GetCreatives extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative ID',
-        'name' => 'Creative Name',
-        'type' => 'Creative Type'
-    );
+    return ['id' => 'Creative ID',
+            'name' => 'Creative Name',
+            'type' => 'Creative Type'];
   }
 }

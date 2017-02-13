@@ -31,14 +31,12 @@ class GetChangeLogsForAdvertiser extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true]];
   }
 
   /**
@@ -62,11 +60,9 @@ class GetChangeLogsForAdvertiser extends BaseExample {
       // Create and execute the change logs list request.
       $response = $this->service->changeLogs->listChangeLogs(
           $values['user_profile_id'],
-          array(
-              'objectIds' => array($values['advertiser_id']),
-              'objectType' => 'OBJECT_ADVERTISER',
-              'pageToken' => $pageToken
-          )
+          ['objectIds' => [$values['advertiser_id']],
+           'objectType' => 'OBJECT_ADVERTISER',
+           'pageToken' => $pageToken]
       );
 
       foreach ($response->getChangeLogs() as $log) {
@@ -95,11 +91,9 @@ class GetChangeLogsForAdvertiser extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'action' => 'Action',
-        'fieldName' => 'Field',
-        'oldValue' => 'Old Value',
-        'newValue' => 'New Value'
-    );
+    return ['action' => 'Action',
+            'fieldName' => 'Field',
+            'oldValue' => 'Old Value',
+            'newValue' => 'New Value'];
   }
 }

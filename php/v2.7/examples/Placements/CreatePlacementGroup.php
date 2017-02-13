@@ -30,20 +30,18 @@ class CreatePlacementGroup extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'campaign_id',
-              'display' => 'Campaign ID',
-              'required' => true),
-        array('name' => 'site_id',
-              'display' => 'Site ID',
-              'required' => true),
-        array('name' => 'group_name',
-              'display' => 'Placement Group Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'campaign_id',
+             'display' => 'Campaign ID',
+             'required' => true],
+            ['name' => 'site_id',
+             'display' => 'Site ID',
+             'required' => true],
+            ['name' => 'group_name',
+             'display' => 'Placement Group Name',
+             'required' => true]];
   }
 
   /**
@@ -80,7 +78,7 @@ class CreatePlacementGroup extends BaseExample {
         $values['user_profile_id'], $group
     );
 
-    $this->printResultsTable('Placement group created.', array($result));
+    $this->printResultsTable('Placement group created.', [$result]);
   }
 
   /**
@@ -98,9 +96,7 @@ class CreatePlacementGroup extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Placement Group ID',
-        'name' => 'Placement Group Name'
-    );
+    return ['id' => 'Placement Group ID',
+            'name' => 'Placement Group Name'];
   }
 }

@@ -29,20 +29,18 @@ class CreateFloodlightReport extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'floodlight_config_id',
-              'display' => 'Floodlight Configuration ID',
-              'required' => true),
-        array('name' => 'start_date',
-              'display' => 'Start Date (yyyy-MM-dd)',
-              'required' => true),
-        array('name' => 'end_date',
-              'display' => 'End Date (yyyy-MM-dd)',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'floodlight_config_id',
+             'display' => 'Floodlight Configuration ID',
+             'required' => true],
+            ['name' => 'start_date',
+             'display' => 'Start Date (yyyy-MM-dd)',
+             'required' => true],
+            ['name' => 'end_date',
+             'display' => 'End Date (yyyy-MM-dd)',
+             'required' => true]];
   }
 
   /**
@@ -84,23 +82,21 @@ class CreateFloodlightReport extends BaseExample {
 
     $criteria = new Google_Service_Dfareporting_ReportFloodlightCriteria();
     $criteria->setDateRange($dateRange);
-    $criteria->setDimensions(array($floodlightConfigDimension,
-        $activityDimension, $advDimension));
-    $criteria->setMetricNames(
-        array(
-            'dfa:activityClickThroughConversions',
-            'dfa:activityClickThroughRevenue',
-            'dfa:activityViewThroughConversions',
-            'dfa:activityViewThroughRevenue'
-        )
-    );
-    $criteria->setDimensionFilters(array($filter));
+    $criteria->setDimensions([$floodlightConfigDimension,
+        $activityDimension, $advDimension]);
+    $criteria->setMetricNames([
+        'dfa:activityClickThroughConversions',
+        'dfa:activityClickThroughRevenue',
+        'dfa:activityViewThroughConversions',
+        'dfa:activityViewThroughRevenue'
+    ]);
+    $criteria->setDimensionFilters([$filter]);
 
     $report->setFloodlightCriteria($criteria);
 
     $result = $this->service->reports->insert($values['user_profile_id'],
         $report);
-    $this->printResultsTable('Floodlight Report', array($result));
+    $this->printResultsTable('Floodlight Report', [$result]);
   }
 
   /**
@@ -118,9 +114,7 @@ class CreateFloodlightReport extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Report ID',
-        'name' => 'Report Name'
-    );
+    return ['id' => 'Report ID',
+            'name' => 'Report Name'];
   }
 }

@@ -50,13 +50,11 @@ class GetAllUserProfiles extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'profileId' => 'Profile ID',
-        'userName' => 'User Name',
-        'accountId' => 'Account ID',
-        'accountName' => 'Account Name',
-        'subAccountId' => 'Subaccount ID',
-        'subAccountName' => 'Subaccount Name'
-    );
+    return ['profileId' => 'Profile ID',
+            'userName' => 'User Name',
+            'accountId' => 'Account ID',
+            'accountName' => 'Account Name',
+            'subAccountId' => 'Subaccount ID',
+            'subAccountName' => 'Subaccount Name'];
   }
 }

@@ -28,11 +28,9 @@ class GetAllFiles extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -49,7 +47,7 @@ class GetAllFiles extends BaseExample {
     do {
       $files = $this->service->files->listFiles(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($files['items'] as $file) {
@@ -79,13 +77,11 @@ class GetAllFiles extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'File ID',
-        'fileName' => 'File Name',
-        'reportId' => 'Report ID',
-        'format' => 'File Format',
-        'status' => 'Status',
-        'download' => 'Download'
-    );
+    return ['id' => 'File ID',
+            'fileName' => 'File Name',
+            'reportId' => 'Report ID',
+            'format' => 'File Format',
+            'status' => 'Status',
+            'download' => 'Download'];
   }
 }

@@ -30,11 +30,9 @@ class GetUserRoles extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -54,7 +52,7 @@ class GetUserRoles extends BaseExample {
     do {
       // Create and execute the subaccounts list request.
       $response = $this->service->userRoles->listUserRoles(
-          $values['user_profile_id'], array('pageToken' => $pageToken)
+          $values['user_profile_id'], ['pageToken' => $pageToken]
       );
 
       foreach ($response->getUserRoles() as $userRoles) {
@@ -83,9 +81,7 @@ class GetUserRoles extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'User Role ID',
-        'name' => 'User Role Name'
-    );
+    return ['id' => 'User Role ID',
+            'name' => 'User Role Name'];
   }
 }

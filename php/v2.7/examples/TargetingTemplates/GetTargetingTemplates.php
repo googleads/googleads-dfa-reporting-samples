@@ -29,11 +29,9 @@ class GetTargetingTemplates extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -53,7 +51,7 @@ class GetTargetingTemplates extends BaseExample {
     do {
       // Create and execute the targeting templates list request.
       $response = $this->service->targetingTemplates->listTargetingTemplates(
-          $values['user_profile_id'], array('pageToken' => $pageToken));
+          $values['user_profile_id'], ['pageToken' => $pageToken]);
 
       foreach ($response->getTargetingTemplates() as $template) {
         $this->printResultsTableRow($template);
@@ -81,10 +79,8 @@ class GetTargetingTemplates extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Template ID',
-        'name' => 'Template Name',
-        'advertiserId' => 'Advertiser ID'
-    );
+    return ['id' => 'Template ID',
+            'name' => 'Template Name',
+            'advertiserId' => 'Advertiser ID'];
   }
 }

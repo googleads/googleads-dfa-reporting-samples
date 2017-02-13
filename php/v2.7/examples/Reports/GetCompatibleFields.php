@@ -28,14 +28,12 @@ class GetCompatibleFields extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'report_id',
-              'display' => 'Report ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'report_id',
+             'display' => 'Report ID',
+             'required' => true]];
   }
 
   /**
@@ -90,8 +88,6 @@ class GetCompatibleFields extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'name' => 'Field Name'
-    );
+    return ['name' => 'Field Name'];
   }
 }

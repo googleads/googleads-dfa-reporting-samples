@@ -29,23 +29,21 @@ class CreateSubaccount extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'account_id',
-              'display' => 'Account ID',
-              'required' => true),
-        array('name' => 'permission_one',
-              'display' => 'First Permission ID',
-              'required' => true),
-        array('name' => 'permission_two',
-              'display' => 'Second Permission ID',
-              'required' => true),
-        array('name' => 'subaccount_name',
-              'display' => 'Subaccount Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'account_id',
+             'display' => 'Account ID',
+             'required' => true],
+            ['name' => 'permission_one',
+             'display' => 'First Permission ID',
+             'required' => true],
+            ['name' => 'permission_two',
+             'display' => 'Second Permission ID',
+             'required' => true],
+            ['name' => 'subaccount_name',
+             'display' => 'Subaccount Name',
+             'required' => true]];
   }
 
   /**
@@ -62,15 +60,14 @@ class CreateSubaccount extends BaseExample {
 
     $subaccount = new Google_Service_Dfareporting_Subaccount();
     $subaccount->setName($values['subaccount_name']);
-    $subaccount->setAvailablePermissionIds(array(
-        $values['permission_one'], $values['permission_two']
-    ));
+    $subaccount->setAvailablePermissionIds(
+        [$values['permission_one'], $values['permission_two']]);
 
     $result = $this->service->subaccounts->insert(
         $values['user_profile_id'], $subaccount
     );
 
-    $this->printResultsTable('Subaccount created.', array($result));
+    $this->printResultsTable('Subaccount created.', [$result]);
   }
 
   /**
@@ -88,9 +85,7 @@ class CreateSubaccount extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Subaccount ID',
-        'name' => 'Subaccount Name'
-    );
+    return ['id' => 'Subaccount ID',
+            'name' => 'Subaccount Name'];
   }
 }

@@ -29,11 +29,9 @@ class GetAllReports extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -52,7 +50,7 @@ class GetAllReports extends BaseExample {
     do {
       $response = $this->service->reports->listReports(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getItems() as $report) {
@@ -80,10 +78,8 @@ class GetAllReports extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Report ID',
-        'name' => 'Report Name',
-        'type' => 'Report Type'
-    );
+    return ['id' => 'Report ID',
+            'name' => 'Report Name',
+            'type' => 'Report Type'];
   }
 }

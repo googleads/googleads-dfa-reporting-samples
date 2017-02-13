@@ -28,11 +28,9 @@ class DownloadReportFile extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'file_url',
-              'display' => 'URL of a generated report file',
-              'required' => true)
-    );
+    return [['name' => 'file_url',
+             'display' => 'URL of a generated report file',
+             'required' => true]];
   }
 
   /**

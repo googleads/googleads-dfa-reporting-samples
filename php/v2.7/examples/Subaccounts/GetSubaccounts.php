@@ -28,11 +28,9 @@ class GetSubaccounts extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -52,7 +50,7 @@ class GetSubaccounts extends BaseExample {
     do {
       // Create and execute the subaccounts list request.
       $response = $this->service->subaccounts->listSubaccounts(
-          $values['user_profile_id'], array('pageToken' => $pageToken)
+          $values['user_profile_id'], ['pageToken' => $pageToken]
       );
 
       foreach ($response->getSubaccounts() as $subaccount) {
@@ -81,9 +79,7 @@ class GetSubaccounts extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Subaccount ID',
-        'name' => 'Subaccount Name'
-    );
+    return ['id' => 'Subaccount ID',
+            'name' => 'Subaccount Name'];
   }
 }

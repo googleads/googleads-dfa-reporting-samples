@@ -28,11 +28,9 @@ class GetCreativeGroups extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -53,7 +51,7 @@ class GetCreativeGroups extends BaseExample {
       // Create and execute the creative fields list request.
       $response = $this->service->creativeGroups->listCreativeGroups(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getCreativeGroups() as $groups) {
@@ -82,9 +80,7 @@ class GetCreativeGroups extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative Group ID',
-        'name' => 'Creative Group Name'
-    );
+    return ['id' => 'Creative Group ID',
+            'name' => 'Creative Group Name'];
   }
 }

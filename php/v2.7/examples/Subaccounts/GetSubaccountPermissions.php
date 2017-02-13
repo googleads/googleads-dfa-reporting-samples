@@ -31,14 +31,12 @@ class GetSubaccountPermissions extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'subaccount_id',
-              'display' => 'Subaccount ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'subaccount_id',
+             'display' => 'Subaccount ID',
+             'required' => true]];
   }
 
   /**
@@ -59,7 +57,7 @@ class GetSubaccountPermissions extends BaseExample {
     $permissions =
         $this->service->userRolePermissions->listUserRolePermissions(
             $values['user_profile_id'],
-            array('ids' => $subaccount->getAvailablePermissionIds())
+            ['ids' => $subaccount->getAvailablePermissionIds()]
         );
 
     $this->printResultsTable('Subaccount Permissions', $permissions);
@@ -80,9 +78,7 @@ class GetSubaccountPermissions extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Permission ID',
-        'name' => 'Permission Name'
-    );
+    return ['id' => 'Permission ID',
+            'name' => 'Permission Name'];
   }
 }

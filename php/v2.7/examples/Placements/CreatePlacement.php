@@ -31,23 +31,21 @@ class CreatePlacement extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'campaign_id',
-              'display' => 'Campaign ID',
-              'required' => true),
-        array('name' => 'site_id',
-              'display' => 'Site ID',
-              'required' => true),
-        array('name' => 'size_id',
-              'display' => 'Size ID',
-              'required' => true),
-        array('name' => 'placement_name',
-              'display' => 'Placement Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'campaign_id',
+             'display' => 'Campaign ID',
+             'required' => true],
+            ['name' => 'site_id',
+             'display' => 'Site ID',
+             'required' => true],
+            ['name' => 'size_id',
+             'display' => 'Size ID',
+             'required' => true],
+            ['name' => 'placement_name',
+             'display' => 'Placement Name',
+             'required' => true]];
   }
 
   /**
@@ -72,7 +70,7 @@ class CreatePlacement extends BaseExample {
     $placement->setName($values['placement_name']);
     $placement->setPaymentSource('PLACEMENT_AGENCY_PAID');
     $placement->setSiteId($values['site_id']);
-    $placement->setTagFormats(array('PLACEMENT_TAG_STANDARD'));
+    $placement->setTagFormats(['PLACEMENT_TAG_STANDARD']);
 
     // Set the size of the placement.
     $size = new Google_Service_Dfareporting_Size();
@@ -91,7 +89,7 @@ class CreatePlacement extends BaseExample {
         $values['user_profile_id'], $placement
     );
 
-    $this->printResultsTable('Placement created.', array($result));
+    $this->printResultsTable('Placement created.', [$result]);
   }
 
   /**
@@ -109,9 +107,7 @@ class CreatePlacement extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Placement ID',
-        'name' => 'Placement Name'
-    );
+    return ['id' => 'Placement ID',
+            'name' => 'Placement Name'];
   }
 }

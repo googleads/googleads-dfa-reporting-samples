@@ -28,20 +28,18 @@ class CreateStandardReport extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'start_date',
-              'display' => 'Start Date (yyyy-MM-dd)',
-              'required' => true),
-        array('name' => 'end_date',
-              'display' => 'End Date (yyyy-MM-dd)',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'start_date',
+             'display' => 'Start Date (yyyy-MM-dd)',
+             'required' => true],
+            ['name' => 'end_date',
+             'display' => 'End Date (yyyy-MM-dd)',
+             'required' => true]];
   }
 
   /**
@@ -75,15 +73,15 @@ class CreateStandardReport extends BaseExample {
 
     $criteria = new Google_Service_Dfareporting_ReportCriteria();
     $criteria->setDateRange($dateRange);
-    $criteria->setDimensions(array($dimension));
-    $criteria->setMetricNames(array('dfa:clicks', 'dfa:impressions'));
-    $criteria->setDimensionFilters(array($filter));
+    $criteria->setDimensions([$dimension]);
+    $criteria->setMetricNames(['dfa:clicks', 'dfa:impressions']);
+    $criteria->setDimensionFilters([$filter]);
 
     $report->setCriteria($criteria);
 
     $result = $this->service->reports->insert($values['user_profile_id'],
         $report);
-    $this->printResultsTable('Standard Report', array($result));
+    $this->printResultsTable('Standard Report', [$result]);
   }
 
   /**
@@ -100,9 +98,7 @@ class CreateStandardReport extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Report ID',
-        'name' => 'Report Name'
-    );
+    return ['id' => 'Report ID',
+            'name' => 'Report Name'];
   }
 }

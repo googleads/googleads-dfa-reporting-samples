@@ -28,11 +28,9 @@ class GetPlacementStrategies extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -53,7 +51,7 @@ class GetPlacementStrategies extends BaseExample {
       // Create and execute the placement strategies list request.
       $response = $this->service->placementStrategies->listPlacementStrategies(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getPlacementStrategies() as $strategies) {
@@ -83,9 +81,7 @@ class GetPlacementStrategies extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Placement Strategy ID',
-        'name' => 'Placement Strategy Name'
-    );
+    return ['id' => 'Placement Strategy ID',
+            'name' => 'Placement Strategy Name'];
   }
 }

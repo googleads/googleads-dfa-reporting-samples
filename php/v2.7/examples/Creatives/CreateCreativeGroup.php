@@ -30,20 +30,18 @@ class CreateCreativeGroup extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'group_name',
-              'display' => 'Creative Group Name',
-              'required' => true),
-        array('name' => 'group_number',
-              'display' => 'Creative Group Number (1-2)',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'group_name',
+             'display' => 'Creative Group Name',
+             'required' => true],
+            ['name' => 'group_number',
+             'display' => 'Creative Group Number (1-2)',
+             'required' => true]];
   }
 
   /**
@@ -67,7 +65,7 @@ class CreateCreativeGroup extends BaseExample {
         $values['user_profile_id'], $group
     );
 
-    $this->printResultsTable('Creative group created.', array($result));
+    $this->printResultsTable('Creative group created.', [$result]);
   }
 
   /**
@@ -85,10 +83,8 @@ class CreateCreativeGroup extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative Group ID',
-        'name' => 'Creative Group Name',
-        'groupNumber' => 'Creative Group Number'
-    );
+    return ['id' => 'Creative Group ID',
+            'name' => 'Creative Group Name',
+            'groupNumber' => 'Creative Group Number'];
   }
 }

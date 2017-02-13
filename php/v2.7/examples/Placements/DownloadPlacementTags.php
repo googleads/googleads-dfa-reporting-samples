@@ -30,17 +30,15 @@ class DownloadPlacementTags extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'campaign_id',
-              'display' => 'Campaign ID',
-              'required' => true),
-        array('name' => 'placement_id',
-              'display' => 'Placement ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'campaign_id',
+             'display' => 'Campaign ID',
+             'required' => true],
+            ['name' => 'placement_id',
+             'display' => 'Placement ID',
+             'required' => true]];
   }
 
   /**
@@ -57,27 +55,24 @@ class DownloadPlacementTags extends BaseExample {
 
     $placementTags = $this->service->placements->generatetags(
         $values['user_profile_id'],
-        array(
-            'campaignId' => $values['campaign_id'],
-            'placementIds' => array($values['placement_id']),
-            'tagFormats' => array(
-                'PLACEMENT_TAG_STANDARD',
-                'PLACEMENT_TAG_IFRAME_JAVASCRIPT',
-                'PLACEMENT_TAG_INTERNAL_REDIRECT'
-            )
-        )
+        ['campaignId' => $values['campaign_id'],
+         'placementIds' => [$values['placement_id']],
+         'tagFormats' => [
+             'PLACEMENT_TAG_STANDARD',
+             'PLACEMENT_TAG_IFRAME_JAVASCRIPT',
+             'PLACEMENT_TAG_INTERNAL_REDIRECT'
+          ]
+        ]
     );
 
     $this->printResultsTableHeader('Placement Tags');
 
     foreach ($placementTags['placementTags'] as $placementTag) {
       foreach ($placementTag['tagDatas'] as $tagData) {
-        $result = array(
-            'clickTag' => htmlspecialchars($tagData->getClickTag()),
-            'format' => $tagData->getFormat(),
-            'impressionTag' =>
-                htmlspecialchars($tagData->getImpressionTag())
-        );
+        $result = ['clickTag' => htmlspecialchars($tagData->getClickTag()),
+                   'format' => $tagData->getFormat(),
+                   'impressionTag' =>
+                       htmlspecialchars($tagData->getImpressionTag())];
 
         $this->printResultsTableRow($result);
       }
@@ -101,10 +96,8 @@ class DownloadPlacementTags extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'format' => 'Format',
-        'impressionTag' => 'Impression Tag',
-        'clickTag' => 'Click Tag'
-    );
+    return ['format' => 'Format',
+            'impressionTag' => 'Impression Tag',
+            'clickTag' => 'Click Tag'];
   }
 }

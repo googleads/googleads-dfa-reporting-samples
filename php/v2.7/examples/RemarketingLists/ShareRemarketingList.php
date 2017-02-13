@@ -29,17 +29,15 @@ class ShareRemarketingList extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'list_id',
-              'display' => 'Remarketing List ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'list_id',
+             'display' => 'Remarketing List ID',
+             'required' => true]];
   }
 
   /**
@@ -60,7 +58,7 @@ class ShareRemarketingList extends BaseExample {
 
     $advertiserIds = $share['sharedAdvertiserIds'];
     if(!isset($advertiserIds)) {
-      $advertiserIds = array();
+      $advertiserIds = [];
     }
 
     if(!in_array($values['advertiser_id'], $advertiserIds)) {
@@ -73,7 +71,7 @@ class ShareRemarketingList extends BaseExample {
           $values['user_profile_id'], $share);
 
       $result['advertiserIds'] = implode(',', $result['sharedAdvertiserIds']);
-      $this->printResultsTable('Remarketing list shared.', array($result));
+      $this->printResultsTable('Remarketing list shared.', [$result]);
     } else {
       print '<pre>Remarketing list is already shared with advertiser.</pre>';
     }
@@ -94,9 +92,7 @@ class ShareRemarketingList extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'remarketingListId' => 'Remarketing List ID',
-        'advertiserIds' => 'Shared Advertiser IDs'
-    );
+    return ['remarketingListId' => 'Remarketing List ID',
+            'advertiserIds' => 'Shared Advertiser IDs'];
   }
 }

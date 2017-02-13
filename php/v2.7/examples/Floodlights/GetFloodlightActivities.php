@@ -30,14 +30,12 @@ class GetFloodlightActivities extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true]];
   }
 
   /**
@@ -62,10 +60,8 @@ class GetFloodlightActivities extends BaseExample {
       $response =
         $this->service->floodlightActivities->listFloodlightActivities(
             $values['user_profile_id'],
-            array(
-                'advertiserId' => $values['advertiser_id'],
-                'pageToken' => $pageToken
-            )
+            ['advertiserId' => $values['advertiser_id'],
+             'pageToken' => $pageToken]
         );
 
       foreach ($response->getFloodlightActivities() as $activities) {
@@ -95,10 +91,8 @@ class GetFloodlightActivities extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Floodlight Activity ID',
-        'name' => 'Floodlight Activity Name',
-        'floodlightConfigurationId' => 'Floodlight Configuration ID'
-    );
+    return ['id' => 'Floodlight Activity ID',
+            'name' => 'Floodlight Activity Name',
+            'floodlightConfigurationId' => 'Floodlight Configuration ID'];
   }
 }

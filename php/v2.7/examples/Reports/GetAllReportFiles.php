@@ -28,14 +28,12 @@ class GetAllReportFiles extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'report_id',
-              'display' => 'Report ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'report_id',
+             'display' => 'Report ID',
+             'required' => true]];
   }
 
   /**
@@ -59,7 +57,7 @@ class GetAllReportFiles extends BaseExample {
       $response = $this->service->reports_files->listReportsFiles(
         $values['user_profile_id'],
         $values['report_id'],
-        array('pageToken' => $pageToken)
+        ['pageToken' => $pageToken]
       );
 
       foreach ($response->getItems() as $file) {
@@ -88,13 +86,11 @@ class GetAllReportFiles extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'File ID',
-        'fileName' => 'File Name',
-        'reportId' => 'Report ID',
-        'format' => 'File Format',
-        'status' => 'Status',
-        'apiUrl' => 'API URL'
-    );
+    return ['id' => 'File ID',
+            'fileName' => 'File Name',
+            'reportId' => 'Report ID',
+            'format' => 'File Format',
+            'status' => 'Status',
+            'apiUrl' => 'API URL'];
   }
 }

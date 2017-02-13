@@ -29,17 +29,15 @@ class CreateFloodlightActivityGroup extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'group_name',
-              'display' => 'Floodlight Activity Group Name',
-              'required' => true),
-        array('name' => 'configuration_id',
-              'display' => 'Floodlight Configuration (Advertiser) ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'group_name',
+             'display' => 'Floodlight Activity Group Name',
+             'required' => true],
+            ['name' => 'configuration_id',
+             'display' => 'Floodlight Configuration (Advertiser) ID',
+             'required' => true]];
   }
 
   /**
@@ -63,8 +61,7 @@ class CreateFloodlightActivityGroup extends BaseExample {
         $values['user_profile_id'], $group
     );
 
-    $this->printResultsTable('Floodlight activity group created.',
-        array($result));
+    $this->printResultsTable('Floodlight activity group created.', [$result]);
   }
 
   /**
@@ -82,10 +79,8 @@ class CreateFloodlightActivityGroup extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Floodlight Activity Group ID',
-        'name' => 'Floodlight Activity Group Name',
-        'floodlightConfigurationId' => 'Floodlight Configuration ID'
-    );
+    return ['id' => 'Floodlight Activity Group ID',
+            'name' => 'Floodlight Activity Group Name',
+            'floodlightConfigurationId' => 'Floodlight Configuration ID'];
   }
 }

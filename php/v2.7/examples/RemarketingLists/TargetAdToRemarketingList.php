@@ -33,14 +33,12 @@ class TargetAdToRemarketingList extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'ad_id',
-              'display' => 'Ad ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'ad_id',
+             'display' => 'Ad ID',
+             'required' => true]];
   }
 
   /**
@@ -63,7 +61,7 @@ class TargetAdToRemarketingList extends BaseExample {
     $listService = $this->service->targetableRemarketingLists;
     $lists = $listService->listTargetableRemarketingLists(
         $values['user_profile_id'], $ad['advertiserId'],
-        array('maxResults' => 1)
+        ['maxResults' => 1]
     );
 
     if(!empty($lists['targetableRemarketingLists'])) {
@@ -82,8 +80,7 @@ class TargetAdToRemarketingList extends BaseExample {
       $result['expression'] =
           $result['remarketing_list_expression']['expression'];
 
-      $this->printResultsTable('Ad targeted to remarketing list.',
-          array($result));
+      $this->printResultsTable('Ad targeted to remarketing list.', [$result]);
     } else {
       print '<pre>Ad has no targetable remarketing lists.</pre>';
     }
@@ -104,9 +101,7 @@ class TargetAdToRemarketingList extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Ad ID',
-        'expression' => 'Remarketing List Expression'
-    );
+    return ['id' => 'Ad ID',
+            'expression' => 'Remarketing List Expression'];
   }
 }

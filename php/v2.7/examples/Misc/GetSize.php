@@ -28,17 +28,15 @@ class GetSize extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'width',
-              'display' => 'Width (px)',
-              'required' => true),
-        array('name' => 'height',
-              'display' => 'Height (px)',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'width',
+             'display' => 'Width (px)',
+             'required' => true],
+            ['name' => 'height',
+             'display' => 'Height (px)',
+             'required' => true]];
   }
 
   /**
@@ -58,7 +56,7 @@ class GetSize extends BaseExample {
     // Create and execute the size list request.
     $response = $this->service->sizes->listSizes(
         $values['user_profile_id'],
-        array('height' => $values['height'], 'width' => $values['width'])
+        ['height' => $values['height'], 'width' => $values['width']]
     );
 
     foreach ($response->getSizes() as $sizes) {
@@ -83,10 +81,8 @@ class GetSize extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Size ID',
-        'width' => 'Width',
-        'height' => 'Height'
-    );
+    return ['id' => 'Size ID',
+            'width' => 'Width',
+            'height' => 'Height'];
   }
 }

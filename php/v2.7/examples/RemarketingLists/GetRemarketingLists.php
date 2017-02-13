@@ -34,14 +34,12 @@ class GetRemarketingLists extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true]];
   }
 
   /**
@@ -66,7 +64,7 @@ class GetRemarketingLists extends BaseExample {
       $response = $this->service->remarketingLists->listRemarketingLists(
           $values['user_profile_id'],
           $values['advertiser_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getRemarketingLists() as $list) {
@@ -95,9 +93,7 @@ class GetRemarketingLists extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Remarketing List ID',
-        'name' => 'Remarketing List Name'
-    );
+    return ['id' => 'Remarketing List ID',
+            'name' => 'Remarketing List Name'];
   }
 }

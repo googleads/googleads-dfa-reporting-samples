@@ -28,14 +28,12 @@ class GenerateReportFile extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'report_id',
-              'display' => 'Report ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'report_id',
+             'display' => 'Report ID',
+             'required' => true]];
   }
 
   /**
@@ -54,9 +52,9 @@ class GenerateReportFile extends BaseExample {
     $reportFile = $this->service->reports->run(
         $values['user_profile_id'],
         $values['report_id'],
-        array('synchronous' => false));
+        ['synchronous' => false]);
 
-    $this->printResultsTable('Report File', array($reportFile));
+    $this->printResultsTable('Report File', [$reportFile]);
   }
 
   /**
@@ -74,12 +72,10 @@ class GenerateReportFile extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'File ID',
-        'fileName' => 'File Name',
-        'reportId' => 'Report ID',
-        'format' => 'File Format',
-        'status' => 'Status'
-    );
+    return ['id' => 'File ID',
+            'fileName' => 'File Name',
+            'reportId' => 'Report ID',
+            'format' => 'File Format',
+            'status' => 'Status'];
   }
 }

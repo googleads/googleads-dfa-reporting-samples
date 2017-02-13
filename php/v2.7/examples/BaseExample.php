@@ -78,7 +78,7 @@ abstract class BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array();
+    return [];
   }
 
   /**
@@ -87,7 +87,7 @@ abstract class BaseExample {
    * @return array
    */
   protected function getResultsTableHeaders() {
-    return array();
+    return [];
   }
 
   /**
@@ -156,7 +156,7 @@ abstract class BaseExample {
    * @return array
    */
   protected function getFormValues() {
-    $input = array();
+    $input = [];
 
     foreach ($this->getInputParameters() as $parameter) {
       if($parameter['file'] && isset($_FILES[$parameter['name']])) {

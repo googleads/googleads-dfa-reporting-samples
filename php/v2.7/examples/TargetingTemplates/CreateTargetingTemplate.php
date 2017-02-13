@@ -29,17 +29,15 @@ class CreateTargetingTemplate extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'template_name',
-              'display' => 'Template Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'template_name',
+             'display' => 'Template Name',
+             'required' => true]];
   }
 
   /**
@@ -60,17 +58,17 @@ class CreateTargetingTemplate extends BaseExample {
     $template->setName($values['template_name']);
 
     // Configure the template to serve ads on Monday, Wednesday, and Friday from
-    // 9-10am and 3-5pm.
+    // 9 to 10am and 3 to 5pm.
     $targeting = new Google_Service_Dfareporting_DayPartTargeting();
-    $targeting->setDaysOfWeek(array('MONDAY', 'WEDNESDAY', 'FRIDAY'));
-    $targeting->setHoursOfDay(array(9, 15, 16));
+    $targeting->setDaysOfWeek(['MONDAY', 'WEDNESDAY', 'FRIDAY']);
+    $targeting->setHoursOfDay([9, 15, 16]);
     $targeting->setUserLocalTime(true);
     $template->setDayPartTargeting($targeting);
 
     $result = $this->service->targetingTemplates->insert(
         $values['user_profile_id'], $template);
 
-    $this->printResultsTable('Targeting template created.', array($result));
+    $this->printResultsTable('Targeting template created.', [$result]);
   }
 
   /**
@@ -88,9 +86,7 @@ class CreateTargetingTemplate extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Template ID',
-        'name' => 'Template Name'
-    );
+    return ['id' => 'Template ID',
+            'name' => 'Template Name'];
   }
 }

@@ -29,17 +29,15 @@ class CreateCreativeField extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'field_name',
-              'display' => 'Creative Field Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'field_name',
+             'display' => 'Creative Field Name',
+             'required' => true]];
   }
 
   /**
@@ -62,7 +60,7 @@ class CreateCreativeField extends BaseExample {
         $values['user_profile_id'], $field
     );
 
-    $this->printResultsTable('Creative field created.', array($result));
+    $this->printResultsTable('Creative field created.', [$result]);
   }
 
   /**
@@ -80,9 +78,7 @@ class CreateCreativeField extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative Field ID',
-        'name' => 'Creative Field Name'
-    );
+    return ['id' => 'Creative Field ID',
+            'name' => 'Creative Field Name'];
   }
 }

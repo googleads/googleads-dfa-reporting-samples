@@ -33,20 +33,18 @@ class GetDimensionValues extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'dimension_name',
-              'display' => 'Dimension Name',
-              'required' => true),
-        array('name' => 'start_date',
-              'display' => 'Start Date (yyyy-MM-dd)',
-              'required' => true),
-        array('name' => 'end_date',
-              'display' => 'End Date (yyyy-MM-dd)',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'dimension_name',
+             'display' => 'Dimension Name',
+             'required' => true],
+            ['name' => 'start_date',
+             'display' => 'Start Date (yyyy-MM-dd)',
+             'required' => true],
+            ['name' => 'end_date',
+             'display' => 'End Date (yyyy-MM-dd)',
+             'required' => true]];
   }
 
   /**
@@ -87,9 +85,7 @@ class GetDimensionValues extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'value' => 'Dimension Value',
-        'id' => 'Dimension ID'
-    );
+    return ['value' => 'Dimension Value',
+            'id' => 'Dimension ID'];
   }
 }

@@ -31,26 +31,24 @@ class CreateUserRole extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'parent_user_role_id',
-              'display' => 'Parent User Role ID',
-              'required' => true),
-        array('name' => 'subaccount_id',
-              'display' => 'Subaccount ID',
-              'required' => true),
-        array('name' => 'permission_one',
-              'display' => 'First Permission ID',
-              'required' => true),
-        array('name' => 'permission_two',
-              'display' => 'Second Permission ID',
-              'required' => true),
-        array('name' => 'user_role_name',
-              'display' => 'User Role Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'parent_user_role_id',
+             'display' => 'Parent User Role ID',
+             'required' => true],
+            ['name' => 'subaccount_id',
+             'display' => 'Subaccount ID',
+             'required' => true],
+            ['name' => 'permission_one',
+             'display' => 'First Permission ID',
+             'required' => true],
+            ['name' => 'permission_two',
+             'display' => 'Second Permission ID',
+             'required' => true],
+            ['name' => 'user_role_name',
+             'display' => 'User Role Name',
+             'required' => true]];
   }
 
   /**
@@ -68,16 +66,15 @@ class CreateUserRole extends BaseExample {
     $userRole = new Google_Service_Dfareporting_UserRole();
     $userRole->setName($values['user_role_name']);
     $userRole->setParentUserRoleId($values['parent_user_role_id']);
-    $userRole->setPermissions(array(
-        $values['permission_one'], $values['permission_two']
-    ));
+    $userRole->setPermissions(
+        [$values['permission_one'], $values['permission_two']]);
     $userRole->setSubaccountId($values['subaccount_id']);
 
     $result = $this->service->userRoles->insert(
         $values['user_profile_id'], $userRole
     );
 
-    $this->printResultsTable('User role created.', array($result));
+    $this->printResultsTable('User role created.', [$result]);
   }
 
   /**
@@ -95,9 +92,7 @@ class CreateUserRole extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'User Role ID',
-        'name' => 'User Role Name'
-    );
+    return ['id' => 'User Role ID',
+            'name' => 'User Role Name'];
   }
 }

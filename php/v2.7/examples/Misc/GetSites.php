@@ -28,11 +28,9 @@ class GetSites extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -53,7 +51,7 @@ class GetSites extends BaseExample {
       // Create and execute the sites list request.
       $response = $this->service->sites->listSites(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getSites() as $sites) {
@@ -82,9 +80,7 @@ class GetSites extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Site ID',
-        'keyName' => 'Site Key Name'
-    );
+    return ['id' => 'Site ID',
+            'keyName' => 'Site Key Name'];
   }
 }

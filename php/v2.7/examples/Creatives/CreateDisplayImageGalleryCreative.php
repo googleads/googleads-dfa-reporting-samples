@@ -30,25 +30,23 @@ class CreateDisplayImageGalleryCreative extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'size_id',
-              'display' => 'Size ID',
-              'required' => true),
-        array('name' => 'image1_asset_file',
-              'display' => 'First Image Asset File',
-              'file' => true,
-              'required' => true),
-        array('name' => 'image2_asset_file',
-              'display' => 'Second Image Asset File',
-              'file' => true,
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'size_id',
+             'display' => 'Size ID',
+             'required' => true],
+            ['name' => 'image1_asset_file',
+             'display' => 'First Image Asset File',
+             'file' => true,
+             'required' => true],
+            ['name' => 'image2_asset_file',
+             'display' => 'Second Image Asset File',
+             'file' => true,
+             'required' => true]];
   }
 
   /**
@@ -91,7 +89,7 @@ class CreateDisplayImageGalleryCreative extends BaseExample {
     $image2Asset->setRole('PRIMARY');
 
     // Add the creative assets.
-    $creative->setCreativeAssets(array($image1Asset, $image2Asset));
+    $creative->setCreativeAssets([$image1Asset, $image2Asset]);
 
     // Add a click tag for the first image asset.
     $clickTag1 = new Google_Service_Dfareporting_ClickTag();
@@ -103,13 +101,13 @@ class CreateDisplayImageGalleryCreative extends BaseExample {
     $clickTag2->setName($image2->getAssetIdentifier()->getName());
     $clickTag2->setEventName($image2->getAssetIdentifier()->getName());
 
-    $creative->setClickTags(array($clickTag1, $clickTag2));
+    $creative->setClickTags([$clickTag1, $clickTag2]);
 
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
     $this->printResultsTable('Display image gallery creative created.',
-        array($result));
+        [$result]);
   }
 
   /**
@@ -127,10 +125,8 @@ class CreateDisplayImageGalleryCreative extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative ID',
-        'name' => 'Creative Name',
-        'type' => 'Creative type'
-    );
+    return ['id' => 'Creative ID',
+            'name' => 'Creative Name',
+            'type' => 'Creative type'];
   }
 }

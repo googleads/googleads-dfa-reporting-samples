@@ -28,17 +28,15 @@ class CheckFileStatus extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'report_id',
-              'display' => 'Report ID',
-              'required' => true),
-        array('name' => 'report_file_id',
-              'display' => 'Report File ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'report_id',
+             'display' => 'Report ID',
+             'required' => true],
+            ['name' => 'report_file_id',
+             'display' => 'Report File ID',
+             'required' => true]];
   }
 
   /**
@@ -58,7 +56,7 @@ class CheckFileStatus extends BaseExample {
         $values['report_id'],
         $values['report_file_id']);
 
-    $this->printResultsTable('File status', array($reportFile));
+    $this->printResultsTable('File status', [$reportFile]);
   }
 
   /**
@@ -76,12 +74,10 @@ class CheckFileStatus extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'File ID',
-        'fileName' => 'File Name',
-        'reportId' => 'Report ID',
-        'format' => 'File Format',
-        'status' => 'Status'
-    );
+    return ['id' => 'File ID',
+            'fileName' => 'File Name',
+            'reportId' => 'Report ID',
+            'format' => 'File Format',
+            'status' => 'Status'];
   }
 }

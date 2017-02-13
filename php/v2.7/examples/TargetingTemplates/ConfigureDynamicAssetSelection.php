@@ -33,21 +33,19 @@ class ConfigureDynamicAssetSelection extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'creative_id',
-              'display' => 'In-stream Video Creative ID',
-              'required' => true),
-        array('name' => 'template_id',
-              'display' => 'Targeting Template ID',
-              'required' => true),
-        array('name' => 'asset_file',
-              'display' => 'Video Asset File',
-              'file' => true,
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'creative_id',
+             'display' => 'In-stream Video Creative ID',
+             'required' => true],
+            ['name' => 'template_id',
+             'display' => 'Targeting Template ID',
+             'required' => true],
+            ['name' => 'asset_file',
+             'display' => 'Video Asset File',
+             'file' => true,
+             'required' => true]];
   }
 
   /**
@@ -85,7 +83,7 @@ class ConfigureDynamicAssetSelection extends BaseExample {
       $assetSelection =
           new Google_Service_Dfareporting_CreativeAssetSelection();
       $assetSelection->setDefaultAssetId($defaultVideoAssetId);
-      $assetSelection->setRules(array());
+      $assetSelection->setRules([]);
 
       // Enable dynamic asset selection for the creative.
       $creative->setDynamicAssetSelection(true);
@@ -99,7 +97,7 @@ class ConfigureDynamicAssetSelection extends BaseExample {
     $videoAsset->setAssetIdentifier($video->getAssetIdentifier());
     $videoAsset->setRole('PARENT_VIDEO');
     $creative->setCreativeAssets(
-        array_merge($creative->getCreativeAssets(), array($videoAsset)));
+        array_merge($creative->getCreativeAssets(), [$videoAsset]));
 
     // Create a rule targeting the new video asset and add it to the selection.
     $rule = new Google_Service_Dfareporting_Rule();
@@ -107,7 +105,7 @@ class ConfigureDynamicAssetSelection extends BaseExample {
     $rule->setName('Test rule for asset ' . $video->getId());
     $rule->setTargetingTemplateId($values['template_id']);
     $assetSelection->setRules(
-        array_merge($assetSelection->getRules(), array($rule)));
+        array_merge($assetSelection->getRules(), [$rule]));
 
     // Update the creative.
     $result = $this->service->creatives->update($values['user_profile_id'],
@@ -121,12 +119,13 @@ class ConfigureDynamicAssetSelection extends BaseExample {
     $assets = $creative->getCreativeAssets();
     $index = array_search('PARENT_VIDEO',
         array_map(
-            function($asset) { return $asset->getRole(); },
-            $assets
+            function($asset) {
+              return $asset->getRole();
+            }, $assets
         )
     );
 
-    return $index !== FALSE ? $assets[$index]->getId() : -1;
+    return $index !== false ? $assets[$index]->getId() : -1;
   }
 
   /**

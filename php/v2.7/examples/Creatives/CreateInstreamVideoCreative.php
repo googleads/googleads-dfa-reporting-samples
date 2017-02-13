@@ -30,18 +30,16 @@ class CreateInstreamVideoCreative extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'asset_file',
-              'display' => 'Video Asset File',
-              'file' => true,
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'asset_file',
+             'display' => 'Video Asset File',
+             'file' => true,
+             'required' => true]];
   }
 
   /**
@@ -74,13 +72,12 @@ class CreateInstreamVideoCreative extends BaseExample {
     $asset->setRole('PARENT_VIDEO');
 
     // Add the creative asset.
-    $creative->setCreativeAssets(array($asset));
+    $creative->setCreativeAssets([$asset]);
 
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('In-stream video creative created.',
-        array($result));
+    $this->printResultsTable('In-stream video creative created.', [$result]);
   }
 
   /**
@@ -98,10 +95,8 @@ class CreateInstreamVideoCreative extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative ID',
-        'name' => 'Creative Name',
-        'type' => 'Creative type'
-    );
+    return ['id' => 'Creative ID',
+            'name' => 'Creative Name',
+            'type' => 'Creative type'];
   }
 }

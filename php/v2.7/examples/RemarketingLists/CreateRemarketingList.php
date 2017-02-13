@@ -32,20 +32,18 @@ class CreateRemarketingList extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'floodlight_activity_id',
-              'display' => 'Floodlight Activity ID',
-              'required' => true),
-        array('name' => 'remarketing_list_name',
-              'display' => 'Remarketing List Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'floodlight_activity_id',
+             'display' => 'Floodlight Activity ID',
+             'required' => true],
+            ['name' => 'remarketing_list_name',
+             'display' => 'Remarketing List Name',
+             'required' => true]];
   }
 
   /**
@@ -78,14 +76,14 @@ class CreateRemarketingList extends BaseExample {
 
     // Add the term to a list population clause.
     $clause = new Google_Service_Dfareporting_ListPopulationClause();
-    $clause->setTerms(array($term));
+    $clause->setTerms([$term]);
 
     // Add the clause to a list population rule.
     // This rule will target all visitors who trigger the specified floodlight
     // activity and satisfy the custom rule defined in the list population term.
     $rule = new Google_Service_Dfareporting_ListPopulationRule();
     $rule->setFloodlightActivityId($values['floodlight_activity_id']);
-    $rule->setListPopulationClauses(array($clause));
+    $rule->setListPopulationClauses([$clause]);
 
     $list->setListPopulationRule($rule);
 
@@ -95,7 +93,7 @@ class CreateRemarketingList extends BaseExample {
         $list
     );
 
-    $this->printResultsTable('Remarketing list created.', array($result));
+    $this->printResultsTable('Remarketing list created.', [$result]);
   }
 
   /**
@@ -113,9 +111,7 @@ class CreateRemarketingList extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Remarketing List ID',
-        'name' => 'Remarketing List Name'
-    );
+    return ['id' => 'Remarketing List ID',
+            'name' => 'Remarketing List Name'];
   }
 }

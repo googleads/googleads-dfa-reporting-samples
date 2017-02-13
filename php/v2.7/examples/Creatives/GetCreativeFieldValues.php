@@ -29,14 +29,12 @@ class GetCreativeFieldValues extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'field_id',
-              'display' => 'Creative Field ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'field_id',
+             'display' => 'Creative Field ID',
+             'required' => true]];
   }
 
   /**
@@ -61,7 +59,7 @@ class GetCreativeFieldValues extends BaseExample {
       // Create and execute the creative field values list request.
       $response = $this->service->creativeFieldValues->listCreativeFieldValues(
           $values['user_profile_id'], $values['field_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getCreativeFieldValues() as $values) {
@@ -90,9 +88,7 @@ class GetCreativeFieldValues extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative Field Value ID',
-        'value' => 'Creative Field Value'
-    );
+    return ['id' => 'Creative Field Value ID',
+            'value' => 'Creative Field Value'];
   }
 }

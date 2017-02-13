@@ -28,14 +28,12 @@ class CreateTrackingCreative extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true]];
   }
 
   /**
@@ -58,7 +56,7 @@ class CreateTrackingCreative extends BaseExample {
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('Tracking creative created.', array($result));
+    $this->printResultsTable('Tracking creative created.', [$result]);
   }
 
   /**
@@ -76,10 +74,8 @@ class CreateTrackingCreative extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative ID',
-        'name' => 'Creative Name',
-        'type' => 'Creative type'
-    );
+    return ['id' => 'Creative ID',
+            'name' => 'Creative Name',
+            'type' => 'Creative type'];
   }
 }

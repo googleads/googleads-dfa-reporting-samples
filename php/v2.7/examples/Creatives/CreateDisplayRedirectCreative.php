@@ -29,20 +29,18 @@ class CreateDisplayRedirectCreative extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'image_url',
-              'display' => 'Image File URL',
-              'required' => true),
-        array('name' => 'size_id',
-              'display' => 'Size ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'image_url',
+             'display' => 'Image File URL',
+             'required' => true],
+            ['name' => 'size_id',
+             'display' => 'Size ID',
+             'required' => true]];
   }
 
   /**
@@ -70,8 +68,7 @@ class CreateDisplayRedirectCreative extends BaseExample {
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('Display redirect creative created.',
-        array($result));
+    $this->printResultsTable('Display redirect creative created.', [$result]);
   }
 
   /**
@@ -89,10 +86,8 @@ class CreateDisplayRedirectCreative extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative ID',
-        'name' => 'Creative Name',
-        'type' => 'Creative type'
-    );
+    return ['id' => 'Creative ID',
+            'name' => 'Creative Name',
+            'type' => 'Creative type'];
   }
 }

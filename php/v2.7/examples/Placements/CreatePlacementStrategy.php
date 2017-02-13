@@ -28,14 +28,12 @@ class CreatePlacementStrategy extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'strategy_name',
-              'display' => 'Placement Strategy Name',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'strategy_name',
+             'display' => 'Placement Strategy Name',
+             'required' => true]];
   }
 
   /**
@@ -58,7 +56,7 @@ class CreatePlacementStrategy extends BaseExample {
         $values['user_profile_id'], $strategy
     );
 
-    $this->printResultsTable('Placement strategy created.', array($result));
+    $this->printResultsTable('Placement strategy created.', [$result]);
   }
 
   /**
@@ -76,9 +74,7 @@ class CreatePlacementStrategy extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Placement Strategy ID',
-        'name' => 'Placement Strategy Name'
-    );
+    return ['id' => 'Placement Strategy ID',
+            'name' => 'Placement Strategy Name'];
   }
 }

@@ -28,11 +28,9 @@ class GetPlacements extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true]];
   }
 
   /**
@@ -53,7 +51,7 @@ class GetPlacements extends BaseExample {
       // Create and execute the placements list request.
       $response = $this->service->placements->listPlacements(
           $values['user_profile_id'],
-          array('pageToken' => $pageToken)
+          ['pageToken' => $pageToken]
       );
 
       foreach ($response->getPlacements() as $placements) {
@@ -82,10 +80,8 @@ class GetPlacements extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Placement ID',
-        'name' => 'Placement Name',
-        'campaignId' => 'Associated Campaign ID'
-    );
+    return ['id' => 'Placement ID',
+            'name' => 'Placement Name',
+            'campaignId' => 'Associated Campaign ID'];
   }
 }

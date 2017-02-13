@@ -29,17 +29,15 @@ class AssignCreativeToCampaign extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'campaign_id',
-              'display' => 'Campaign ID',
-              'required' => true),
-        array('name' => 'creative_id',
-              'display' => 'Creative ID',
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'campaign_id',
+             'display' => 'Campaign ID',
+             'required' => true],
+            ['name' => 'creative_id',
+             'display' => 'Creative ID',
+             'required' => true]];
   }
 
   /**

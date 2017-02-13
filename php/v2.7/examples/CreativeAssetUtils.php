@@ -26,11 +26,9 @@ function uploadAsset($service, $userProfileId, $advertiserId, $asset,
 
   $result = $service->creativeAssets->insert(
       $userProfileId, $advertiserId, $metadata,
-      array(
-          'data' => file_get_contents($asset['tmp_name']),
-          'mimeType' => $asset['type'],
-          'uploadType' => 'multipart'
-      )
+      ['data' => file_get_contents($asset['tmp_name']),
+       'mimeType' => $asset['type'],
+       'uploadType' => 'multipart']
   );
 
   return $result;

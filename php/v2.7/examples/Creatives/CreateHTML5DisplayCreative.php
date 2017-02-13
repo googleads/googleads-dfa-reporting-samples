@@ -30,25 +30,23 @@ class CreateHTML5DisplayCreative extends BaseExample {
    * @return array
    */
   protected function getInputParameters() {
-    return array(
-        array('name' => 'user_profile_id',
-              'display' => 'User Profile ID',
-              'required' => true),
-        array('name' => 'advertiser_id',
-              'display' => 'Advertiser ID',
-              'required' => true),
-        array('name' => 'size_id',
-              'display' => 'Size ID',
-              'required' => true),
-        array('name' => 'html_asset_file',
-              'display' => 'HTML5 Asset File',
-              'file' => true,
-              'required' => true),
-        array('name' => 'image_asset_file',
-              'display' => 'Backup Image Asset File',
-              'file' => true,
-              'required' => true)
-    );
+    return [['name' => 'user_profile_id',
+             'display' => 'User Profile ID',
+             'required' => true],
+            ['name' => 'advertiser_id',
+             'display' => 'Advertiser ID',
+             'required' => true],
+            ['name' => 'size_id',
+             'display' => 'Size ID',
+             'required' => true],
+            ['name' => 'html_asset_file',
+             'display' => 'HTML5 Asset File',
+             'file' => true,
+             'required' => true],
+            ['name' => 'image_asset_file',
+             'display' => 'Backup Image Asset File',
+             'file' => true,
+             'required' => true]];
   }
 
   /**
@@ -90,7 +88,7 @@ class CreateHTML5DisplayCreative extends BaseExample {
     $imageAsset->setRole('BACKUP_IMAGE');
 
     // Add the creative assets.
-    $creative->setCreativeAssets(array($htmlAsset, $imageAsset));
+    $creative->setCreativeAssets([$htmlAsset, $imageAsset]);
 
     // Configure the backup image.
     $creative->setBackupImageClickThroughUrl('https://www.google.com');
@@ -105,12 +103,12 @@ class CreateHTML5DisplayCreative extends BaseExample {
     $clickTag->setName('clickTag');
     $clickTag->setEventName('exit');
     $clickTag->setValue('https://www.google.com');
-    $creative->setClickTags(array($clickTag));
+    $creative->setClickTags([$clickTag]);
 
     $result = $this->service->creatives->insert($values['user_profile_id'],
         $creative);
 
-    $this->printResultsTable('HTML5 display creative created.', array($result));
+    $this->printResultsTable('HTML5 display creative created.', [$result]);
   }
 
   /**
@@ -128,10 +126,8 @@ class CreateHTML5DisplayCreative extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return array(
-        'id' => 'Creative ID',
-        'name' => 'Creative Name',
-        'type' => 'Creative type'
-    );
+    return ['id' => 'Creative ID',
+            'name' => 'Creative Name',
+            'type' => 'Creative type'];
   }
 }
