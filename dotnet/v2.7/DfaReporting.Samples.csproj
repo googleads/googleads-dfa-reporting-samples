@@ -158,6 +158,10 @@
     <Compile Include="Targeting\ConfigureDynamicAssetTargeting.cs" />
     <Compile Include="Targeting\CreateTargetingTemplate.cs" />
     <Compile Include="Targeting\GetTargetingTemplates.cs" />
+    <Compile Include="Remarketing\CreateRemarketingList.cs" />
+    <Compile Include="Remarketing\GetRemarketingLists.cs" />
+    <Compile Include="Remarketing\ShareRemarketingListToAdvertiser.cs" />
+    <Compile Include="Remarketing\TargetAdToRemarketingList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
