@@ -31,8 +31,7 @@ from oauth2client import client
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
-    'profile_id', type=int,
-    help='The ID of the profile to use for targeting')
+    'profile_id', type=int, help='The ID of the profile to use for targeting')
 argparser.add_argument('ad_id', type=int, help='The ID of the ad to target')
 
 
@@ -59,15 +58,16 @@ def main(argv):
       list = lists['targetableRemarketingLists'][0]
 
       # Update the ad with a list targeting expression
-      ad['remarketing_list_expression'] = { 'expression': list['id'] }
+      ad['remarketingListExpression'] = {'expression': list['id']}
       response = service.ads().update(profileId=profile_id, body=ad).execute()
 
-      print ('Ad %s updated to use remarketing list expression: "%s".'
-            % (response['id'],
-            response['remarketing_list_expression']['expression']))
+      print('Ad %s updated to use remarketing list expression: "%s".' % (
+          response['id'], response['remarketingListExpression']['expression']))
+    else:
+      print 'No targetable remarketing lists found for ad with ID %d.' % ad_id
   except client.AccessTokenRefreshError:
-    print ('The credentials have been revoked or expired, please re-run the '
-           'application to re-authorize')
+    print('The credentials have been revoked or expired, please re-run the '
+          'application to re-authorize')
 
 
 if __name__ == '__main__':
