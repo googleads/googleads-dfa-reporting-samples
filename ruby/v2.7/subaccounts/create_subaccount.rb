@@ -16,24 +16,36 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 #
-# This example illustrates how to list all user profiles
+# This example creates a subaccount in a given DCM account.
+#
+# To get the account ID, run get_all_userprofiles.rb. To get the available
+# permissions, run get_subaccount_permissions.rb.
 
 require_relative '../dfareporting_utils'
+require 'securerandom'
 
-def get_userprofiles()
+def create_subaccount(profile_id, account_id, permission_id)
   # Authenticate and initialize API service.
   service = DfareportingUtils.get_service()
 
-  # Get all user profiles.
-  result = service.list_user_profiles()
+  # Create a new subaccount resource to insert.
+  subaccount = DfareportingUtils::API_NAMESPACE::Subaccount.new({
+    :account_id => account_id,
+    :available_permission_ids => [permission_id],
+    :name => 'Example Subaccount #%s' % SecureRandom.hex(3),
+  })
+
+  # Insert the subaccount.
+  result = service.insert_subaccount(profile_id, subaccount)
 
   # Display results.
-  result.items.each do |profile|
-    puts 'User profile with ID %d and name "%s" was found for account %d.' %
-        [profile.profile_id, profile.user_name, profile.account_id]
-  end
+  puts 'Created subaccount with ID %d and name "%s".' % [result.id, result.name]
 end
 
 if __FILE__ == $0
-  get_userprofiles()
+  # Retrieve command line arguments.
+  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :account_id,
+      :permission_id)
+
+  create_subaccount(args[:profile_id], args[:account_id], args[:permission_id])
 end

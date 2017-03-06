@@ -16,25 +16,34 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 #
-# This example illustrates how to get a user profile
+# This example displays all of the available user role permissions for a given
+# subaccount.
+#
+# To get a subaccount ID, run get_subaccounts.rb.
 
 require_relative '../dfareporting_utils'
 
-def get_userprofile(profile_id)
+def get_subaccount_permissions(profile_id, subaccount_id)
   # Authenticate and initialize API service.
   service = DfareportingUtils.get_service()
 
-  # Get the user profile.
-  result = service.get_user_profile(profile_id)
+  # Construct and execute the subaccount request.
+  subaccount = service.get_subaccount(profile_id, subaccount_id)
 
-  # Display results.
-  puts 'User profile with ID %d and name "%s" was found for account "%s".' %
-      [result.profile_id, result.user_name, result.account_id]
+  # Construct the user role permissions request.
+  result = service.list_user_role_permissions(profile_id, {
+    :ids => subaccount.available_permission_ids
+  })
+
+  result.user_role_permissions.each do |permission|
+    puts 'Found user role permission with ID %d and name "%s".' %
+        [permission.id, permission.name]
+  end
 end
 
 if __FILE__ == $0
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id)
+  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :subaccount_id)
 
-  get_userprofile(args[:profile_id])
+  get_subaccount_permissions(args[:profile_id], args[:subaccount_id])
 end
