@@ -15,22 +15,25 @@
 */
 
 using System;
+using System.Collections.Generic;
 using Google.Apis.Dfareporting.v2_7;
 using Google.Apis.Dfareporting.v2_7.Data;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example illustrates how to patch a standard report. Patching a
-  /// report will modify only the fields you specify.
+  /// This example creates a subaccount in a given DoubleClick Campaign Manager
+  /// account. To get the available permissions, run
+  /// GetUserRolePermissions.cs.
   /// </summary>
-  class PatchReport : SampleBase {
+  class CreateSubaccount : SampleBase {
     /// <summary>
     /// Returns a description about the code example.
     /// </summary>
     public override string Description {
       get {
-        return "This example illustrates how to patch a standard report." +
-            " Patching a report will modify only the fields you specify.\n";
+        return "This example creates a subaccount in a given DoubleClick" +
+            " Campaign Manager account. To get the available permissions, run" +
+            " GetSubaccountPermissions.cs.\n";
       }
     }
 
@@ -39,7 +42,7 @@ namespace DfaReporting.Samples {
     /// </summary>
     /// <param name="args">The command line arguments.</param>
     public static void Main(string[] args) {
-      SampleBase codeExample = new PatchReport();
+      SampleBase codeExample = new CreateSubaccount();
       Console.WriteLine(codeExample.Description);
       codeExample.Run(DfaReportingFactory.getInstance());
     }
@@ -50,21 +53,27 @@ namespace DfaReporting.Samples {
     /// <param name="service">An initialized Dfa Reporting service object
     /// </param>
     public override void Run(DfareportingService service) {
-      long reportId = long.Parse(_T("INSERT_REPORT_ID_HERE"));
+      long accountId = long.Parse(_T("INSERT_ACCOUNT_ID_HERE"));
+      long permissionOneId = long.Parse(_T("INSERT_FIRST_PERMISSION_ID_HERE"));
+      long permissionTwoId = long.Parse(_T("INSERT_SECOND_PERMISSION_ID_HERE"));
       long profileId = long.Parse(_T("INSERT_USER_PROFILE_ID_HERE"));
 
-      String reportName = _T("ENTER_REPORT_NAME_HERE");
+      String subaccountName = _T("INSERT_SUBACCOUNT_NAME_HERE");
 
-      // Prepare the report object to patch.
-      Report toPatch = new Report();
-      // We only want to modify the report name.
-      toPatch.Name = reportName;
+      // Create subaccount structure.
+      Subaccount subaccount = new Subaccount();
+      subaccount.Name = subaccountName;
+      subaccount.AccountId = accountId;
 
-      // Insert the report.
-      Report report = service.Reports.Patch(toPatch, profileId, reportId).Execute();
+      // Create a collection of all permissions assigned to this subaccount and add it to the
+      // subaccount structure. To get list of available permissions, run GetUserRolePermissions.cs.
+      subaccount.AvailablePermissionIds = new List<long?> { permissionOneId, permissionTwoId };
 
-      Console.WriteLine("{0} report with ID {1} was successfully patched.",
-          report.Type, report.Id);
+      // Create subaccount.
+      Subaccount result = service.Subaccounts.Insert(subaccount, profileId).Execute();
+
+      // Display subaccount ID.
+      Console.WriteLine("Subaccount with ID {0} was created.", result.Id);
     }
   }
 }

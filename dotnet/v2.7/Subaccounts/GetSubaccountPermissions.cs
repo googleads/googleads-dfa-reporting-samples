@@ -15,22 +15,24 @@
 */
 
 using System;
+using System.Linq;
 using Google.Apis.Dfareporting.v2_7;
 using Google.Apis.Dfareporting.v2_7.Data;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example illustrates how to update a report. Updating a report will
-  /// modify all fields.
+  /// This example displays all of the available subaccount permissions.
+  ///
+  /// To get a subaccount ID, run GetSubaccounts.cs.
   /// </summary>
-  class UpdateReport : SampleBase {
+  class GetSubaccountPermissions : SampleBase {
     /// <summary>
     /// Returns a description about the code example.
     /// </summary>
     public override string Description {
       get {
-        return "This example illustrates how to update a report. Updating a" +
-            " report will modify all fields.\n";
+        return "This example displays all of the available user role permissions for the" +
+            " specified subaccount.\n\nTo get a subaccount ID, run GetSubaccounts.cs.\n";
       }
     }
 
@@ -39,7 +41,7 @@ namespace DfaReporting.Samples {
     /// </summary>
     /// <param name="args">The command line arguments.</param>
     public static void Main(string[] args) {
-      SampleBase codeExample = new UpdateReport();
+      SampleBase codeExample = new GetSubaccountPermissions();
       Console.WriteLine(codeExample.Description);
       codeExample.Run(DfaReportingFactory.getInstance());
     }
@@ -50,23 +52,27 @@ namespace DfaReporting.Samples {
     /// <param name="service">An initialized Dfa Reporting service object
     /// </param>
     public override void Run(DfareportingService service) {
-      long reportId = long.Parse(_T("INSERT_REPORT_ID_HERE"));
-      long profileId = long.Parse(_T("INSERT_USER_PROFILE_ID_HERE"));
+      long profileId = long.Parse(_T("INSERT_PROFILE_ID_HERE"));
+      long subaccountId = long.Parse(_T("INSERT_SUBACCOUNT_ID_HERE"));
 
-      String reportName = _T("ENTER_REPORT_NAME_HERE");
+      // Limit the fields returned.
+      String fields = "userRolePermissions(id,name)";
 
-      // Retrieve the specified report.
-      Report report = service.Reports.Get(profileId, reportId).Execute();
+      // Retrieve the subaccount.
+      Subaccount subaccount = service.Subaccounts.Get(profileId, subaccountId).Execute();
 
-      // Update the report name.
-      report.Name = reportName;
+      // Retrieve the subaccount permissions.
+      UserRolePermissionsResource.ListRequest request = service.UserRolePermissions.List(profileId);
+      request.Ids = subaccount.AvailablePermissionIds.Select(p => p.ToString()).ToList<string>();
+      request.Fields = fields;
 
-      // Insert the updated report.
-      Report updatedReport =
-          service.Reports.Update(report, profileId, reportId).Execute();
+      UserRolePermissionsListResponse permissions = request.Execute();
 
-      Console.WriteLine("{0} report with ID {1} was successfully updated.",
-          updatedReport.Type, updatedReport.Id);
+      // Display the subaccount permissions.
+      foreach (UserRolePermission permission in permissions.UserRolePermissions) {
+        Console.WriteLine("User role permission with ID {0} and name \"{1}\" was found.",
+            permission.Id, permission.Name);
+      }
     }
   }
 }
