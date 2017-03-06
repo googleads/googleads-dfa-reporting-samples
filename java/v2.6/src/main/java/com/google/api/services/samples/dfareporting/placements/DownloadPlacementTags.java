@@ -21,7 +21,6 @@ import com.google.api.services.dfareporting.model.PlacementsGenerateTagsResponse
 import com.google.api.services.dfareporting.model.TagData;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 import com.google.common.collect.ImmutableList;
-
 import java.util.List;
 
 /**
@@ -35,8 +34,11 @@ public class DownloadPlacementTags {
   private static final String PLACEMENT_ID = "ENTER_PLACEMENT_ID_HERE";
 
   // The tag formats to generate
-  private static final List<String> TAG_FORMATS = ImmutableList.of("PLACEMENT_TAG_STANDARD",
-      "PLACEMENT_TAG_IFRAME_JAVASCRIPT", "PLACEMENT_TAG_INTERNAL_REDIRECT");
+  private static final ImmutableList<String> TAG_FORMATS =
+      ImmutableList.of(
+          "PLACEMENT_TAG_STANDARD",
+          "PLACEMENT_TAG_IFRAME_JAVASCRIPT",
+          "PLACEMENT_TAG_INTERNAL_REDIRECT");
 
   public static void runExample(Dfareporting reporting, long profileId, long campaignId,
       long placementId, List<String> tagFormats) throws Exception {
