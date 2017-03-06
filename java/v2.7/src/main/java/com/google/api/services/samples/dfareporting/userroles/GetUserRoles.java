@@ -12,40 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.services.samples.dfareporting.misc;
+package com.google.api.services.samples.dfareporting.userroles;
 
 import com.google.api.client.util.Strings;
 import com.google.api.services.dfareporting.Dfareporting;
-import com.google.api.services.dfareporting.model.ContentCategoriesListResponse;
-import com.google.api.services.dfareporting.model.ContentCategory;
+import com.google.api.services.dfareporting.model.UserRole;
+import com.google.api.services.dfareporting.model.UserRolesListResponse;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
- * This example displays all available content categories.
+ * This example displays all user roles.
+ *
+ * The output is limited to include only ID, name, account ID and subaccount ID.
  */
-public class GetContentCategories {
+public class GetUserRoles {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";
 
   public static void runExample(Dfareporting reporting, long profileId) throws Exception {
     // Limit the fields returned.
-    String fields = "nextPageToken,contentCategories(id,name)";
+    String fields = "nextPageToken,userRoles(accountId,id,name,subaccountId)";
 
-    ContentCategoriesListResponse categories;
+    UserRolesListResponse roles;
     String nextPageToken = null;
 
     do {
-      // Create and execute the content categories list request
-      categories = reporting.contentCategories().list(profileId).setFields(fields)
-          .setPageToken(nextPageToken).execute();
+      // Create and execute the user roles list request.
+      roles = reporting.userRoles().list(profileId).setFields(fields).setPageToken(nextPageToken)
+          .execute();
 
-      for (ContentCategory category : categories.getContentCategories()) {
-        System.out.printf("Found content category with ID %d and name \"%s\".%n",
-            category.getId(), category.getName());
+      for (UserRole role : roles.getUserRoles()) {
+        System.out.printf("User role with ID %d and name \"%s\" was found.%n", role.getId(),
+            role.getName());
       }
 
-      // Update the next page token
-      nextPageToken = categories.getNextPageToken();
-    } while (!categories.getContentCategories().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
+      // Update the next page token.
+      nextPageToken = roles.getNextPageToken();
+    } while (!roles.getUserRoles().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
   }
 
   public static void main(String[] args) throws Exception {

@@ -12,42 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.services.samples.dfareporting.accountmanagement;
+package com.google.api.services.samples.dfareporting.subaccounts;
 
 import com.google.api.client.util.Strings;
 import com.google.api.services.dfareporting.Dfareporting;
-import com.google.api.services.dfareporting.model.UserRole;
-import com.google.api.services.dfareporting.model.UserRolesListResponse;
+import com.google.api.services.dfareporting.model.Subaccount;
+import com.google.api.services.dfareporting.model.SubaccountsListResponse;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
- * This example displays all user roles.
+ * This example displays all subaccounts.
  *
- * The output is limited to include only ID, name, account ID and subaccount ID.
+ * Note that the permissions assigned to a subaccount are not returned in a human-readable format
+ * with this example. Run GetSubaccountPermissions.java to see what permissions are available on a
+ * subaccount.
  */
-public class GetUserRoles {
-  private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";
+public class GetSubaccounts {
+  private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";
 
   public static void runExample(Dfareporting reporting, long profileId) throws Exception {
     // Limit the fields returned.
-    String fields = "nextPageToken,userRoles(accountId,id,name,subaccountId)";
+    String fields = "nextPageToken,subaccounts(id,name)";
 
-    UserRolesListResponse roles;
+    SubaccountsListResponse subaccounts;
     String nextPageToken = null;
 
     do {
-      // Create and execute the user roles list request.
-      roles = reporting.userRoles().list(profileId).setFields(fields).setPageToken(nextPageToken)
-          .execute();
+      // Create and execute the subaccounts list request.
+      subaccounts = reporting.subaccounts().list(profileId).setFields(fields)
+          .setPageToken(nextPageToken).execute();
 
-      for (UserRole role : roles.getUserRoles()) {
-        System.out.printf("User role with ID %d and name \"%s\" was found.%n", role.getId(),
-            role.getName());
+      for (Subaccount subaccount : subaccounts.getSubaccounts()) {
+        System.out.printf("Subaccount with ID %d and name \"%s\" was found.%n", subaccount.getId(),
+            subaccount.getName());
       }
 
       // Update the next page token.
-      nextPageToken = roles.getNextPageToken();
-    } while (!roles.getUserRoles().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
+      nextPageToken = subaccounts.getNextPageToken();
+    } while (!subaccounts.getSubaccounts().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
   }
 
   public static void main(String[] args) throws Exception {

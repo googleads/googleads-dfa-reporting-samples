@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.services.samples.dfareporting.accountmanagement;
+package com.google.api.services.samples.dfareporting.subaccounts;
 
 import com.google.api.services.dfareporting.Dfareporting;
 import com.google.api.services.dfareporting.model.Subaccount;
@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * This example creates a subaccount in a given DoubleClick Campaign Manager account. To get the
- * available permissions, run GetUserRolePermissions.java.
+ * available permissions, run GetSubaccountPermissions.java.
  */
 public class CreateSubaccount {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";

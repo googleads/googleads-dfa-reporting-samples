@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.services.samples.dfareporting.accountmanagement;
+package com.google.api.services.samples.dfareporting.userroles;
 
 import com.google.api.services.dfareporting.Dfareporting;
 import com.google.api.services.dfareporting.model.UserRole;

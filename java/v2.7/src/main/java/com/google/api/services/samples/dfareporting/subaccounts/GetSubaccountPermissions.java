@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.services.samples.dfareporting.accountmanagement;
+package com.google.api.services.samples.dfareporting.subaccounts;
 
 import com.google.api.services.dfareporting.Dfareporting;
 import com.google.api.services.dfareporting.model.Subaccount;
@@ -21,11 +21,12 @@ import com.google.api.services.dfareporting.model.UserRolePermissionsListRespons
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
- * This example displays all of the available subaccount permissions.
+ * This example displays all of the available user role permissions for a specified
+ * subaccount.
  *
- * To get a subaccount ID, run get_subaccounts.py.
+ * To get a subaccount ID, run GetSubaccounts.java.
  */
-public class GetUserRolePermissions {
+public class GetSubaccountPermissions {
   private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";
 
   private static final String SUBACCOUNT_ID = "ENTER_SUBACCOUNT_ID_HERE";

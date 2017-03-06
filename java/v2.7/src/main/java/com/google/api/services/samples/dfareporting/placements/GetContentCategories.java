@@ -12,44 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.services.samples.dfareporting.accountmanagement;
+package com.google.api.services.samples.dfareporting.placements;
 
 import com.google.api.client.util.Strings;
 import com.google.api.services.dfareporting.Dfareporting;
-import com.google.api.services.dfareporting.model.Subaccount;
-import com.google.api.services.dfareporting.model.SubaccountsListResponse;
+import com.google.api.services.dfareporting.model.ContentCategoriesListResponse;
+import com.google.api.services.dfareporting.model.ContentCategory;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
 /**
- * This example displays all subaccounts.
- *
- * Note that the permissions assigned to a subaccount are not returned in a human-readable format
- * with this example. Run GetUserRolePermissions.java to see what permissions are available on a
- * subaccount.
+ * This example displays all available content categories.
  */
-public class GetSubaccounts {
-  private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";
+public class GetContentCategories {
+  private static final String USER_PROFILE_ID = "ENTER_USER_PROFILE_ID_HERE";
 
   public static void runExample(Dfareporting reporting, long profileId) throws Exception {
     // Limit the fields returned.
-    String fields = "nextPageToken,subaccounts(id,name)";
+    String fields = "nextPageToken,contentCategories(id,name)";
 
-    SubaccountsListResponse subaccounts;
+    ContentCategoriesListResponse categories;
     String nextPageToken = null;
 
     do {
-      // Create and execute the subaccounts list request.
-      subaccounts = reporting.subaccounts().list(profileId).setFields(fields)
+      // Create and execute the content categories list request
+      categories = reporting.contentCategories().list(profileId).setFields(fields)
           .setPageToken(nextPageToken).execute();
 
-      for (Subaccount subaccount : subaccounts.getSubaccounts()) {
-        System.out.printf("Subaccount with ID %d and name \"%s\" was found.%n", subaccount.getId(),
-            subaccount.getName());
+      for (ContentCategory category : categories.getContentCategories()) {
+        System.out.printf("Found content category with ID %d and name \"%s\".%n",
+            category.getId(), category.getName());
       }
 
-      // Update the next page token.
-      nextPageToken = subaccounts.getNextPageToken();
-    } while (!subaccounts.getSubaccounts().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
+      // Update the next page token
+      nextPageToken = categories.getNextPageToken();
+    } while (!categories.getContentCategories().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
   }
 
   public static void main(String[] args) throws Exception {
