@@ -55,14 +55,17 @@ def main(argv):
         maxResults=1).execute()
 
     if lists['targetableRemarketingLists']:
-      list = lists['targetableRemarketingLists'][0]
+      remarketing_list = lists['targetableRemarketingLists'][0]
 
       # Update the ad with a list targeting expression
-      ad['remarketingListExpression'] = {'expression': list['id']}
+      ad['remarketingListExpression'] = {
+          'expression': remarketing_list['id']
+      }
       response = service.ads().update(profileId=profile_id, body=ad).execute()
 
-      print('Ad %s updated to use remarketing list expression: "%s".' % (
-          response['id'], response['remarketingListExpression']['expression']))
+      print('Ad %s updated to use remarketing list expression: "%s".'
+            % (response['id'],
+               response['remarketingListExpression']['expression']))
     else:
       print 'No targetable remarketing lists found for ad with ID %d.' % ad_id
   except client.AccessTokenRefreshError:

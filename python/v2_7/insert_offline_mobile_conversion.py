@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Inserts an offline conversion attributed to an encrypted user ID."""
+"""Inserts an offline conversion attributed to a mobile device ID."""
 
 import argparse
 import sys
@@ -29,17 +29,8 @@ argparser.add_argument(
     'profile_id', type=int,
     help='The ID of the profile to add a placement for')
 argparser.add_argument(
-    'encrypted_user_id',
-    help='The encrypted user ID to attribute the conversion to')
-argparser.add_argument(
-    'encryption_source',
-    help='The source of the encrypted user ID')
-argparser.add_argument(
-    'encryption_entity_id', type=int,
-    help='The ID of the entity used to encrypt the supplied user ID')
-argparser.add_argument(
-    'encryption_entity_type',
-    help='The type of the entity used to encrypt the supplied user ID')
+    'mobile_device_id',
+    help='The ID of the mobile device to attribute the conversion to')
 argparser.add_argument(
     'floodlight_activity_id', type=int,
     help='The ID of Floodlight activity this conversion is associated with')
@@ -53,11 +44,8 @@ def main(argv):
   service = dfareporting_utils.setup(flags)
 
   profile_id = flags.profile_id
-  encrypted_user_id = flags.encrypted_user_id
-  encryption_entity_id = flags.encryption_entity_id
-  encryption_entity_type = flags.encryption_entity_type
-  encryption_source = flags.encryption_source
   floodlight_activity_id = flags.floodlight_activity_id
+  mobile_device_id = flags.mobile_device_id
 
   try:
     # Look up the Floodlight configuration ID based on activity ID.
@@ -69,35 +57,25 @@ def main(argv):
 
     # Construct the conversion.
     conversion = {
-        'encryptedUserId': encrypted_user_id,
         'floodlightActivityId': floodlight_activity_id,
         'floodlightConfigurationId': floodlight_config_id,
         'ordinal': current_time_in_micros,
+        'mobileDeviceId': mobile_device_id,
         'timestampMicros': current_time_in_micros
     }
 
-    # Construct the encryption info.
-    encryption_info = {
-        'encryptionEntityId': encryption_entity_id,
-        'encryptionEntityType': encryption_entity_type,
-        'encryptionSource': encryption_source
-    }
-
     # Insert the conversion.
-    request_body = {
-        'conversions': [conversion],
-        'encryptionInfo': encryption_info
-    }
+    request_body = {'conversions': [conversion]}
     request = service.conversions().batchinsert(profileId=profile_id,
                                                 body=request_body)
     response = request.execute()
 
     if not response['hasFailures']:
-      print ('Successfully inserted conversion for encrypted user ID %s.'
-          % encrypted_user_id)
+      print ('Successfully inserted conversion for mobile device ID %s.'
+             % mobile_device_id)
     else:
-      print ('Error(s) inserting conversion for encrypted user ID %s.'
-          % encrypted_user_id)
+      print ('Error(s) inserting conversion for mobile device ID %s.'
+             % mobile_device_id)
 
       status = response['status'][0]
       for error in status['errors']:

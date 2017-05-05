@@ -14,9 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example displays all active ads your DFA user profile can see.
+"""Displays all remarketing lists owned by the specified advertiser.
 
-Only name and ID are returned.
+Note: the RemarketingLists resource will only return lists owned by the
+specified advertiser. To see all lists that can be used for targeting ads
+(including those shared from other accounts or advertisers), use the
+TargetableRemarketingLists resource instead.
 """
 
 import argparse
@@ -29,7 +32,10 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to look up ads for')
+    help='The ID of the profile to look up remarketing lists for')
+argparser.add_argument(
+    'advertiser_id', type=int,
+    help='The ID of the advertiser to look up remarketing lists for')
 
 
 def main(argv):
@@ -40,20 +46,23 @@ def main(argv):
   service = dfareporting_utils.setup(flags)
 
   profile_id = flags.profile_id
+  advertiser_id = flags.advertiser_id
 
   try:
     # Construct the request.
-    request = service.ads().list(profileId=profile_id, active=True)
+    request = service.remarketingLists().list(
+        profileId=profile_id, advertiserId=advertiser_id)
 
     while True:
       # Execute request and print response.
       response = request.execute()
 
-      for ad in response['ads']:
-        print ('Found ad with ID %s and name "%s".' % (ad['id'], ad['name']))
+      for remarketing_list in response['remarketingLists']:
+        print ('Found remarketing list with ID %s and name "%s."'
+               % (remarketing_list['id'], remarketing_list['name']))
 
-      if response['ads'] and response['nextPageToken']:
-        request = service.ads().list_next(request, response)
+      if response['remarketingLists'] and response['nextPageToken']:
+        request = service.remarketingLists().list_next(request, response)
       else:
         break
 

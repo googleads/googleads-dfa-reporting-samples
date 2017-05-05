@@ -14,18 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates an HTML5 display creative.
+"""This example creates an image display creative.
 
-Requires an HTML5 asset, backup image asset, and an advertiser ID as input.
-To get an advertiser ID, run get_advertisers.py.
+Requires an image asset and advertiser ID as input. To get an advertiser ID,
+run get_advertisers.py.
 """
 
 import argparse
 import sys
 
 from apiclient.http import MediaFileUpload
-from oauth2client import client
 import dfareporting_utils
+from oauth2client import client
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
@@ -39,16 +39,10 @@ argparser.add_argument(
     'size_id', type=int,
     help='The ID of the size of this creative.')
 argparser.add_argument(
-    'html5_asset_name',
+    'image_name',
     help='Suggested name to use for the uploaded creative asset.')
 argparser.add_argument(
-    'path_to_html5_asset_file',
-    help='Path to the asset file to be uploaded.')
-argparser.add_argument(
-    'backup_image_name',
-    help='Suggested name to use for the uploaded creative asset.')
-argparser.add_argument(
-    'path_to_backup_image_file',
+    'path_to_image_file',
     help='Path to the asset file to be uploaded.')
 
 
@@ -61,39 +55,23 @@ def main(argv):
 
   profile_id = flags.profile_id
   advertiser_id = flags.advertiser_id
-  backup_image_name = flags.backup_image_name
-  html5_asset_name = flags.html5_asset_name
-  path_to_backup_image_file = flags.path_to_backup_image_file
-  path_to_html5_asset_file = flags.path_to_html5_asset_file
+  image_name = flags.image_name
+  path_to_image_file = flags.path_to_image_file
   size_id = flags.size_id
 
   try:
-    # Upload the HTML5 asset
-    html5_asset_id = upload_creative_asset(
-        service, profile_id, advertiser_id, html5_asset_name,
-        path_to_html5_asset_file, 'HTML')
-
-    # Upload the backup image asset
-    backup_image_asset_id = upload_creative_asset(
-        service, profile_id, advertiser_id, backup_image_name,
-        path_to_backup_image_file, 'HTML_IMAGE')
+    # Upload the creative asset
+    creative_asset_id = upload_creative_asset(
+        service, profile_id, advertiser_id, image_name, path_to_image_file,
+        'HTML_IMAGE')
 
     # Construct the creative structure.
     creative = {
         'advertiserId': advertiser_id,
-        'backupImageClickThroughUrl': 'https://www.google.com',
-        'backupImageReportingLabel': 'backup_image_exit',
-        'backupImageTargetWindow': {'targetWindowOption': 'NEW_WINDOW'},
-        'clickTags': [{
-            'eventName': 'exit',
-            'name': 'click_tag',
-            'value': 'https://www.google.com'
-        }],
         'creativeAssets': [
-            {'assetIdentifier': html5_asset_id, 'role': 'PRIMARY'},
-            {'assetIdentifier': backup_image_asset_id, 'role': 'BACKUP_IMAGE'},
+            {'assetIdentifier': creative_asset_id, 'role': 'PRIMARY'}
         ],
-        'name': 'Test HTML5 display creative',
+        'name': 'Test image display creative',
         'size': {'id': size_id},
         'type': 'DISPLAY'
     }
@@ -103,7 +81,7 @@ def main(argv):
     # Execute request and print response.
     response = request.execute()
 
-    print ('Created HTML5 display creative with ID %s and name "%s".'
+    print ('Created image display creative with ID %s and name "%s".'
            % (response['id'], response['name']))
 
   except client.AccessTokenRefreshError:

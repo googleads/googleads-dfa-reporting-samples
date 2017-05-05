@@ -25,7 +25,6 @@ from apiclient import discovery
 import dfareporting_utils
 import httplib2
 from oauth2client import client
-from oauth2client import tools
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Declare command-line flags.

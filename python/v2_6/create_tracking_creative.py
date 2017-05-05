@@ -14,10 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example displays all active ads your DFA user profile can see.
-
-Only name and ID are returned.
-"""
+"""This example creates a tracking creative associated with an advertiser."""
 
 import argparse
 import sys
@@ -29,7 +26,10 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to look up ads for')
+    help='The ID of the profile to add a user role for')
+argparser.add_argument(
+    'advertiser_id', type=int,
+    help='The ID of the advertiser to associate this creative with.')
 
 
 def main(argv):
@@ -40,22 +40,23 @@ def main(argv):
   service = dfareporting_utils.setup(flags)
 
   profile_id = flags.profile_id
+  advertiser_id = flags.advertiser_id
 
   try:
-    # Construct the request.
-    request = service.ads().list(profileId=profile_id, active=True)
+    # Construct the basic creative structure.
+    creative = {
+        'advertiserId': advertiser_id,
+        'name': 'Test tracking creative',
+        'type': 'TRACKING_TEXT'
+    }
 
-    while True:
-      # Execute request and print response.
-      response = request.execute()
+    request = service.creatives().insert(profileId=profile_id, body=creative)
 
-      for ad in response['ads']:
-        print ('Found ad with ID %s and name "%s".' % (ad['id'], ad['name']))
+    # Execute request and print response.
+    response = request.execute()
 
-      if response['ads'] and response['nextPageToken']:
-        request = service.ads().list_next(request, response)
-      else:
-        break
+    print ('Created tracking creative with ID %s and name "%s".'
+           % (response['id'], response['name']))
 
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '

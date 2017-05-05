@@ -14,12 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example targets an ad to a remarketing list.
+"""Displays all remarketing lists owned by the specified advertiser.
 
-The first targetable remarketing list, either owned by or shared to the ad's
-advertiser, will be used. To create a remarketing list, see
-create_remarketing_list.py. To share a remarketing list with the ad's
-advertiser, see share_remarketing_list_to_advertiser.py.
+Note: the RemarketingLists resource will only return lists owned by the
+specified advertiser. To see all lists that can be used for targeting ads
+(including those shared from other accounts or advertisers), use the
+TargetableRemarketingLists resource instead.
 """
 
 import argparse
@@ -32,8 +32,10 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to use for targeting')
-argparser.add_argument('ad_id', type=int, help='The ID of the ad to target')
+    help='The ID of the profile to look up remarketing lists for')
+argparser.add_argument(
+    'advertiser_id', type=int,
+    help='The ID of the advertiser to look up remarketing lists for')
 
 
 def main(argv):
@@ -44,27 +46,26 @@ def main(argv):
   service = dfareporting_utils.setup(flags)
 
   profile_id = flags.profile_id
-  ad_id = flags.ad_id
+  advertiser_id = flags.advertiser_id
 
   try:
-    # Retrieve the ad.
-    ad = service.ads().get(profileId=profile_id, id=ad_id).execute()
+    # Construct the request.
+    request = service.remarketingLists().list(
+        profileId=profile_id, advertiserId=advertiser_id)
 
-    # Retrieve a single targetable remarketing list for the ad.
-    lists = service.targetableRemarketingLists().list(
-        profileId=profile_id, advertiserId=ad['advertiserId'],
-        maxResults=1).execute()
+    while True:
+      # Execute request and print response.
+      response = request.execute()
 
-    if lists['targetableRemarketingLists']:
-      list = lists['targetableRemarketingLists'][0]
+      for remarketing_list in response['remarketingLists']:
+        print ('Found remarketing list with ID %s and name "%s."'
+               % (remarketing_list['id'], remarketing_list['name']))
 
-      # Update the ad with a list targeting expression
-      ad['remarketing_list_expression'] = { 'expression': list['id'] }
-      response = service.ads().update(profileId=profile_id, body=ad).execute()
+      if response['remarketingLists'] and response['nextPageToken']:
+        request = service.remarketingLists().list_next(request, response)
+      else:
+        break
 
-      print ('Ad %s updated to use remarketing list expression: "%s".'
-            % (response['id'],
-            response['remarketing_list_expression']['expression']))
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '
            'application to re-authorize')

@@ -14,7 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates a tracking creative associated with a given advertiser."""
+"""Creates a remarketing list for a given advertiser and floodlight activity.
+
+Note: this sample assumes that the floodlight activity specified has a U1 custom
+floodlight variable.
+"""
 
 import argparse
 import sys
@@ -26,10 +30,13 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to add a user role for')
+    help='The ID of the profile to add a remarketing list for')
 argparser.add_argument(
     'advertiser_id', type=int,
-    help='The ID of the advertiser to associate this creative with.')
+    help='The ID of the advertiser to add a remarketing list for')
+argparser.add_argument(
+    'activity_id', type=int,
+    help='The ID of the floodlight activity to add a remarketing list for')
 
 
 def main(argv):
@@ -41,21 +48,43 @@ def main(argv):
 
   profile_id = flags.profile_id
   advertiser_id = flags.advertiser_id
+  activity_id = flags.activity_id
 
   try:
-    # Construct the basic creative structure.
-    creative = {
-        'advertiserId': advertiser_id,
-        'name': 'Test tracking creative',
-        'type': 'TRACKING_TEXT'
+    # Create a list population term.
+    # This term matches all visitors with a U1 value exactly matching
+    # "test_value"
+    term = {
+        'operator': 'STRING_EQUALS',
+        'type': 'CUSTOM_VARIABLE_TERM',
+        'value': 'test_value',
+        'variableName': 'U1'
     }
 
-    request = service.creatives().insert(profileId=profile_id, body=creative)
+    # Add the term to a clause and the clause to a population rule.
+    # This rule will target all visitors who trigger the specified floodlight
+    # activity and satisfy the custom rule defined in the list population term.
+    rule = {
+        'floodlightActivityId': activity_id,
+        'listPopulationClauses': {'terms': [term]}
+    }
+
+    # Create the remarketing list.
+    remarketing_list = {
+        'name': 'Test Remarketing List',
+        'active': 'true',
+        'advertiserId': advertiser_id,
+        'lifeSpan': 30,
+        'listPopulationRule': rule
+    }
+
+    request = service.remarketingLists().insert(
+        profileId=profile_id, body=remarketing_list)
 
     # Execute request and print response.
     response = request.execute()
 
-    print ('Created tracking creative with ID %s and name "%s".'
+    print ('Created remarketing list with ID %s and name "%s."'
            % (response['id'], response['name']))
 
   except client.AccessTokenRefreshError:

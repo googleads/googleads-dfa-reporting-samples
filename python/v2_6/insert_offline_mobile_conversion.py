@@ -72,10 +72,10 @@ def main(argv):
 
     if not response['hasFailures']:
       print ('Successfully inserted conversion for mobile device ID %s.'
-          % mobile_device_id)
+             % mobile_device_id)
     else:
       print ('Error(s) inserting conversion for mobile device ID %s.'
-          % mobile_device_id)
+             % mobile_device_id)
 
       status = response['status'][0]
       for error in status['errors']:

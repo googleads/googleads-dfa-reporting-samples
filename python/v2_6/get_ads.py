@@ -14,7 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example displays all advertiser groups for the specified user profile."""
+"""This example displays all active ads your DFA user profile can see.
+
+Only name and ID are returned.
+"""
 
 import argparse
 import sys
@@ -26,7 +29,7 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to list activity groups for')
+    help='The ID of the profile to look up ads for')
 
 
 def main(argv):
@@ -40,18 +43,17 @@ def main(argv):
 
   try:
     # Construct the request.
-    request = service.advertiserGroups().list(profileId=profile_id)
+    request = service.ads().list(profileId=profile_id, active=True)
 
     while True:
       # Execute request and print response.
       response = request.execute()
 
-      for group in response['advertiserGroups']:
-        print ('Found advertiser group with ID %s and name "%s".'
-               % (group['id'], group['name']))
+      for ad in response['ads']:
+        print 'Found ad with ID %s and name "%s".' % (ad['id'], ad['name'])
 
-      if response['advertiserGroups'] and response['nextPageToken']:
-        request = service.advertiserGroups().list_next(request, response)
+      if response['ads'] and response['nextPageToken']:
+        request = service.ads().list_next(request, response)
       else:
         break
 

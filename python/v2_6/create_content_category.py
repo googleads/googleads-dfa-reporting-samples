@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates a content category with the given name and description."""
+"""This example creates a content category with given name and description."""
 
 import argparse
 import sys

@@ -14,13 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Displays all remarketing lists owned by the specified advertiser.
-
-Note: the RemarketingLists resource will only return lists owned by the
-specified advertiser. To see all lists that can be used for targeting ads
-(including those shared from other accounts or advertisers), use the
-TargetableRemarketingLists resource instead.
-"""
+"""This example displays all advertiser groups for a specified user profile."""
 
 import argparse
 import sys
@@ -32,10 +26,7 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to look up remarketing lists for')
-argparser.add_argument(
-    'advertiser_id', type=int,
-    help='The ID of the advertiser to look up remarketing lists for')
+    help='The ID of the profile to list activity groups for')
 
 
 def main(argv):
@@ -46,23 +37,21 @@ def main(argv):
   service = dfareporting_utils.setup(flags)
 
   profile_id = flags.profile_id
-  advertiser_id = flags.advertiser_id
 
   try:
     # Construct the request.
-    request = service.remarketingLists().list(
-        profileId=profile_id, advertiserId=advertiser_id)
+    request = service.advertiserGroups().list(profileId=profile_id)
 
     while True:
       # Execute request and print response.
       response = request.execute()
 
-      for list in response['remarketingLists']:
-        print ('Found remarketing list with ID %s and name "%s."'
-               % (list['id'], list['name']))
+      for group in response['advertiserGroups']:
+        print ('Found advertiser group with ID %s and name "%s".'
+               % (group['id'], group['name']))
 
-      if response['remarketingLists'] and response['nextPageToken']:
-        request = service.remarketingLists().list_next(request, response)
+      if response['advertiserGroups'] and response['nextPageToken']:
+        request = service.advertiserGroups().list_next(request, response)
       else:
         break
 

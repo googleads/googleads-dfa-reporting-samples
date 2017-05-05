@@ -14,7 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example creates a content category with the given name and description."""
+"""This example displays all active ads your DFA user profile can see.
+
+Only name and ID are returned.
+"""
 
 import argparse
 import sys
@@ -26,7 +29,7 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to add a content category for')
+    help='The ID of the profile to look up ads for')
 
 
 def main(argv):
@@ -39,19 +42,20 @@ def main(argv):
   profile_id = flags.profile_id
 
   try:
-    # Construct and save content category.
-    content_category = {
-        'name': 'Test Category'
-    }
+    # Construct the request.
+    request = service.ads().list(profileId=profile_id, active=True)
 
-    request = service.contentCategories().insert(
-        profileId=profile_id, body=content_category)
+    while True:
+      # Execute request and print response.
+      response = request.execute()
 
-    # Execute request and print response.
-    response = request.execute()
+      for ad in response['ads']:
+        print 'Found ad with ID %s and name "%s".' % (ad['id'], ad['name'])
 
-    print ('Created content category with ID %s and name "%s".'
-           % (response['id'], response['name']))
+      if response['ads'] and response['nextPageToken']:
+        request = service.ads().list_next(request, response)
+      else:
+        break
 
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '

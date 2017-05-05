@@ -14,13 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Displays all remarketing lists owned by the specified advertiser.
-
-Note: the RemarketingLists resource will only return lists owned by the
-specified advertiser. To see all lists that can be used for targeting ads
-(including those shared from other accounts or advertisers), use the
-TargetableRemarketingLists resource instead.
-"""
+"""This example creates a content category with given name and description."""
 
 import argparse
 import sys
@@ -32,10 +26,7 @@ from oauth2client import client
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
     'profile_id', type=int,
-    help='The ID of the profile to look up remarketing lists for')
-argparser.add_argument(
-    'advertiser_id', type=int,
-    help='The ID of the advertiser to look up remarketing lists for')
+    help='The ID of the profile to add a content category for')
 
 
 def main(argv):
@@ -46,25 +37,21 @@ def main(argv):
   service = dfareporting_utils.setup(flags)
 
   profile_id = flags.profile_id
-  advertiser_id = flags.advertiser_id
 
   try:
-    # Construct the request.
-    request = service.remarketingLists().list(
-        profileId=profile_id, advertiserId=advertiser_id)
+    # Construct and save content category.
+    content_category = {
+        'name': 'Test Category'
+    }
 
-    while True:
-      # Execute request and print response.
-      response = request.execute()
+    request = service.contentCategories().insert(
+        profileId=profile_id, body=content_category)
 
-      for list in response['remarketingLists']:
-        print ('Found remarketing list with ID %s and name "%s."'
-               % (list['id'], list['name']))
+    # Execute request and print response.
+    response = request.execute()
 
-      if response['remarketingLists'] and response['nextPageToken']:
-        request = service.remarketingLists().list_next(request, response)
-      else:
-        break
+    print ('Created content category with ID %s and name "%s".'
+           % (response['id'], response['name']))
 
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '
