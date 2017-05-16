@@ -26,9 +26,9 @@ module DfareportingUtils
   API_NAME = 'dfareporting'
   API_NAMESPACE = Google::Apis::DfareportingV2_8
   API_SCOPES = [
-    'https://www.googleapis.com/auth/dfareporting',
-    'https://www.googleapis.com/auth/dfatrafficking',
-    'https://www.googleapis.com/auth/ddmconversions'
+    API_NAMESPACE::AUTH_DDMCONVERSIONS,
+    API_NAMESPACE::AUTH_DFAREPORTING,
+    API_NAMESPACE::AUTH_DFATRAFFICKING
   ]
 
   CLIENT_SECRETS_FILE = "client_secrets.json"
