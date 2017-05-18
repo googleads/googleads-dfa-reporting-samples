@@ -20,20 +20,29 @@ using Google.Apis.Dfareporting.v2_8.Data;
 using Google.Apis.Json;
 using Google.Apis.Services;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example shows how to authenticate and make a basic request using a service account.
+  /// This example demonstrates how to authenticate and make a basic request using a service
+  /// account.
   /// </summary>
   class AuthenticateUsingServiceAccount : SampleBase {
+    /// <summary>
+    /// The OAuth 2.0 scopes to request.
+    /// </summary>
+    private static readonly IEnumerable<string> OAuthScopes = new[] {
+      DfareportingService.Scope.Dfareporting
+    };
+
     /// <summary>
     /// Returns a description about the code example.
     /// </summary>
     public override string Description {
       get {
-        return "This example shows how to authenticate and make a basic request" +
-            " using a service account.\n";
+        return "This example demonstrates how to authenticate and make a basic request" +
+               " using a service account.\n";
       }
     }
 
@@ -52,16 +61,29 @@ namespace DfaReporting.Samples {
     /// </summary>
     /// <param name="service">Unused</param>
     public override void Run(DfareportingService service) {
-      string emailToImpersonate = _T("ENTER_EMAIL_TO_IMPERSONATE_HERE");
       string pathToJsonFile = _T("ENTER_PATH_TO_JSON_FILE_HERE");
 
-      // Create the Dfareporting service using service account credentials.
-      service = new DfareportingService(new BaseClientService.Initializer {
-        HttpClientInitializer =
-            getServiceAccountCredential(pathToJsonFile, emailToImpersonate),
-        ApplicationName = "DFA/DCM Reporting and Trafficking API Samples"
-      });
+      // An optional Google account email to impersonate. Only applicable to service accounts which
+      // have enabled domain-wide delegation and wish to make API requests on behalf of an account
+      // within their domain. Setting this field will not allow you to impersonate a user from a
+      // domain you don't own (e.g., gmail.com).
+      string emailToImpersonate = _T("");
 
+      // Build service account credential.
+      ServiceAccountCredential credential =
+          getServiceAccountCredential(pathToJsonFile, emailToImpersonate);
+
+      // Create a Dfareporting service object.
+      //
+      // Note: application name should be replaced with a value that identifies your application.
+      service = new DfareportingService(
+          new BaseClientService.Initializer {
+            HttpClientInitializer = credential,
+            ApplicationName = "C# service account sample"
+          }
+      );
+
+      // Retrieve and print all user profiles for the current authorized user.
       UserProfileList profiles = service.UserProfiles.List().Execute();
 
       foreach (UserProfile profile in profiles.Items) {
@@ -71,23 +93,29 @@ namespace DfaReporting.Samples {
     }
 
     private ServiceAccountCredential getServiceAccountCredential(String pathToJsonFile,
-      String emailToImpersonate) {
-      // Load and deserialize the specified JSON file.
+        String emailToImpersonate) {
+      // Load and deserialize credential parameters from the specified JSON file.
       JsonCredentialParameters parameters;
       using (Stream json = new FileStream(pathToJsonFile, FileMode.Open, FileAccess.Read)) {
         parameters = NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(json);
       }
 
-      // Generate a ServiceAccountCredential object with the correct scopes and impersonation info.
-      return new ServiceAccountCredential(
-         new ServiceAccountCredential.Initializer(parameters.ClientEmail) {
-           Scopes = new[] {
-             DfareportingService.Scope.Dfareporting,
-             DfareportingService.Scope.Dfatrafficking,
-             DfareportingService.Scope.Ddmconversions
-           },
-           User = emailToImpersonate
-         }.FromPrivateKey(parameters.PrivateKey));
+      // Create a credential initializer with the correct scopes.
+      ServiceAccountCredential.Initializer initializer =
+          new ServiceAccountCredential.Initializer(parameters.ClientEmail) {
+            Scopes = OAuthScopes
+          };
+
+      // Configure impersonation (if applicable).
+      if (!String.IsNullOrEmpty(emailToImpersonate)) {
+        initializer.User = emailToImpersonate;
+      }
+
+      // Create a service account credential object using the deserialized private key.
+      ServiceAccountCredential credential =
+          new ServiceAccountCredential(initializer.FromPrivateKey(parameters.PrivateKey));
+
+      return credential;
     }
   }
 }

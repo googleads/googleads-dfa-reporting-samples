@@ -107,7 +107,6 @@
     <Compile Include="Floodlight\CreateFloodlightActivityGroup.cs" />
     <Compile Include="Floodlight\CreateFloodlightActivity.cs" />
     <Compile Include="Floodlight\GetFloodlightActivities.cs" />
-    <Compile Include="Misc\AuthenticateUsingServiceAccount.cs" />
     <Compile Include="Misc\GetSize.cs" />
     <Compile Include="Misc\GetSites.cs" />
     <Compile Include="Misc\GetChangeLogsForAdvertiser.cs" />
@@ -144,6 +143,7 @@
     <Compile Include="UserRoles\GetUserRoles.cs" />
     <Compile Include="Placements\CreateContentCategory.cs" />
     <Compile Include="Placements\GetContentCategories.cs" />
+    <Compile Include="Auth\AuthenticateUsingServiceAccount.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
