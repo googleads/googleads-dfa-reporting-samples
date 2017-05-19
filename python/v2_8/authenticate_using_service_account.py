@@ -14,40 +14,55 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example shows how to authenticate using a service account.
+"""This example demonstrates how to authenticate using a service account.
 
+An optional Google account email to impersonate may be specified as follows:
+    authenticate_using_service_account.py <path_to_json_file> -i <email>
+
+This optional flag only applies to service accounts which have domain-wide
+delegation enabled and wish to make API requests on behalf of an account
+within that domain. Using this flag will not allow you to impersonate a
+user from a domain you don't own (e.g., gmail.com).
 """
 
 import argparse
 import sys
 
-from apiclient import discovery
-import dfareporting_utils
+from googleapiclient import discovery
 import httplib2
 from oauth2client import client
+from oauth2client import tools
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
-    'impersonation_user_email',
-    help='Email address of the user to impersonate.')
-argparser.add_argument(
     'json_file',
     help='Path to the JSON file to use for authenticating.')
+argparser.add_argument(
+    '-i',
+    '--impersonation_email',
+    help='Google account email to impersonate.')
+
+# The OAuth 2.0 scopes to request.
+OAUTH_SCOPES = ['https://www.googleapis.com/auth/dfareporting']
 
 
 def main(argv):
   # Retrieve command line arguments.
-  flags = dfareporting_utils.get_arguments(argv, __doc__, parents=[argparser])
+  parser = argparse.ArgumentParser(
+      description=__doc__,
+      formatter_class=argparse.RawDescriptionHelpFormatter,
+      parents=[tools.argparser, argparser])
+  flags = parser.parse_args(argv[1:])
 
   # Authenticate using the supplied service account credentials
-  http_auth = authenticate_using_service_account(flags.impersonation_user_email,
-                                                 flags.json_file)
+  http = authenticate_using_service_account(
+      flags.json_file,
+      flags.impersonation_email)
 
   # Construct a service object via the discovery service.
-  service = discovery.build(dfareporting_utils.API_NAME,
-                            dfareporting_utils.API_VERSION, http=http_auth)
+  service = discovery.build('dfareporting', 'v2.8', http=http)
 
   try:
     # Construct the request.
@@ -57,23 +72,30 @@ def main(argv):
     response = request.execute()
 
     for profile in response['items']:
-      print ('Found user profile with ID %s and user name "%s".'
-             % (profile['profileId'], profile['userName']))
+      print('Found user profile with ID %s and user name "%s".' %
+            (profile['profileId'], profile['userName']))
 
   except client.AccessTokenRefreshError:
-    print ('The credentials have been revoked or expired, please re-run the '
-           'application to re-authorize')
+    print('The credentials have been revoked or expired, please re-run the '
+          'application to re-authorize')
 
 
-def authenticate_using_service_account(impersonation_user_email, json_file):
-  """Authorizes an Http instance using service account credentials."""
+def authenticate_using_service_account(json_file, impersonation_email):
+  """Authorizes an httplib2.Http instance using service account credentials."""
+  # Load the service account credentials from the specified JSON keyfile.
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
-      json_file, scopes=dfareporting_utils.API_SCOPES)
+      json_file,
+      scopes=OAUTH_SCOPES)
 
-  # Delegate domain-wide authority.
-  delegated_credentials = credentials.create_delegated(impersonation_user_email)
+  # Configure impersonation (if applicable).
+  if impersonation_email:
+    credentials = credentials.create_delegated(impersonation_email)
 
-  return delegated_credentials.authorize(httplib2.Http())
+  # Use the credentials to authorize an httplib2.Http instance.
+  http = credentials.authorize(httplib2.Http())
+
+  return http
+
 
 if __name__ == '__main__':
   main(sys.argv)
