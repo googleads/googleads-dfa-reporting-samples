@@ -62,7 +62,7 @@ namespace DfaReporting.Samples {
           service.Placements.Generatetags(profileId);
       request.CampaignId = campaignId;
       request.TagFormats =
-          PlacementsResource.GeneratetagsRequest.TagFormatsEnum.PLACEMENTTAGSTANDARD;
+          PlacementsResource.GeneratetagsRequest.TagFormatsEnum.PLACEMENTTAGIFRAMEJAVASCRIPT;
       request.PlacementIds = placementId.ToString();
 
       PlacementsGenerateTagsResponse response = request.Execute();
