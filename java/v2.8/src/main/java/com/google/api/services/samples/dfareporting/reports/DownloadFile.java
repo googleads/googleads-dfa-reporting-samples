@@ -14,13 +14,15 @@
 
 package com.google.api.services.samples.dfareporting.reports;
 
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.util.Charsets;
 import com.google.api.services.dfareporting.Dfareporting;
+import com.google.api.services.dfareporting.Dfareporting.Files.Get;
+import com.google.api.services.dfareporting.model.File;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import com.google.common.base.Strings;
+import com.google.common.io.Files;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * This example illustrates how to download a file.
@@ -31,21 +33,38 @@ public class DownloadFile {
 
   public static void runExample(Dfareporting reporting, long reportId, long fileId)
       throws Exception {
-    // Download the file.
-    HttpResponse fileContents = reporting.files().get(reportId, fileId).executeMedia();
+    // Retrieve the file metadata.
+    File file = reporting.files().get(reportId, fileId).execute();
 
-    // Display the file contents.
-    try {
-      BufferedReader reader =
-          new BufferedReader(new InputStreamReader(fileContents.getContent(), Charsets.UTF_8));
+    if ("REPORT_AVAILABLE".equals(file.getStatus())) {
+      // Prepare a local file to download the report contents to.
+      java.io.File outFile = new java.io.File(Files.createTempDir(), generateFileName(file));
 
-      String line;
-      while ((line = reader.readLine()) != null) {
-        System.out.println(line);
+      // Create a get request.
+      Get getRequest = reporting.files().get(reportId, fileId);
+
+      // Optional: adjust the chunk size used when downloading the file.
+      // getRequest.getMediaHttpDownloader().setChunkSize(MediaHttpDownloader.MAXIMUM_CHUNK_SIZE);
+
+      // Execute the get request and download the file.
+      try (OutputStream stream = new FileOutputStream(outFile)) {
+        getRequest.executeMediaAndDownloadTo(stream);
       }
-    } finally {
-      fileContents.disconnect();
+
+      System.out.printf("File %d downloaded to %s%n", file.getId(), outFile.getAbsolutePath());
     }
+  }
+
+  private static String generateFileName(File file) {
+    // If no filename is specified, use the file ID instead.
+    String fileName = file.getFileName();
+    if (Strings.isNullOrEmpty(fileName)) {
+      fileName = file.getId().toString();
+    }
+
+    String extension = "CSV".equals(file.getFormat()) ? ".csv" : ".xls";
+
+    return fileName + extension;
   }
 
   public static void main(String[] args) throws Exception {

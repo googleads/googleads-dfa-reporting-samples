@@ -22,7 +22,6 @@ import com.google.api.services.dfareporting.model.Report;
 import com.google.api.services.dfareporting.model.ReportList;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 import com.google.common.base.Strings;
-
 import java.io.IOException;
 
 /**
@@ -52,7 +51,6 @@ public class FindAndRunReportGuide {
 
   private static Report findReport(Dfareporting reporting, long profileId)
       throws IOException {
-    // [START find_report]
     Report target = null;
     ReportList reports;
     String nextPageToken = null;
@@ -71,7 +69,6 @@ public class FindAndRunReportGuide {
       // Update the next page token.
       nextPageToken = reports.getNextPageToken();
     } while (!reports.getItems().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
-    // [END find_report]
 
     if (target != null) {
       System.out.printf("Found report %d with name \"%s\".%n", target.getId(), target.getName());
@@ -90,35 +87,37 @@ public class FindAndRunReportGuide {
 
   private static File runReport(Dfareporting reporting, long profileId, long reportId)
       throws IOException {
-    // [START run_report]
     // Run the report.
     File file = reporting.reports().run(profileId, reportId).execute();
-    // [END run_report]
 
-    System.out.printf("Running report %d, current file status is %s.%n", reportId,
-        file.getStatus());
+    System.out.printf(
+        "Running report %d, current file status is %s.%n", reportId, file.getStatus());
     return file;
   }
 
   private static File waitForReportFile(Dfareporting reporting, long profileId, long reportId,
       long fileId) throws IOException, InterruptedException {
-    // [START wait_for_report]
-    BackOff backOff = new ExponentialBackOff.Builder()
-        .setInitialIntervalMillis(10 * 1000)     // 10 second initial retry
-        .setMaxIntervalMillis(10 * 60 * 1000)    // 10 minute maximum retry
-        .setMaxElapsedTimeMillis(60 * 60 * 1000) // 1 hour total retry
-        .build();
+    BackOff backOff =
+        new ExponentialBackOff.Builder()
+            .setInitialIntervalMillis(10 * 1000) // 10 second initial retry
+            .setMaxIntervalMillis(10 * 60 * 1000) // 10 minute maximum retry
+            .setMaxElapsedTimeMillis(60 * 60 * 1000) // 1 hour total retry
+            .build();
 
-    while (true) {
+    do {
       File file = reporting.files().get(reportId, fileId).execute();
 
-      // Check to see if the report has finished processing
       if ("REPORT_AVAILABLE".equals(file.getStatus())) {
-        System.out.printf("File status is %s, processing finished.%n", file.getStatus());
+        // File has finished processing.
+        System.out.printf("File status is %s, ready to download.%n", file.getStatus());
         return file;
+      } else if (!"PROCESSING".equals(file.getStatus())) {
+        // File failed to process.
+        System.out.printf("File status is %s, processing failed.", file.getStatus());
+        return null;
       }
 
-      // If the file isn't available yet, wait before checking again.
+      // The file hasn't finished processing yet, wait before checking again.
       long retryInterval = backOff.nextBackOffMillis();
       if (retryInterval == BackOff.STOP) {
         System.out.println("File processing deadline exceeded.%n");
@@ -127,8 +126,6 @@ public class FindAndRunReportGuide {
 
       System.out.printf("File status is %s, sleeping for %dms.%n", file.getStatus(), retryInterval);
       Thread.sleep(retryInterval);
-    }
-    // [END wait_for_report]
+    } while (true);
   }
 }
-

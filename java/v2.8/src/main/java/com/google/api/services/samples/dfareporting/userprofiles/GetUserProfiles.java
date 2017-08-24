@@ -27,7 +27,8 @@ public class GetUserProfiles {
     // Retrieve and print all user profiles for the current authorized user.
     UserProfileList profiles = reporting.userProfiles().list().execute();
     for (UserProfile profile : profiles.getItems()) {
-      System.out.println(profile.getUserName());
+      System.out.printf("User profile with ID %d and name \"%s\" was found for account %d.%n",
+          profile.getProfileId(), profile.getUserName(), profile.getAccountId());
     }
   }
 

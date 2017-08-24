@@ -61,7 +61,6 @@ public class CreateReportGuide {
   }
 
   private static Report createReportResource(Dfareporting reporting) {
-    // [START create_report]
     Report report = new Report();
 
     // Set the required fields "name" and "type".
@@ -71,7 +70,6 @@ public class CreateReportGuide {
     // Set optional fields
     report.setFileName("example_report");
     report.setFormat("CSV");
-    // [END create_report]
 
     System.out.printf("Creating %s report resource with name \"%s\".%n", report.getType(),
         report.getName());
@@ -80,7 +78,6 @@ public class CreateReportGuide {
   }
 
   private static void defineReportCriteria(Report report) throws IOException {
-    // [START report_criteria]
     // Define a date range to report on. This example uses explicit start and end dates to mimic
     // the "LAST_MONTH" relative date range.
     DateRange dateRange = new DateRange();
@@ -98,14 +95,12 @@ public class CreateReportGuide {
 
     // Add the criteria to the report resource.
     report.setCriteria(criteria);
-    // [END report_criteria]
 
     System.out.printf("%nAdded report criteria:%n%s%n", criteria.toPrettyString());
   }
 
   private static void findCompatibleFields(Dfareporting reporting, long profileId, Report report)
       throws IOException {
-    // [START compatible_fields]
     CompatibleFields fields = reporting.reports().compatibleFields()
         .query(profileId, report).execute();
 
@@ -121,7 +116,6 @@ public class CreateReportGuide {
       Metric metric = reportFields.getMetrics().get(0);
       report.getCriteria().getMetricNames().add(metric.getName());
     }
-    // [END compatible_fields]
 
     System.out.printf("%nUpdated report criteria (with compatible fields):%n%s%n",
         report.getCriteria().toPrettyString());
@@ -129,7 +123,6 @@ public class CreateReportGuide {
 
   private static void addDimensionFilters(Dfareporting reporting, long profileId, Report report)
       throws IOException {
-    // [START dimension_values]
     // Query advertiser dimension values for report run dates.
     DimensionValueRequest request = new DimensionValueRequest();
     request.setStartDate(report.getCriteria().getDateRange().getStartDate());
@@ -143,7 +136,6 @@ public class CreateReportGuide {
       List<DimensionValue> filters = Lists.newArrayList(values.getItems().get(0));
       report.getCriteria().setDimensionFilters(filters);
     }
-    // [END dimension_values]
 
     System.out.printf("%nUpdated report criteria (with valid dimension filters):%n%s%n",
         report.getCriteria());
@@ -151,9 +143,7 @@ public class CreateReportGuide {
 
   private static Report insertReportResource(Dfareporting reporting, long profileId, Report report)
       throws IOException {
-    // [START insert_report]
     Report insertedReport = reporting.reports().insert(profileId, report).execute();
-    // [END insert_report]
 
     System.out.printf("%nSuccessfully inserted new report with ID %d.%n", insertedReport.getId());
     return insertedReport;

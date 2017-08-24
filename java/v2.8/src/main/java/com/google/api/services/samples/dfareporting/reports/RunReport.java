@@ -14,6 +14,8 @@
 
 package com.google.api.services.samples.dfareporting.reports;
 
+import com.google.api.client.util.BackOff;
+import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.dfareporting.Dfareporting;
 import com.google.api.services.dfareporting.model.File;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
@@ -30,9 +32,40 @@ public class RunReport {
       throws Exception {
     // Run the report.
     File file = reporting.reports().run(profileId, reportId).execute();
+    System.out.printf("File with ID %d has been created.%n", file.getId());
 
-    System.out.printf("Report file with ID %d is in status \"%s\".%n", file.getId(),
-        file.getStatus());
+    // Wait for the report file to finish processing.
+    // An exponential backoff policy is used to limit retries and conserve request quota.
+    BackOff backOff =
+        new ExponentialBackOff.Builder()
+            .setInitialIntervalMillis(10 * 1000) // 10 second initial retry
+            .setMaxIntervalMillis(10 * 60 * 1000) // 10 minute maximum retry
+            .setMaxElapsedTimeMillis(60 * 60 * 1000) // 1 hour total retry
+            .build();
+
+    do {
+      file = reporting.files().get(file.getReportId(), file.getId()).execute();
+
+      if ("REPORT_AVAILABLE".equals(file.getStatus())) {
+        // File has finished processing.
+        System.out.printf("File status is %s, ready to download.%n", file.getStatus());
+        return;
+      } else if (!"PROCESSING".equals(file.getStatus())) {
+        // File failed to process.
+        System.out.printf("File status is %s, processing failed.", file.getStatus());
+        return;
+      }
+
+      // The file hasn't finished processing yet, wait before checking again.
+      long retryInterval = backOff.nextBackOffMillis();
+      if (retryInterval == BackOff.STOP) {
+        System.out.println("File processing deadline exceeded.%n");
+        return;
+      }
+
+      System.out.printf("File status is %s, sleeping for %dms.%n", file.getStatus(), retryInterval);
+      Thread.sleep(retryInterval);
+    } while (true);
   }
 
   public static void main(String[] args) throws Exception {
