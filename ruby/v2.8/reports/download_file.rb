@@ -19,19 +19,33 @@
 # This example illustrates how to download a file
 
 require_relative '../dfareporting_utils'
-require 'stringio'
 
 def download_file(report_id, file_id)
   # Authenticate and initialize API service.
   service = DfareportingUtils.get_service()
 
-  # Download and display the report contents.
-  report_contents = StringIO.new
-  result = service.get_file(report_id, file_id, {
-    :download_dest => report_contents
-  })
+  # Retrieve the file metadata.
+  report_file = service.get_file(report_id, file_id)
 
-  puts report_contents.string
+  if report_file.status == 'REPORT_AVAILABLE'
+    # Prepare a local file to download the report contents to.
+    File.open(generate_file_name(report_file), 'w') do |out_file|
+      # Execute the download request. Providing a download destination
+      # retrieves the file contents rather than the file metadata.
+      service.get_file(report_id, file_id, {:download_dest => out_file})
+
+      puts 'File %s downloaded to %s' %
+          [file_id, File.absolute_path(out_file.path)]
+    end
+  end
+end
+
+def generate_file_name(report_file)
+  file_name = report_file.file_name
+  # If no filename is specified, use the file ID instead.
+  file_name = report_file.id.to_s if file_name.empty?
+  extension = report_file.format == 'CSV' ? '.csv' : '.xml'
+  return file_name + extension
 end
 
 if __FILE__ == $0

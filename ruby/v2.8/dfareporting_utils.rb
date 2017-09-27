@@ -78,8 +78,21 @@ module DfareportingUtils
 
     # Initialize API Service.
     service = get_dfareporting_service_instance()
-    service.authorization = authorize_installed_application()
 
+    # Load application default credentials if they're available.
+    authorization = authorize_application_default_credentials()
+
+    # Otherwise, load credentials from the provided client secrets file.
+    authorization = authorize_installed_application() if authorization.nil?
+
+    # If no credentials could be loaded, return an error.
+    if authorization.nil?
+      puts 'Could not load credentials. Enter client ID and secret from ' +
+           'https://console.developers.google.com/ into client_secrets.json.'
+      exit
+    end
+
+    service.authorization = authorization
     return service
   end
 
@@ -93,12 +106,24 @@ module DfareportingUtils
   end
   private_class_method :get_dfareporting_service_instance
 
+  # Attempts to load application default credentials and return an authorization
+  # object that can be used to make requests.
+  def self.authorize_application_default_credentials()
+    begin
+      return Google::Auth.get_application_default(API_SCOPES)
+    rescue
+      # No application default credentials, continue to try other options.
+      return nil
+    end
+  end
+  private_class_method :authorize_application_default_credentials
+
   # Handles authorizing a user via the OAuth installed application flow and
   # returns an authorization object that can be used to make requests.
   def self.authorize_installed_application()
-    # Load client ID from the specified file.
-    client_id = Google::Auth::ClientId.from_file(
-        File.join(CREDENTIAL_STORE_PATH, CLIENT_SECRETS_FILE))
+    # Load the client secrets.
+    client_id = load_client_secrets()
+    return nil if client_id.nil?
 
     # FileTokenStore stores auth credentials in a file, so they survive
     # multiple runs of the application. This avoids prompting the user for
@@ -127,4 +152,23 @@ module DfareportingUtils
     return authorization
   end
   private_class_method :authorize_installed_application
+
+  def self.load_client_secrets()
+    begin
+      # Load client ID from the specified file.
+      client_id = Google::Auth::ClientId.from_file(
+          File.join(CREDENTIAL_STORE_PATH, CLIENT_SECRETS_FILE))
+
+      if client_id.id.start_with?('[[INSERT') or
+          client_id.secret.start_with?('[[INSERT')
+        return nil
+      end
+
+      return client_id
+    rescue
+      # Unable to load client_secrets.json.
+      return nil
+    end
+  end
+  private_class_method :load_client_secrets
 end
