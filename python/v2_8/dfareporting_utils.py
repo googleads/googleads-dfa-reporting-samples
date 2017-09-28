@@ -25,6 +25,7 @@ from oauth2client import client
 from oauth2client import file as oauthFile
 from oauth2client import tools
 
+
 API_NAME = 'dfareporting'
 API_VERSION = 'v2.8'
 API_SCOPES = ['https://www.googleapis.com/auth/dfareporting',
@@ -59,6 +60,49 @@ def get_arguments(argv, desc, parents=None):
   return parser.parse_args(argv[1:])
 
 
+def load_application_default_credentials():
+  """Atempts to load application default credentials.
+
+  Returns:
+    A credential object initialized with application default credentials or None
+    if none were found.
+  """
+  try:
+    credentials = client.GoogleCredentials.get_application_default()
+    return credentials.create_scoped(API_SCOPES)
+  except client.ApplicationDefaultCredentialsError:
+    # No application default credentials, continue to try other options.
+    pass
+
+
+def load_user_credentials(client_secrets, storage, flags):
+  """Attempts to load user credentials from the provided client secrets file.
+
+  Args:
+    client_secrets: path to the file containing client secrets.
+    storage: the data store to use for caching credential information.
+    flags: command-line flags.
+
+  Returns:
+    A credential object initialized with user account credentials.
+  """
+  # Set up a Flow object to be used if we need to authenticate.
+  flow = client.flow_from_clientsecrets(
+      client_secrets,
+      scope=API_SCOPES,
+      message=tools.message_if_missing(client_secrets))
+
+  # Retrieve credentials from storage.
+  # If the credentials don't exist or are invalid run through the installed
+  # client flow. The storage object will ensure that if successful the good
+  # credentials will get written back to file.
+  credentials = storage.get()
+  if credentials is None or credentials.invalid:
+    credentials = tools.run_flow(flow, storage, flags)
+
+  return credentials
+
+
 def setup(flags):
   """Handles authentication and loading of the API.
 
@@ -68,26 +112,20 @@ def setup(flags):
   Returns:
     An initialized service object.
   """
-  # Name of a file containing the OAuth 2.0 information for this
-  # application, including client_id and client_secret, which are found
-  # on the Credentials tab on the Google Developers Console.
-  client_secrets = os.path.join(os.path.dirname(__file__),
-                                'client_secrets.json')
+  # Load application default credentials if they're available.
+  credentials = load_application_default_credentials()
 
-  # Set up a Flow object to be used if we need to authenticate.
-  flow = client.flow_from_clientsecrets(
-      client_secrets,
-      scope=API_SCOPES,
-      message=tools.message_if_missing(client_secrets))
+  # Otherwise, load credentials from the provided client secrets file.
+  if credentials is None:
+    # Name of a file containing the OAuth 2.0 information for this
+    # application, including client_id and client_secret, which are found
+    # on the Credentials tab on the Google Developers Console.
+    client_secrets = os.path.join(os.path.dirname(__file__),
+                                  'client_secrets.json')
+    storage = oauthFile.Storage(CREDENTIAL_STORE_FILE)
+    credentials = load_user_credentials(client_secrets, storage, flags)
 
-  # Prepare credentials, and authorize HTTP object with them.
-  # If the credentials don't exist or are invalid run through the installed
-  # client flow. The Storage object will ensure that if successful the good
-  # credentials will get written back to a file.
-  storage = oauthFile.Storage(CREDENTIAL_STORE_FILE)
-  credentials = storage.get()
-  if credentials is None or credentials.invalid:
-    credentials = tools.run_flow(flow, storage, flags)
+  # Authorize HTTP object with the prepared credentials.
   http = credentials.authorize(http=httplib2.Http())
 
   # Construct and return a service object via the discovery service.

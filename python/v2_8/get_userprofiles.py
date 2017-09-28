@@ -37,8 +37,9 @@ def main(argv):
     response = request.execute()
 
     for profile in response['items']:
-      print ('Found user profile with ID %s and user name "%s".'
-             % (profile['profileId'], profile['userName']))
+      print ('Found user profile with ID %s and name "%s" for account %s.'
+             % (profile['profileId'], profile['userName'],
+                profile['accountId']))
 
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '
