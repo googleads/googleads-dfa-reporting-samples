@@ -15,9 +15,10 @@
 */
 
 using System;
-using System.IO;
 using System.Text;
 using Google.Apis.Dfareporting.v2_8;
+using Google.Apis.Dfareporting.v2_8.Data;
+using Google.Apis.Download;
 
 namespace DfaReporting.Samples {
   /// <summary>
@@ -52,15 +53,35 @@ namespace DfaReporting.Samples {
       long fileId = long.Parse(_T("INSERT_FILE_ID_HERE"));
       long reportId = long.Parse(_T("ENTER_REPORT_ID_HERE"));
 
-      // Download the file.
-      using (Stream fileStream = new MemoryStream()) {
-        service.Files.Get(reportId, fileId).Download(fileStream);
+      // Retrive the file metadata.
+      File file = service.Files.Get(reportId, fileId).Execute();
 
-        // Display the file contents.
-        fileStream.Position = 0;
-        StreamReader reader = new StreamReader(fileStream, Encoding.UTF8);
-        Console.WriteLine(reader.ReadToEnd());
+      if ("REPORT_AVAILABLE".Equals(file.Status)) {
+        // Create a get request.
+        FilesResource.GetRequest getRequest = service.Files.Get(reportId, fileId);
+
+        // Optional: adjust the chunk size used when downloading the file.
+        // getRequest.MediaDownloader.ChunkSize = MediaDownloader.MaximumChunkSize;
+
+        // Execute the get request and download the file.
+        using (System.IO.FileStream outFile = new System.IO.FileStream(GenerateFileName(file),
+            System.IO.FileMode.Create, System.IO.FileAccess.Write)) {
+          getRequest.Download(outFile);
+          Console.WriteLine("File {0} downloaded to {1}", file.Id, outFile.Name);
+        }
       }
+    }
+
+    private string GenerateFileName(File file) {
+      // If no filename is specified, use the file ID instead.
+      string fileName = file.FileName;
+      if (String.IsNullOrEmpty(fileName)) {
+        fileName = file.Id.ToString();
+      }
+
+      String extension = "CSV".Equals(file.Format) ? ".csv" : ".xml";
+
+      return fileName + extension;
     }
   }
 }

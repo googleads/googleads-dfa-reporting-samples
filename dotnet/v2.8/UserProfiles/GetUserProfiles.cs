@@ -51,7 +51,8 @@ namespace DfaReporting.Samples {
       // Retrieve and print all user profiles for the current authorized user.
       UserProfileList profiles = service.UserProfiles.List().Execute();
       foreach (UserProfile profile in profiles.Items) {
-        Console.WriteLine(profile.UserName);
+        Console.WriteLine("User profile with ID {0} and name \"{1}\" was found for account {2}.",
+                    profile.ProfileId, profile.UserName, profile.AccountId);
       }
     }
   }

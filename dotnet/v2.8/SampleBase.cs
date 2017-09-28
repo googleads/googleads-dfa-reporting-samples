@@ -14,6 +14,12 @@
  * limitations under the License.
 */
 
+// Comment out the following define to make the samples non-interactive.
+// This will require you to manually replace the INSERT_XXX fields in
+// samples.
+#define INTERACTIVE
+
+using System;
 using Google.Apis.Dfareporting.v2_8;
 
 namespace DfaReporting.Samples {
