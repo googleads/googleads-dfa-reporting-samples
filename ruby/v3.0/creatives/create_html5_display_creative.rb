@@ -31,6 +31,10 @@ def create_html5_banner_creative(profile_id, advertiser_id, size_id,
 
   util = CreativeAssetUtils.new(service, profile_id)
 
+  # Locate an advertiser landing page to use as a default.
+  default_landing_page = get_advertiser_landing_page(service, profile_id,
+      advertiser_id)
+
   # Upload the HTML5 asset.
   html5_asset_id = util.upload_asset(advertiser_id, path_to_html5_asset_file,
       'HTML').asset_identifier
@@ -42,7 +46,10 @@ def create_html5_banner_creative(profile_id, advertiser_id, size_id,
   # Construct the creative structure.
   creative = DfareportingUtils::API_NAMESPACE::Creative.new({
     :advertiser_id => advertiser_id,
-    :backup_image_click_through_url => 'https://www.google.com',
+    :backup_image_click_through_url =>
+        DfareportingUtils::API_NAMESPACE::CreativeClickThroughUrl.new({
+          :landing_page_id => default_landing_page.id
+        }),
     :backup_image_reporting_label => 'backup',
     :backup_image_target_window =>
         DfareportingUtils::API_NAMESPACE::TargetWindow.new({
@@ -52,7 +59,10 @@ def create_html5_banner_creative(profile_id, advertiser_id, size_id,
       DfareportingUtils::API_NAMESPACE::ClickTag.new({
         :event_name => 'exit',
         :name => 'click_tag',
-        :value => 'https://www.google.com'
+        :click_through_url =>
+            DfareportingUtils::API_NAMESPACE::CreativeClickThroughUrl.new({
+              :landing_page_id => default_landing_page.id
+            })
       })
     ],
     :creative_assets => [
@@ -75,6 +85,20 @@ def create_html5_banner_creative(profile_id, advertiser_id, size_id,
 
   puts 'Created HTML5 display creative with ID %d and name "%s".' %
       [result.id, result.name]
+end
+
+def get_advertiser_landing_page(service, profile_id, advertiser_id)
+  # Retrieve a sigle landing page from the specified advertiser.
+  result = service.list_advertiser_landing_pages(profile_id, {
+    :advertiser_ids => [advertiser_id],
+    :max_results => 1
+  })
+
+  if !result.landing_pages.any?
+    abort 'No landing pages for for advertiser with ID %d' % advertiser_id
+  end
+
+  return result.landing_pages[0]
 end
 
 if __FILE__ == $0

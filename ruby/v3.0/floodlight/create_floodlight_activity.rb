@@ -32,6 +32,7 @@ def create_floodlight_activity(profile_id, activity_group_id)
     :counting_method => 'STANDARD_COUNTING',
     :expected_url => 'http://www.google.com',
     :floodlight_activity_group_id => activity_group_id,
+    :floodlight_tag_type => 'GLOBAL_SITE_TAG',
     :name => 'Example Floodlight Activity #%s' % SecureRandom.hex(3),
   })
 

@@ -25,11 +25,20 @@ def download_floodlight_tag(profile_id, activity_id)
   service = DfareportingUtils.get_service()
 
   # Construct the request.
-  result = service.generate_floodlight_activity_tag(profile_id, {
+  result = service.generatetag_floodlight_activity(profile_id, {
     :floodlight_activity_id => activity_id
   })
 
-  puts result.floodlight_activity_tag
+  unless result.global_site_tag_global_snippet.nil?
+    # This is a global site tag, display both the global and event snippets.
+    puts "Global site tag global snippet:\n\n%s" %
+        result.global_site_tag_global_snippet
+    puts "\n\nGlobal site tag event snippet:\n\n%s" %
+        result.floodlight_activity_tag
+  else
+    # This is an image or iframe tag.
+    puts "Floodlight activity tag:\n\n%s" % result.floodlight_activity_tag
+  end
 end
 
 if __FILE__ == $0
