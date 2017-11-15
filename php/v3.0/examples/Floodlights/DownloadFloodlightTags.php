@@ -54,8 +54,27 @@ class DownloadFloodlightTags extends BaseExample {
     );
 
     // Prepare the tag for display
-    $htmlEscapedTag = htmlentities($result->getFloodlightActivityTag());
-    print str_replace("\r\n", '<br>', $htmlEscapedTag);
+    $activityTag = '';
+    if (!is_null($result->getGlobalSiteTagGlobalSnippet())) {
+      // This is a global site tag, display both the global and event snippets.
+      $activityTag = sprintf(
+          "Global site tag global snippet:\n\n%s",
+          $result->getGlobalSiteTagGlobalSnippet()
+      );
+      $activityTag .= sprintf(
+          "\n\nGlobal site tag event snippet:\n\n%s",
+          $result->getFloodlightActivityTag()
+      );
+    } else {
+      // This is an image or iframe tag.
+      $activityTag = sprintf(
+          "Floodlight activity tag:\n\n%s",
+          $result->getFloodlightActivityTag()
+      );
+    }
+
+    // Display the tag
+    print str_replace(["\r\n", "\n"], '<br>', htmlentities($activityTag));
   }
 
   /**

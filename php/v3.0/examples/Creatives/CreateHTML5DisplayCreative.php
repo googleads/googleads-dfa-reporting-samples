@@ -39,6 +39,9 @@ class CreateHTML5DisplayCreative extends BaseExample {
             ['name' => 'size_id',
              'display' => 'Size ID',
              'required' => true],
+            ['name' => 'landing_page_id',
+             'display' => 'Landing Page ID',
+             'required' => true],
             ['name' => 'html_asset_file',
              'display' => 'HTML5 Asset File',
              'file' => true,
@@ -90,8 +93,13 @@ class CreateHTML5DisplayCreative extends BaseExample {
     // Add the creative assets.
     $creative->setCreativeAssets([$htmlAsset, $imageAsset]);
 
+    // Configure the default click-through URL.
+    $clickThroughUrl =
+        new Google_Service_Dfareporting_CreativeClickThroughUrl();
+    $clickThroughUrl->setLandingPageId($values['landing_page_id']);
+
     // Configure the backup image.
-    $creative->setBackupImageClickThroughUrl('https://www.google.com');
+    $creative->setBackupImageClickThroughUrl($clickThroughUrl);
     $creative->setBackupImageReportingLabel('backup');
 
     $targetWindow = new Google_Service_Dfareporting_TargetWindow();
@@ -102,7 +110,7 @@ class CreateHTML5DisplayCreative extends BaseExample {
     $clickTag = new Google_Service_Dfareporting_ClickTag();
     $clickTag->setName('clickTag');
     $clickTag->setEventName('exit');
-    $clickTag->setValue('https://www.google.com');
+    $clickTag->setClickThroughUrl($clickThroughUrl);
     $creative->setClickTags([$clickTag]);
 
     $result = $this->service->creatives->insert($values['user_profile_id'],

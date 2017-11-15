@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2015 Google Inc.
+ * Copyright 2017 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@
 require_once dirname(__DIR__) . '/BaseExample.php';
 
 /**
- * This example creates a campaign associated with a given advertiser. To
- * create an advertiser, run CreateAdvertiser.
+ * This example displays all advertiser landing pages for the specified
+ * advertiser.
  */
-class CreateCampaign extends BaseExample {
+class GetAdvertiserLandingPages extends BaseExample {
   /**
    * (non-PHPdoc)
    * @see BaseExample::getInputParameters()
@@ -34,12 +34,6 @@ class CreateCampaign extends BaseExample {
              'required' => true],
             ['name' => 'advertiser_id',
              'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'campaign_name',
-             'display' => 'Campaign Name',
-             'required' => true],
-            ['name' => 'default_landing_page_id',
-             'display' => 'Default Landing Page ID',
              'required' => true]];
   }
 
@@ -51,25 +45,33 @@ class CreateCampaign extends BaseExample {
     $values = $this->formValues;
 
     printf(
-        '<h2>Creating campaign with name "%s"</h2>', $values['campaign_name']
+        '<h2>Listing all landing pages for advertiser %d</h2>',
+        $values['advertiser_id']
     );
 
-    $startDate = new DateTime('today');
-    $endDate = new DateTime('+1 month');
+    $response = null;
+    $pageToken = null;
 
-    $campaign = new Google_Service_Dfareporting_Campaign();
-    $campaign->setAdvertiserId($values['advertiser_id']);
-    $campaign->setDefaultLandingPageId($values['default_landing_page_id']);
-    $campaign->setName($values['campaign_name']);
-    $campaign->setStartDate($startDate->format('Y-m-d'));
-    $campaign->setEndDate($endDate->format('Y-m-d'));
+    $this->printResultsTableHeader('Advertiser landing pages');
 
-    $result = $this->service->campaigns->insert(
-        $values['user_profile_id'],
-        $campaign
-    );
+    do {
+      // Create and execute the advertiser landing page list request.
+      $response =
+          $this->service->advertiserLandingPages->listAdvertiserLandingPages(
+              $values['user_profile_id'],
+              ['advertiserIds' => [$values['advertiser_id']],
+               'pageToken' => $pageToken]
+          );
 
-    $this->printResultsTable('Campaign created.', [$result]);
+      foreach ($response->getLandingPages() as $landingPage) {
+        $this->printResultsTableRow($landingPage);
+      }
+
+      // Update the next page token.
+      $pageToken = $response->getNextPageToken();
+    } while(!empty($response->getLandingPages()) && !empty($pageToken));
+
+    $this->printResultsTableFooter();
   }
 
   /**
@@ -78,7 +80,7 @@ class CreateCampaign extends BaseExample {
    * @return string
    */
   public function getName() {
-    return 'Create Campaign';
+    return 'Get All Advertiser Landing Pages';
   }
 
   /**
@@ -87,7 +89,8 @@ class CreateCampaign extends BaseExample {
    * @return array
    */
   public function getResultsTableHeaders() {
-    return ['id' => 'Campaign ID',
-            'name' => 'Campaign Name'];
+    return ['id' => 'Advertiser Landing Page ID',
+            'name' => 'Advertiser Landing Page Name',
+            'url' => 'Advertiser Landing Page URL'];
   }
 }
