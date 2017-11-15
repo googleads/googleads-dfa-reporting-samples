@@ -35,8 +35,16 @@ public class DownloadFloodlightTags {
 
     FloodlightActivitiesGenerateTagResponse response = request.execute();
 
-    // Display the floodlight activity tag.
-    System.out.printf(response.getFloodlightActivityTag());
+    if (response.getGlobalSiteTagGlobalSnippet() != null) {
+      // This is a global site tag, display both the global snippet and event snippet.
+      System.out.printf("Global site tag global snippet:%n%n%s",
+          response.getGlobalSiteTagGlobalSnippet());
+      System.out.printf("%n%nGlobal site tag event snippet:%n%n%s",
+          response.getFloodlightActivityTag());
+    } else {
+      // This is an image or iframe tag.
+      System.out.printf("Floodlight activity tag:%n%n%s", response.getFloodlightActivityTag());
+    }
   }
 
   public static void main(String[] args) throws Exception {

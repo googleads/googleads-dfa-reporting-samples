@@ -33,10 +33,11 @@ public class CreateFloodlightActivity {
       String url, long activityGroupId) throws Exception {
     // Set floodlight activity structure.
     FloodlightActivity activity = new FloodlightActivity();
-    activity.setCountingMethod("STANDARD_COUNTING");
     activity.setName(activityName);
-    activity.setFloodlightActivityGroupId(activityGroupId);
+    activity.setCountingMethod("STANDARD_COUNTING");
     activity.setExpectedUrl(url);
+    activity.setFloodlightActivityGroupId(activityGroupId);
+    activity.setFloodlightTagType("GLOBAL_SITE_TAG");
 
     // Create the floodlight tag activity.
     FloodlightActivity result =
