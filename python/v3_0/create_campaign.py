@@ -21,6 +21,7 @@ To create an advertiser, run create_advertiser.py.
 
 import argparse
 import sys
+import uuid
 
 import dfareporting_utils
 from oauth2client import client
@@ -28,10 +29,10 @@ from oauth2client import client
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
-    'profile_id', type=int,
-    help='The ID of the profile to add a campaign for')
+    'profile_id', type=int, help='The ID of the profile to add a campaign for')
 argparser.add_argument(
-    'advertiser_id', type=int,
+    'advertiser_id',
+    type=int,
     help='The ID of the advertiser to associate the campaign with')
 
 
@@ -46,28 +47,44 @@ def main(argv):
   advertiser_id = flags.advertiser_id
 
   try:
+    # Locate an advertiser landing page to use as a default.
+    default_landing_page = get_advertiser_landing_page(service, profile_id,
+                                                       advertiser_id)
+
     # Construct and save campaign.
     campaign = {
-        'name': 'Test Campaign',
+        'name': 'Test Campaign #%s' % uuid.uuid4(),
         'advertiserId': advertiser_id,
         'archived': 'false',
+        'defaultLandingPageId': default_landing_page['id'],
         'startDate': '2015-01-01',
         'endDate': '2020-01-01'
     }
 
-    request = service.campaigns().insert(
-        profileId=profile_id, defaultLandingPageName='Test Landing Page',
-        defaultLandingPageUrl='http://www.google.com', body=campaign)
+    request = service.campaigns().insert(profileId=profile_id, body=campaign)
 
     # Execute request and print response.
     response = request.execute()
 
-    print ('Created campaign with ID %s and name "%s".'
-           % (response['id'], response['name']))
+    print('Created campaign with ID %s and name "%s".' % (response['id'],
+                                                          response['name']))
 
   except client.AccessTokenRefreshError:
-    print ('The credentials have been revoked or expired, please re-run the '
-           'application to re-authorize')
+    print('The credentials have been revoked or expired, please re-run the '
+          'application to re-authorize')
+
+
+def get_advertiser_landing_page(service, profile_id, advertiser_id):
+  # Retrieve a single landing page from the specified advertiser.
+  response = service.advertiserLandingPages().list(
+      profileId=profile_id, advertiserIds=[advertiser_id],
+      maxResults=1).execute()
+
+  if not response['landingPages']:
+    sys.exit(
+        'No landing pages found for advertiser with ID %d.' % advertiser_id)
+
+  return response['landingPages'][0]
 
 
 if __name__ == '__main__':

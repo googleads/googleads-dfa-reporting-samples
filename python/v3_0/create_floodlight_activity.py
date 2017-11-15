@@ -51,6 +51,7 @@ def main(argv):
         'countingMethod': 'STANDARD_COUNTING',
         'expectedUrl': 'http://www.google.com',
         'floodlightActivityGroupId': activity_group_id,
+        'floodlightTagType': 'GLOBAL_SITE_TAG',
         'name': 'Test Floodlight Activity'
     }
 
