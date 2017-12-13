@@ -81,12 +81,17 @@
     <Compile Include="Ads\CreateRotationGroup.cs" />
     <Compile Include="Ads\GetAds.cs" />
     <Compile Include="Advertisers\AssignAdvertisersToAdvertiserGroup.cs" />
+    <Compile Include="Advertisers\CreateAdvertiserLandingPage.cs" />
+    <Compile Include="Advertisers\GetAdvertiserLandingPages.cs" />
     <Compile Include="Advertisers\GetAdvertisers.cs" />
     <Compile Include="Advertisers\CreateAdvertiserGroup.cs" />
     <Compile Include="Advertisers\CreateAdvertiser.cs" />
     <Compile Include="Advertisers\GetAdvertiserGroups.cs" />
     <Compile Include="Campaigns\CreateCampaignEventTag.cs" />
+    <Compile Include="Campaigns\CreateCampaign.cs" />
     <Compile Include="Campaigns\GetCampaigns.cs" />
+    <Compile Include="Conversions\UpdateOfflineUserConversion.cs" />
+    <Compile Include="Conversions\UpdateOfflineMobileConversion.cs" />
     <Compile Include="Conversions\InsertOfflineMobileConversion.cs" />
     <Compile Include="Conversions\InsertOfflineUserConversion.cs" />
     <Compile Include="Creatives\Assets\CreativeAssetUtils.cs" />
@@ -96,6 +101,7 @@
     <Compile Include="Creatives\CreateCreativeGroup.cs" />
     <Compile Include="Creatives\CreateDisplayImageGalleryCreative.cs" />
     <Compile Include="Creatives\CreateDisplayRedirectCreative.cs" />
+    <Compile Include="Creatives\CreateHTML5DisplayCreative.cs" />
     <Compile Include="Creatives\CreateImageDisplayCreative.cs" />
     <Compile Include="Creatives\CreateInstreamVideoCreative.cs" />
     <Compile Include="Creatives\CreateTrackingCreative.cs" />

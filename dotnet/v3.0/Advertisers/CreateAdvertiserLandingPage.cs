@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2015 Google Inc
+ * Copyright 2017 Google Inc
  *
  * Licensed under the Apache License, Version 2.0(the "License");
  * you may not use this file except in compliance with the License.
@@ -20,16 +20,15 @@ using Google.Apis.Dfareporting.v3_0.Data;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example downloads activity tags for a given floodlight activity.
+  /// This example creates an advertiser landing page.
   /// </summary>
-  class DownloadFloodlightTags : SampleBase {
+  class CreateAdvertiserLandingPage : SampleBase {
     /// <summary>
     /// Returns a description about the code example.
     /// </summary>
     public override string Description {
       get {
-        return "This example downloads activity tags for a given floodlight" +
-            " activity.\n";
+        return "This example creates an advertiser landing page.";
       }
     }
 
@@ -38,7 +37,7 @@ namespace DfaReporting.Samples {
     /// </summary>
     /// <param name="args">The command line arguments.</param>
     public static void Main(string[] args) {
-      SampleBase codeExample = new DownloadFloodlightTags();
+      SampleBase codeExample = new CreateAdvertiserLandingPage();
       Console.WriteLine(codeExample.Description);
       codeExample.Run(DfaReportingFactory.getInstance());
     }
@@ -49,28 +48,25 @@ namespace DfaReporting.Samples {
     /// <param name="service">An initialized Dfa Reporting service object
     /// </param>
     public override void Run(DfareportingService service) {
-      long activityId = long.Parse(_T("ENTER_ACTIVITY_ID_HERE"));
+      long advertiserId = long.Parse(_T("INSERT_ADVERTISER_ID_HERE"));
       long profileId = long.Parse(_T("INSERT_USER_PROFILE_ID_HERE"));
 
-      // [START download_floodlight_tag] MOE:strip_line
-      // Generate the floodlight activity tag.
-      FloodlightActivitiesResource.GeneratetagRequest request =
-          service.FloodlightActivities.Generatetag(profileId);
-      request.FloodlightActivityId = activityId;
+      String landingPageName = _T("INSERT_LANDING_PAGE_NAME_HERE");
+      String landingPageUrl = _T("INSERT_LANDING_PAGE_URL_HERE");
 
-      FloodlightActivitiesGenerateTagResponse response = request.Execute();
-      // [END download_floodlight_tag] MOE:strip_line
+      // Create the landing page structure.
+      LandingPage landingPage = new LandingPage();
+      landingPage.AdvertiserId = advertiserId;
+      landingPage.Archived = false;
+      landingPage.Name = landingPageName;
+      landingPage.Url = landingPageUrl;
 
-      if (response.GlobalSiteTagGlobalSnippet != null) {
-        // This is a global site tag, display both the global snippet and event snippet.
-        Console.WriteLine("Global site tag global snippet:\n\n{0}",
-            response.GlobalSiteTagGlobalSnippet);
-        Console.WriteLine("\n\nGlobal site tag event snippet:\n\n{0}",
-            response.FloodlightActivityTag);
-      } else {
-        // This is an image or iframe tag.
-        Console.WriteLine("Floodlight activity tag:\n\n{0}", response.FloodlightActivityTag);
-      }
+      // Create the landing page.
+      LandingPage result = service.AdvertiserLandingPages.Insert(landingPage, profileId).Execute();
+
+      // Display the landing page ID.
+      Console.WriteLine("Advertiser landing page with ID {0} and name \"{1}\" was created.",
+          result.Id, result.Name);
     }
   }
 }

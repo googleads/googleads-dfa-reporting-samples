@@ -63,6 +63,7 @@ namespace DfaReporting.Samples {
       activity.CountingMethod = "STANDARD_COUNTING";
       activity.Name = activityName;
       activity.FloodlightActivityGroupId = activityGroupId;
+      activity.FloodlightTagType = "GLOBAL_SITE_TAG";
       activity.ExpectedUrl = url;
       // [END create_activity] MOE:strip_line
 
