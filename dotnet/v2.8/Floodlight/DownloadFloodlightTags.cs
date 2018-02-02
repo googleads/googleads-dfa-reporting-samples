@@ -52,14 +52,12 @@ namespace DfaReporting.Samples {
       long activityId = long.Parse(_T("ENTER_ACTIVITY_ID_HERE"));
       long profileId = long.Parse(_T("INSERT_USER_PROFILE_ID_HERE"));
 
-      // [START download_floodlight_tag] MOE:strip_line
       // Generate the floodlight activity tag.
       FloodlightActivitiesResource.GeneratetagRequest request =
           service.FloodlightActivities.Generatetag(profileId);
       request.FloodlightActivityId = activityId;
 
       FloodlightActivitiesGenerateTagResponse response = request.Execute();
-      // [END download_floodlight_tag] MOE:strip_line
 
       // Display the floodlight activity tag.
       Console.WriteLine(response.FloodlightActivityTag);

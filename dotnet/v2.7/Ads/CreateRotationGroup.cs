@@ -65,7 +65,6 @@ namespace DfaReporting.Samples {
       // Retrieve the campaign.
       Campaign campaign = service.Campaigns.Get(profileId, campaignId).Execute();
 
-      // [START create_creative_assignment] MOE:strip_line
       // Create a click-through URL.
       ClickThroughUrl clickThroughUrl = new ClickThroughUrl();
       clickThroughUrl.DefaultLandingPage = true;
@@ -75,24 +74,18 @@ namespace DfaReporting.Samples {
       creativeAssignment.Active = true;
       creativeAssignment.CreativeId = creativeId;
       creativeAssignment.ClickThroughUrl = clickThroughUrl;
-      // [END create_creative_assignment] MOE:strip_line
 
-      // [START create_placement_assignment] MOE:strip_line
       // Create a placement assignment.
       PlacementAssignment placementAssignment = new PlacementAssignment();
       placementAssignment.Active = true;
       placementAssignment.PlacementId = placementId;
-      // [END create_placement_assignment] MOE:strip_line
 
-      // [START create_creative_rotation] MOE:strip_line
       // Create a creative rotation.
       CreativeRotation creativeRotation = new CreativeRotation();
       creativeRotation.CreativeAssignments = new List<CreativeAssignment>() {
           creativeAssignment
       };
-      // [END create_creative_rotation] MOE:strip_line
 
-      // [START create_ad] MOE:strip_line
       // Create a delivery schedule.
       DeliverySchedule deliverySchedule = new DeliverySchedule();
       deliverySchedule.ImpressionRatio = 1;
@@ -114,12 +107,9 @@ namespace DfaReporting.Samples {
           placementAssignment
       };
       rotationGroup.Type = "AD_SERVING_STANDARD_AD";
-      // [END create_ad] MOE:strip_line
 
-      // [START insert_ad] MOE:strip_line
       // Insert the rotation group.
       Ad result = service.Ads.Insert(rotationGroup, profileId).Execute();
-      // [END insert_ad] MOE:strip_line
 
       // Display the new ad ID.
       Console.WriteLine("Ad with ID {0} was created.", result.Id);

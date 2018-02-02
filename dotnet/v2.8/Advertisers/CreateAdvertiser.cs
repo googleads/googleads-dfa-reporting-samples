@@ -54,17 +54,13 @@ namespace DfaReporting.Samples {
 
       String advertiserName = _T("INSERT_ADVERTISER_NAME_HERE");
 
-      // [START create_advertiser] MOE:strip_line
       // Create the advertiser structure.
       Advertiser advertiser = new Advertiser();
       advertiser.Name = advertiserName;
       advertiser.Status = "APPROVED";
-      // [END create_advertiser] MOE:strip_line
 
-      // [START insert_advertiser] MOE:strip_line
       // Create the advertiser.
       Advertiser result = service.Advertisers.Insert(advertiser, profileId).Execute();
-      // [END insert_advertiser] MOE:strip_line
 
       // Display the advertiser ID.
       Console.WriteLine("Advertiser with ID {0} was created.", result.Id);
