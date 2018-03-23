@@ -14,9 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This example illustrates how to create a report."""
+"""An end-to-end example of how to create and configure a standard report."""
 
 import argparse
+from datetime import date
+from datetime import timedelta
 import sys
 
 import dfareporting_utils
@@ -25,8 +27,7 @@ from oauth2client import client
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
-    'profile_id', type=int,
-    help='The ID of the profile to create a report for')
+    'profile_id', type=int, help='The ID of the profile to create a report for')
 
 
 def main(argv):
@@ -39,29 +40,118 @@ def main(argv):
   profile_id = flags.profile_id
 
   try:
-    # Create a new report resource to insert
-    report = {
-        'name': 'Example Standard Report',
-        'type': 'STANDARD',
-        'criteria': {
-            'dateRange': {'relativeDateRange': 'YESTERDAY'},
-            'dimensions': [{'name': 'dfa:campaign'}],
-            'metricNames': ['dfa:clicks']
-        }
-    }
+    # 1. Create a report resource.
+    report = create_report_resource()
 
-    # Construct the request.
-    request = service.reports().insert(profileId=profile_id, body=report)
+    # 2. Define the report criteria.
+    define_report_criteria(report)
 
-    # Execute request and print response.
-    response = request.execute()
+    # 3. (optional) Look up compatible fields.
+    find_compatible_fields(service, profile_id, report)
 
-    print ('Created %s report with ID %s and name "%s".'
-           % (response['type'], response['id'], response['name']))
+    # 4. Add dimension filters to the report criteria.
+    add_dimension_filters(service, profile_id, report)
+
+    # 5. Save the report resource.
+    report = insert_report_resource(service, profile_id, report)
 
   except client.AccessTokenRefreshError:
-    print ('The credentials have been revoked or expired, please re-run the '
-           'application to re-authorize')
+    print('The credentials have been revoked or expired, please re-run the '
+          'application to re-authorize')
+
+
+def create_report_resource():
+  """Creates a report resource."""
+  report = {
+      # Set the required fields "name" and "type".
+      'name': 'Example Standard Report',
+      'type': 'STANDARD',
+      # Set optional fields.
+      'fileName': 'example_report',
+      'format': 'CSV'
+  }
+
+  print 'Creating %s report resource with name "%s".' % (report['type'],
+                                                         report['name'])
+
+  return report
+
+
+def define_report_criteria(report):
+  """Defines a criteria for the report."""
+  # Define a date range to report on. This example uses explicit start and end
+  # dates to mimic the "LAST_30_DAYS" relative date range.
+  end_date = date.today()
+  start_date = end_date - timedelta(days=30)
+
+  # Create a report criteria.
+  criteria = {
+      'dateRange': {
+          'startDate': start_date.strftime('%Y-%m-%d'),
+          'endDate': end_date.strftime('%Y-%m-%d')
+      },
+      'dimensions': [{
+          'name': 'dfa:advertiser'
+      }],
+      'metricNames': ['dfa:clicks', 'dfa:impressions']
+  }
+
+  # Add the criteria to the report resource.
+  report['criteria'] = criteria
+
+  print '\nAdded report criteria:\n%s' % criteria
+
+
+def find_compatible_fields(service, profile_id, report):
+  """Finds and adds a compatible dimension/metric to the report."""
+  fields = service.reports().compatibleFields().query(
+      profileId=profile_id, body=report).execute()
+
+  report_fields = fields['reportCompatibleFields']
+
+  if report_fields['dimensions']:
+    # Add a compatible dimension to the report.
+    report['criteria']['dimensions'].append({
+        'name': report_fields['dimensions'][0]['name']
+    })
+  elif report_fields['metrics']:
+    # Add a compatible metric to the report.
+    report['criteria']['metricNames'].append(
+        report_fields['metrics'][0]['name'])
+
+  print('\nUpdated report criteria (with compatible fields):\n%s' %
+        report['criteria'])
+
+
+def add_dimension_filters(service, profile_id, report):
+  """Finds and adds a valid dimension filter to the report."""
+  # Query advertiser dimension values for report run dates.
+  request = {
+      'dimensionName': 'dfa:advertiser',
+      'endDate': report['criteria']['dateRange']['endDate'],
+      'startDate': report['criteria']['dateRange']['startDate']
+  }
+
+  values = service.dimensionValues().query(
+      profileId=profile_id, body=request).execute()
+
+  if values['items']:
+    # Add a value as a filter to the report criteria.
+    report['criteria']['dimensionFilters'] = [values['items'][0]]
+
+  print('\nUpdated report criteria (with valid dimension filters):\n%s' %
+        report['criteria'])
+
+
+def insert_report_resource(service, profile_id, report):
+  """Inserts the report."""
+  inserted_report = service.reports().insert(
+      profileId=profile_id, body=report).execute()
+
+  print('\nSuccessfully inserted new report with ID %s.' %
+        inserted_report['id'])
+
+  return inserted_report
 
 
 if __name__ == '__main__':
