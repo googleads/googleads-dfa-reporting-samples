@@ -20,7 +20,6 @@ import com.google.api.services.dfareporting.model.File;
 import com.google.api.services.dfareporting.model.FileList;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 import com.google.common.base.Strings;
-
 import com.google.common.io.Files;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -74,7 +73,9 @@ public class DownloadReportGuide {
 
       // Update the next page token.
       nextPageToken = files.getNextPageToken();
-    } while (!files.getItems().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
+    } while (target == null
+        && !files.getItems().isEmpty()
+        && !Strings.isNullOrEmpty(nextPageToken));
 
     if (target != null) {
       System.out.printf("Found file %d with filename \"%s\".%n", target.getId(),

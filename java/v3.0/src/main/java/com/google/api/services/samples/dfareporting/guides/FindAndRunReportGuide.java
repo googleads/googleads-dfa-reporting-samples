@@ -68,7 +68,9 @@ public class FindAndRunReportGuide {
 
       // Update the next page token.
       nextPageToken = reports.getNextPageToken();
-    } while (!reports.getItems().isEmpty() && !Strings.isNullOrEmpty(nextPageToken));
+    } while (target == null
+        && !reports.getItems().isEmpty()
+        && !Strings.isNullOrEmpty(nextPageToken));
 
     if (target != null) {
       System.out.printf("Found report %d with name \"%s\".%n", target.getId(), target.getName());
