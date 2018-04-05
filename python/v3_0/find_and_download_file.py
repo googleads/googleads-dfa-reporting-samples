@@ -52,7 +52,7 @@ def main(argv):
 
     if report_file:
       # 2. (optional) Generate browser URL.
-      generate_browse_url(service, report_id, report_file['id'])
+      generate_browser_url(service, report_id, report_file['id'])
 
       # 3. Directly download the file.
       direct_download_file(service, report_id, report_file['id'])
@@ -80,7 +80,7 @@ def find_file(service, profile_id, report_id):
         target = report_file
         break
 
-    if response['items'] and response['nextPageToken']:
+    if not target and response['items'] and response['nextPageToken']:
       request = service.reports().files().list_next(request, response)
     else:
       break
@@ -101,7 +101,7 @@ def is_target_file(report_file):
   return report_file['status'] == 'REPORT_AVAILABLE'
 
 
-def generate_browse_url(service, report_id, file_id):
+def generate_browser_url(service, report_id, file_id):
   """Prints the browser download URL for the file."""
   report_file = service.files().get(
       reportId=report_id, fileId=file_id).execute()
