@@ -80,7 +80,7 @@ def find_report(service, profile_id):
         target = report
         break
 
-    if response['items'] and response['nextPageToken']:
+    if not target and response['items'] and response['nextPageToken']:
       request = service.reports().list_next(request, response)
     else:
       break
