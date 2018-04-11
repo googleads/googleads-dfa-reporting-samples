@@ -1,7 +1,0 @@
-{
-  "require": {
-    "google/apiclient-services": "dev-master@dev",
-    "google/apiclient": "^2.0",
-    "guzzlehttp/psr7": "1.2.*"
-  }
-}
