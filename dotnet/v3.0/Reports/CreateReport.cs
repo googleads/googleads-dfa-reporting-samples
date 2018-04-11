@@ -16,12 +16,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Google.Apis.Dfareporting.v3_0;
 using Google.Apis.Dfareporting.v3_0.Data;
+using Newtonsoft.Json;
 
 namespace DfaReporting.Samples {
   /// <summary>
-  /// This example illustrates how to create a report.
+  /// This example provides an end-to-end example of how to create and
+  /// configure a standard report.
   /// </summary>
   class CreateReport : SampleBase {
     /// <summary>
@@ -29,7 +32,8 @@ namespace DfaReporting.Samples {
     /// </summary>
     public override string Description {
       get {
-        return "This example illustrates how to create a report.\n";
+        return "This example provides an end-to-end example of how to create " +
+               "and configure a standard report.\n";
       }
     }
 
@@ -51,33 +55,118 @@ namespace DfaReporting.Samples {
     public override void Run(DfareportingService service) {
       long profileId = long.Parse(_T("INSERT_USER_PROFILE_ID_HERE"));
 
-      string reportName = _T("INSERT_REPORT_NAME_HERE");
+      // 1. Create a report resource.
+      Report report = CreateReportResource();
 
-      // Create a date range to report on.
+      // 2. Define the report criteria.
+      DefineReportCriteria(report);
+
+      // 3. (optional) Look up compatible fields.
+      FindCompatibleFields(service, profileId, report);
+
+      // 4. Add dimension filters to the report criteria.
+      AddDimensionFilters(service, profileId, report);
+
+      // 5. Save the report resource.
+      InsertReportResource(service, profileId, report);
+    }
+
+    private Report CreateReportResource() {
+      Report report = new Report();
+
+      // Set the require fields "name" and "type".
+      report.Name = "Example standard report";
+      report.Type = "STANDARD";
+
+      // Set optional fields.
+      report.FileName = "example_report";
+      report.Format = "CSV";
+
+      Console.WriteLine("Creating {0} report resource with name \"{1}\".",
+          report.Type, report.Name);
+
+      return report;
+    }
+
+    private void DefineReportCriteria(Report report) {
+      // Define a date range to report on. This example uses explicit start and
+      // end dates to mimic the "LAST_30_DAYS" relative date range.
       DateRange dateRange = new DateRange();
-      dateRange.RelativeDateRange = "YESTERDAY";
+      dateRange.EndDate = DateTime.Now.ToString("yyyy-MM-dd");
+      dateRange.StartDate = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
 
-      // Create a dimension to report on.
+      // Create a report criteria.
       SortedDimension dimension = new SortedDimension();
-      dimension.Name = "dfa:campaign";
+      dimension.Name = "dfa:advertiser";
 
-      // Create the criteria for the report.
       Report.CriteriaData criteria = new Report.CriteriaData();
       criteria.DateRange = dateRange;
       criteria.Dimensions = new List<SortedDimension>() { dimension };
-      criteria.MetricNames = new List<string>() { "dfa:clicks" };
+      criteria.MetricNames = new List<string>() {
+        "dfa:clicks",
+        "dfa:impressions"
+      };
 
-      // Create the report.
-      Report report = new Report();
+      // Add the criteria to the report resource.
       report.Criteria = criteria;
-      report.Name = reportName;
-      report.Type = "STANDARD";
 
-      // Insert the report.
-      Report result = service.Reports.Insert(report, profileId).Execute();
+      Console.WriteLine("\nAdded report criteria:\n{0}",
+          JsonConvert.SerializeObject(criteria));
+    }
 
-      // Display the new report ID.
-      Console.WriteLine("Standard report with ID {0} was created.", result.Id);
+    private void FindCompatibleFields(DfareportingService service,
+        long profileId, Report report) {
+        CompatibleFields fields =
+            service.Reports.CompatibleFields.Query(report, profileId).Execute();
+
+        ReportCompatibleFields reportFields = fields.ReportCompatibleFields;
+
+        if(reportFields.Dimensions.Any()) {
+          // Add a compatible dimension to the report.
+          Dimension dimension = reportFields.Dimensions[0];
+          SortedDimension sortedDimension = new SortedDimension();
+          sortedDimension.Name = dimension.Name;
+          report.Criteria.Dimensions.Add(sortedDimension);
+        } else if (reportFields.Metrics.Any()) {
+          Metric metric = reportFields.Metrics[0];
+          report.Criteria.MetricNames.Add(metric.Name);
+        }
+
+        Console.WriteLine(
+            "\nUpdated report criteria (with compatible fields):\n{0}",
+            JsonConvert.SerializeObject(report.Criteria));
+    }
+
+    private void AddDimensionFilters(DfareportingService service,
+        long profileId, Report report) {
+      // Query advertiser dimension values for report run dates.
+      DimensionValueRequest request = new DimensionValueRequest();
+      request.StartDate = report.Criteria.DateRange.StartDate;
+      request.EndDate = report.Criteria.DateRange.EndDate;
+      request.DimensionName = "dfa:advertiser";
+
+      DimensionValueList values =
+          service.DimensionValues.Query(request, profileId).Execute();
+
+      if (values.Items.Any()) {
+        // Add a value as a filter to the report criteria.
+        report.Criteria.DimensionFilters = new List<DimensionValue>() {
+          values.Items[0]
+        };
+      }
+
+      Console.WriteLine(
+        "\nUpdated report criteria (with valid dimension filters):\n{0}",
+        JsonConvert.SerializeObject(report.Criteria));
+    }
+
+    private void InsertReportResource(DfareportingService service,
+        long profileId, Report report) {
+      Report insertedReport =
+          service.Reports.Insert(report, profileId).Execute();
+
+      Console.WriteLine("\nSuccessfully inserted new report with ID {0}.",
+          insertedReport.Id);
     }
   }
 }
