@@ -78,7 +78,7 @@ namespace DfaReporting.Samples {
       String nextPageToken = null;
 
       do {
-        // Create and execute the file list request.
+        // Create and execute the files list request.
         ReportsResource.FilesResource.ListRequest request =
             service.Reports.Files.List(profileId, reportId);
         request.PageToken = nextPageToken;

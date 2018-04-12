@@ -83,7 +83,7 @@ namespace DfaReporting.Samples {
       String nextPageToken = null;
 
       do {
-        // Create and execute the report list request.
+        // Create and execute the reports list request.
         ReportsResource.ListRequest request = service.Reports.List(profileId);
         request.PageToken = nextPageToken;
         reports = request.Execute();
