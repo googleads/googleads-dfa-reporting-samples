@@ -74,7 +74,7 @@ namespace DfaReporting.Samples {
     private Report CreateReportResource() {
       Report report = new Report();
 
-      // Set the require fields "name" and "type".
+      // Set the required fields "name" and "type".
       report.Name = "Example standard report";
       report.Type = "STANDARD";
 
@@ -128,6 +128,7 @@ namespace DfaReporting.Samples {
           sortedDimension.Name = dimension.Name;
           report.Criteria.Dimensions.Add(sortedDimension);
         } else if (reportFields.Metrics.Any()) {
+          // Add a compatible metric to the report.
           Metric metric = reportFields.Metrics[0];
           report.Criteria.MetricNames.Add(metric.Name);
         }
