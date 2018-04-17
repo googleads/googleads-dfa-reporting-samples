@@ -72,7 +72,6 @@ namespace DfaReporting.Samples {
     }
 
     private Report CreateReportResource() {
-      // [START create_report] MOE:strip_line
       Report report = new Report();
 
       // Set the required fields "name" and "type".
@@ -82,7 +81,6 @@ namespace DfaReporting.Samples {
       // Set optional fields.
       report.FileName = "example_report";
       report.Format = "CSV";
-      // [END create_report] MOE:strip_line
 
       Console.WriteLine("Creating {0} report resource with name \"{1}\".",
           report.Type, report.Name);
@@ -91,7 +89,6 @@ namespace DfaReporting.Samples {
     }
 
     private void DefineReportCriteria(Report report) {
-      // [START report_criteria] MOE:strip_line
       // Define a date range to report on. This example uses explicit start and
       // end dates to mimic the "LAST_30_DAYS" relative date range.
       DateRange dateRange = new DateRange();
@@ -112,7 +109,6 @@ namespace DfaReporting.Samples {
 
       // Add the criteria to the report resource.
       report.Criteria = criteria;
-      // [END report_criteria] MOE:strip_line
 
       Console.WriteLine("\nAdded report criteria:\n{0}",
           JsonConvert.SerializeObject(criteria));
@@ -120,7 +116,6 @@ namespace DfaReporting.Samples {
 
     private void FindCompatibleFields(DfareportingService service,
         long profileId, Report report) {
-        // [START compatible_fields] MOE:strip_line
         CompatibleFields fields =
             service.Reports.CompatibleFields.Query(report, profileId).Execute();
 
@@ -137,7 +132,6 @@ namespace DfaReporting.Samples {
           Metric metric = reportFields.Metrics[0];
           report.Criteria.MetricNames.Add(metric.Name);
         }
-        // [END compatible_fields] MOE:strip_line
 
         Console.WriteLine(
             "\nUpdated report criteria (with compatible fields):\n{0}",
@@ -146,7 +140,6 @@ namespace DfaReporting.Samples {
 
     private void AddDimensionFilters(DfareportingService service,
         long profileId, Report report) {
-      // [START dimension_values] MOE:strip_line
       // Query advertiser dimension values for report run dates.
       DimensionValueRequest request = new DimensionValueRequest();
       request.StartDate = report.Criteria.DateRange.StartDate;
@@ -162,7 +155,6 @@ namespace DfaReporting.Samples {
           values.Items[0]
         };
       }
-      // [END dimension_values] MOE:strip_line
 
       Console.WriteLine(
         "\nUpdated report criteria (with valid dimension filters):\n{0}",
@@ -171,10 +163,8 @@ namespace DfaReporting.Samples {
 
     private void InsertReportResource(DfareportingService service,
         long profileId, Report report) {
-      // [START insert_report] MOE:strip_line
       Report insertedReport =
           service.Reports.Insert(report, profileId).Execute();
-      // [END insert_report] MOE:strip_line
 
       Console.WriteLine("\nSuccessfully inserted new report with ID {0}.",
           insertedReport.Id);

@@ -56,7 +56,6 @@ namespace DfaReporting.Samples {
 
       String campaignName = _T("INSERT_CAMPAIGN_NAME_HERE");
 
-      // [START create_campaign] MOE:strip_line
       // Locate an advertiser landing page to use as a default.
       LandingPage defaultLandingPage = getAdvertiserLandingPage(service, profileId, advertiserId);
 
@@ -74,12 +73,9 @@ namespace DfaReporting.Samples {
       // Set the campaign end date. This example uses one month from today's date.
       campaign.EndDate =
           DfaReportingDateConverterUtil.convertToDateString(DateTime.Now.AddMonths(1));
-      // [END create_campaign] MOE:strip_line
 
-      // [START insert_campaign] MOE:strip_line
       // Insert the campaign.
       Campaign result = service.Campaigns.Insert(campaign, profileId).Execute();
-      // [END insert_campaign] MOE:strip_line
 
       // Display the new campaign ID.
       Console.WriteLine("Campaign with ID {0} was created.", result.Id);

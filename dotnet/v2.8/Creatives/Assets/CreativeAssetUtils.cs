@@ -41,18 +41,13 @@ namespace DfaReporting.Samples {
     /// A CreativeAssetMetadata object populated with the name of the asset after insert.
     /// </returns>
     public CreativeAssetMetadata uploadAsset(String assetFile, String assetType) {
-      // [START upload_asset] MOE:strip_line
       // Prepare an input stream.
       FileStream assetContent = new FileStream(assetFile, FileMode.Open, FileAccess.Read);
 
-      // [START_EXCLUDE silent] MOE:strip_line
-      // [START create_asset_metadata] MOE:strip_line
       // Create the creative asset ID and Metadata.
       CreativeAssetId assetId = new CreativeAssetId();
       assetId.Name = Path.GetFileName(assetFile);
       assetId.Type = assetType;
-      // [END create_asset_metadata] MOE:strip_line
-      // [END_EXCLUDE] MOE:strip_line
 
       CreativeAssetMetadata metaData = new CreativeAssetMetadata();
       metaData.AssetIdentifier = assetId;
@@ -66,7 +61,6 @@ namespace DfaReporting.Samples {
       if (UploadStatus.Failed.Equals(progress.Status)) {
           throw progress.Exception;
       }
-      // [END upload_asset] MOE:strip_line
 
       // Display the new asset name.
       Console.WriteLine("Creative asset was saved with name \"{0}\".",

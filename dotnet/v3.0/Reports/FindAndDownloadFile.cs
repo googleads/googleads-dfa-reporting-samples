@@ -72,7 +72,6 @@ namespace DfaReporting.Samples {
 
     private File FindFile(DfareportingService service, long profileId,
         long reportId) {
-      // [START find_file] MOE:strip_line
       File target = null;
       FileList files;
       String nextPageToken = null;
@@ -96,7 +95,6 @@ namespace DfaReporting.Samples {
       } while (target == null
           && files.Items.Any()
           && !String.IsNullOrEmpty(nextPageToken));
-      // [END find_file] MOE:strip_line
 
       if (target != null) {
         Console.WriteLine("Found file {0} with filename \"{1}\".",
@@ -119,17 +117,14 @@ namespace DfaReporting.Samples {
 
     private void GenerateBrowserUrl(DfareportingService service, long reportId,
         long fileId) {
-      // [START browser_url] MOE:strip_line
       File file = service.Files.Get(reportId, fileId).Execute();
       String browserUrl = file.Urls.BrowserUrl;
-      // [END browser_url] MOE:strip_line
 
       Console.WriteLine("File {0} has browser URL: {1}.", file.Id, browserUrl);
     }
 
     private void DirectDownloadFile(DfareportingService service, long reportId,
         long fileId) {
-      // [START direct_download] MOE:strip_line
       // Retrieve the file metadata.
       File file = service.Files.Get(reportId, fileId).Execute();
 
@@ -147,7 +142,6 @@ namespace DfaReporting.Samples {
           Console.WriteLine("File {0} downloaded to {1}", file.Id, outFile.Name);
         }
       }
-      // [END direct_download] MOE:strip_line
     }
 
     private string GenerateFileName(File file) {

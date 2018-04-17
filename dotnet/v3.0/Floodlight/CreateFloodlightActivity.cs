@@ -57,7 +57,6 @@ namespace DfaReporting.Samples {
       String activityName = _T("INSERT_ACTIVITY_NAME_HERE");
       String url = _T("INSERT_EXPECTED_URL_HERE");
 
-      // [START create_activity] MOE:strip_line
       // Set floodlight activity structure.
       FloodlightActivity activity = new FloodlightActivity();
       activity.CountingMethod = "STANDARD_COUNTING";
@@ -65,13 +64,10 @@ namespace DfaReporting.Samples {
       activity.FloodlightActivityGroupId = activityGroupId;
       activity.FloodlightTagType = "GLOBAL_SITE_TAG";
       activity.ExpectedUrl = url;
-      // [END create_activity] MOE:strip_line
 
-      // [START insert_activity] MOE:strip_line
       // Create the floodlight tag activity.
       FloodlightActivity result =
           service.FloodlightActivities.Insert(activity, profileId).Execute();
-      // [END insert_activity] MOE:strip_line
 
       // Display new floodlight activity ID.
       if (result != null) {

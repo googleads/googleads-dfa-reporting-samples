@@ -69,7 +69,6 @@ namespace DfaReporting.Samples {
       long newQuantity = long.Parse(_T("INSERT_NEW_CONVERSION_QUANTITY_HERE"));
       long newValue = long.Parse(_T("INSERT_NEW_CONVERSION_VALUE_HERE"));
 
-      // [START create_conversion] MOE:strip_line
       // Find the Floodlight configuration ID based on the provided activity ID.
       FloodlightActivity floodlightActivity =
           service.FloodlightActivities.Get(profileId, floodlightActivityId).Execute();
@@ -87,17 +86,13 @@ namespace DfaReporting.Samples {
       // existing conversion, it must be copied over manually.
       conversion.Quantity = newQuantity;
       conversion.Value = newValue;
-      // [END create_conversion] MOE:strip_line
 
-      // [START create_encryption_info] MOE:strip_line
       // Create the encryption info.
       EncryptionInfo encryptionInfo = new EncryptionInfo();
       encryptionInfo.EncryptionEntityId = encryptionEntityId;
       encryptionInfo.EncryptionEntityType = encryptionEntityType;
       encryptionInfo.EncryptionSource = encryptionSource;
-      // [END create_encryption_info] MOE:strip_line
 
-      // [START update_conversion] MOE:strip_line
       // Insert the conversion.
       ConversionsBatchUpdateRequest request = new ConversionsBatchUpdateRequest();
       request.Conversions = new List<Conversion>() { conversion };
@@ -105,9 +100,7 @@ namespace DfaReporting.Samples {
 
       ConversionsBatchUpdateResponse response =
           service.Conversions.Batchupdate(request, profileId).Execute();
-      // [END update_conversion] MOE:strip_line
 
-      // [START process_response] MOE:strip_line
       // Handle the batchinsert response.
       if (!response.HasFailures.Value) {
         Console.WriteLine("Successfully updated conversion for encrypted user ID {0}.",
@@ -121,7 +114,6 @@ namespace DfaReporting.Samples {
           Console.WriteLine("\t[{0}]: {1}", error.Code, error.Message);
         }
       }
-      // [END process_response] MOE:strip_line
     }
   }
 }

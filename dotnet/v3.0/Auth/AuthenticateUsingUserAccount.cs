@@ -78,7 +78,6 @@ namespace DfaReporting.Samples {
       UserCredential credential =
           getUserAccountCredential(pathToJsonFile, new FileDataStore(DataStorePath, true));
 
-      // [START create_client] MOE:strip_line
       // Create a Dfareporting service object.
       //
       // Note: application name should be replaced with a value that identifies your application.
@@ -88,9 +87,7 @@ namespace DfaReporting.Samples {
             ApplicationName = "C# installed app sample"
           }
       );
-      // [END create_client] MOE:strip_line
 
-      // [START make_a_request] MOE:strip_line
       // Retrieve and print all user profiles for the current authorized user.
       UserProfileList profiles = service.UserProfiles.List().Execute();
 
@@ -98,11 +95,9 @@ namespace DfaReporting.Samples {
         Console.WriteLine("Found user profile with ID {0} and name \"{1}\".",
             profile.ProfileId, profile.UserName);
       }
-      // [END make_a_request] MOE:strip_line
     }
 
     private UserCredential getUserAccountCredential(String pathToJsonFile, IDataStore dataStore) {
-      // [START setup_credentials] MOE:strip_line
       // Load client secrets from the specified JSON file.
       GoogleClientSecrets clientSecrets;
       using(Stream json = new FileStream(pathToJsonFile, FileMode.Open, FileAccess.Read)) {
@@ -125,7 +120,6 @@ namespace DfaReporting.Samples {
 
       // Authorize and persist credentials to the data store.
       UserCredential credential = authorizationTask.Result;
-      // [END setup_credentials] MOE:strip_line
 
       return credential;
     }

@@ -60,7 +60,6 @@ namespace DfaReporting.Samples {
       string pathToHtml5AssetFile = _T("INSERT_PATH_TO_HTML5_ASSET_FILE_HERE");
       string pathToImageAssetFile = _T("INSERT_PATH_TO_IMAGE_ASSET_FILE_HERE");
 
-      // [START create_creative] MOE:strip_line
       // Locate an advertiser landing page to use as a default.
       LandingPage defaultLandingPage = getAdvertiserLandingPage(service, profileId, advertiserId);
 
@@ -106,11 +105,8 @@ namespace DfaReporting.Samples {
         LandingPageId = defaultLandingPage.Id
       };
       creative.ClickTags = new List<ClickTag>() { clickTag };
-      // [END create_creative] MOE:strip_line
 
-      // [START insert_creative] MOE:strip_line
       Creative result = service.Creatives.Insert(creative, profileId).Execute();
-      // [END insert_creative] MOE:strip_line
 
       // Display the new creative ID.
       Console.WriteLine("HTML5 display creative with ID {0} was created.", result.Id);

@@ -77,7 +77,6 @@ namespace DfaReporting.Samples {
     }
 
     private Report FindReport(DfareportingService service, long profileId) {
-      // [START find_report] MOE:strip_line
       Report target = null;
       ReportList reports;
       String nextPageToken = null;
@@ -100,7 +99,6 @@ namespace DfaReporting.Samples {
       } while (target == null
           && reports.Items.Any()
           && !String.IsNullOrEmpty(nextPageToken));
-      // [END find_report] MOE:strip_line
 
       if (target != null) {
         Console.WriteLine("Found report {0} with name \"{1}\".",
@@ -120,10 +118,8 @@ namespace DfaReporting.Samples {
 
     private File RunReport(DfareportingService service, long profileId,
         long reportId) {
-      // [START run_report] MOE:strip_line
       // Run the report.
       File file = service.Reports.Run(profileId, reportId).Execute();
-      // [END run_report] MOE:strip_line
 
       Console.WriteLine("Running report {0}, current file status is {1}.",
           reportId, file.Status);
@@ -132,7 +128,6 @@ namespace DfaReporting.Samples {
 
     private void WaitForReportFile(DfareportingService service, long reportId,
         long fileId) {
-      // [START wait_for_report] MOE:strip_line
       // Wait for the report file to finish processing.
       // An exponential backoff policy is used to limit retries and conserve quota.
       int sleep = 0;
@@ -155,7 +150,6 @@ namespace DfaReporting.Samples {
         Console.WriteLine("File status is {0}, sleeping for {1} seconds.", file.Status, sleep);
         Thread.Sleep(sleep * 1000);
       } while (true);
-      // [END wait_for_report] MOE:strip_line
     }
 
     private int GetCurrentTimeInSeconds() {
