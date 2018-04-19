@@ -126,6 +126,8 @@ abstract class BaseExample {
       print '<input type="submit" name="submit" value="Submit"/>';
       print '</form>';
     }
+
+    $this->flush();
   }
 
   /**
@@ -183,6 +185,7 @@ abstract class BaseExample {
     }
 
     print '</tr>';
+    $this->flush();
   }
 
   /**
@@ -200,6 +203,7 @@ abstract class BaseExample {
     }
 
     print '</tr>';
+    $this->flush();
   }
 
   /**
@@ -210,6 +214,7 @@ abstract class BaseExample {
     printf('<td class="noResults" colspan="%s">No results.</td>',
         count($this->headers));
     print '</tr>';
+    $this->flush();
   }
 
   /**
@@ -217,6 +222,7 @@ abstract class BaseExample {
    */
   protected function printResultsTableFooter() {
     print '</table><br>';
+    $this->flush();
   }
 
   /**
@@ -238,5 +244,13 @@ abstract class BaseExample {
     }
 
     $this->printResultsTableFooter();
+  }
+
+  /**
+   * Flushes the contents of the output buffer.
+   */
+  protected function flush() {
+    ob_flush();
+    flush();
   }
 }

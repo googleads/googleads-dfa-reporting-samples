@@ -38,9 +38,13 @@ $client->addScope(Google_Service_Dfareporting::DFATRAFFICKING);
 $client->addScope(Google_Service_Dfareporting::DDMCONVERSIONS);
 $client->setAccessType('offline');
 
-// Be sure to replace the contents of client_secrets.json with your developer
-// credentials.
-$client->setAuthConfigFile('client_secrets.json');
+if (getenv('GOOGLE_APPLICATION_CREDENTIALS')) {
+  $client->useApplicationDefaultCredentials();
+} else {
+  // Be sure to replace the contents of client_secrets.json with your developer
+  // credentials.
+  $client->setAuthConfigFile('client_secrets.json');
+}
 
 // Create service.
 $service = new Google_Service_Dfareporting($client);

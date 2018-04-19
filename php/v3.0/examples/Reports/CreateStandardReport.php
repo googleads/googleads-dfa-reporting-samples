@@ -19,7 +19,7 @@
 require_once dirname(__DIR__) . '/BaseExample.php';
 
 /**
- * This example creates a simple standard report for the given advertiser.
+ * An end-to-end example of how to create a standard report.
  */
 class CreateStandardReport extends BaseExample {
   /**
@@ -30,15 +30,6 @@ class CreateStandardReport extends BaseExample {
   protected function getInputParameters() {
     return [['name' => 'user_profile_id',
              'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'start_date',
-             'display' => 'Start Date (yyyy-MM-dd)',
-             'required' => true],
-            ['name' => 'end_date',
-             'display' => 'End Date (yyyy-MM-dd)',
              'required' => true]];
   }
 
@@ -49,39 +40,109 @@ class CreateStandardReport extends BaseExample {
   public function run() {
     $values = $this->formValues;
 
-    printf('<h2>Creating a new standard report for advertiser %s</h2>',
-        $values['advertiser_id']);
+    print '<h2>Creating a new standard report</h2>';
+    $this->flush();
 
-    // Create a report.
+    $userProfileId = $values['user_profile_id'];
+
+    // 1. Create a report resource.
+    $report = $this->createReportResource();
+
+    // 2. Define the report criteria.
+    $this->defineReportCriteria($report);
+
+    // 3. (optional) Look up compatible fields.
+    $this->findCompatibleFields($userProfileId, $report);
+
+    // 4. Add dimension filters to the report criteria.
+    $this->addDimensionFilters($userProfileId, $report);
+
+    // 5. Save the report resource.
+    $report = $this->insertReportResource($userProfileId, $report);
+
+    $this->printResultsTable('Standard Report', [$report]);
+  }
+
+  private function createReportResource() {
     $report = new Google_Service_Dfareporting_Report();
-    $report->setName('API Report: Advertiser ' . $values['advertiser_id']);
-    $report->setFileName('api_report_files');
+
+    // Set the required fields "name" and "type".
+    $report->setName('Example standard report');
     $report->setType('STANDARD');
 
-    // Create criteria for the report.
-    $dateRange = new Google_Service_Dfareporting_DateRange();
-    $dateRange->setStartDate($values['start_date']);
-    $dateRange->setEndDate($values['end_date']);
+    // Set optional fields.
+    $report->setFileName('example_report');
+    $report->setFormat('CSV');
 
+    return $report;
+  }
+
+  private function defineReportCriteria($report) {
+    // Define a date range to report on. This example uses explicit start and
+    // end dates to mimic the "LAST_30_DAYS" relative date range.
+    $dateRange = new Google_Service_Dfareporting_DateRange();
+    $dateRange->setStartDate(
+        date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') - 30, date('Y'))));
+    $dateRange->setEndDate(date('Y-m-d'));
+
+    // Create a report criteria.
     $dimension = new Google_Service_Dfareporting_SortedDimension();
     $dimension->setName('dfa:advertiser');
-
-    $filter = new Google_Service_Dfareporting_DimensionValue();
-    $filter->setDimensionName('dfa:advertiser');
-    $filter->setId($values['advertiser_id']);
-    $filter->setMatchType('EXACT');
 
     $criteria = new Google_Service_Dfareporting_ReportCriteria();
     $criteria->setDateRange($dateRange);
     $criteria->setDimensions([$dimension]);
     $criteria->setMetricNames(['dfa:clicks', 'dfa:impressions']);
-    $criteria->setDimensionFilters([$filter]);
 
+    // Add the criteria to the report resource.
     $report->setCriteria($criteria);
+  }
 
-    $result = $this->service->reports->insert($values['user_profile_id'],
+  private function findCompatibleFields($userProfileId, $report) {
+    $fields = $this->service->reports_compatibleFields->query($userProfileId,
         $report);
-    $this->printResultsTable('Standard Report', [$result]);
+
+    $reportFields = $fields->getReportCompatibleFields();
+
+    if (!empty($reportFields->getDimensions())) {
+      // Add a compatible dimension to the report.
+      $dimension = $reportFields->getDimensions()[0];
+      $sortedDimension = new Google_Service_Dfareporting_SortedDimension();
+      $sortedDimension->setName($dimension->getName());
+      $report->getCriteria()->setDimensions(
+          array_merge($report->getCriteria()->getDimensions(),
+              [$sortedDimension]));
+    } else if (!empty($reportFields->getMetrics())) {
+      // Add a compatible metric to the report.
+      $metric = $reportFields->getMetrics()[0];
+      $report->getCriteria()->setMetricNames(
+          array_merge($report->getCriteria()->getMetricNames(),
+              [$metric->getName()]));
+    }
+  }
+
+  private function addDimensionFilters($userProfileId, $report) {
+    // Query advertiser dimension values for report run dates.
+    $request = new Google_Service_Dfareporting_DimensionValueRequest();
+    $request->setStartDate(
+        $report->getCriteria()->getDateRange()->getStartDate());
+    $request->setEndDate(
+        $report->getCriteria()->getDateRange()->getEndDate());
+    $request->setDimensionName('dfa:advertiser');
+
+    $values =
+        $this->service->dimensionValues->query($userProfileId, $request);
+
+    if (!empty($values->getItems())) {
+      // Add a value as a filter to the report criteria.
+      $report->getCriteria()->setDimensionFilters([$values->getItems()[0]]);
+    }
+  }
+
+  private function insertReportResource($userProfileId, $report) {
+    $insertedReport =
+        $this->service->reports->insert($userProfileId, $report);
+    return $insertedReport;
   }
 
   /**
