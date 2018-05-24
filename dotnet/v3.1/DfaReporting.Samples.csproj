@@ -103,6 +103,7 @@
     <Compile Include="Creatives\CreateDisplayRedirectCreative.cs" />
     <Compile Include="Creatives\CreateHTML5DisplayCreative.cs" />
     <Compile Include="Creatives\CreateImageDisplayCreative.cs" />
+    <Compile Include="Creatives\CreateInstreamAudioCreative.cs" />
     <Compile Include="Creatives\CreateInstreamVideoCreative.cs" />
     <Compile Include="Creatives\CreateTrackingCreative.cs" />
     <Compile Include="Creatives\GetCreativeFields.cs" />
