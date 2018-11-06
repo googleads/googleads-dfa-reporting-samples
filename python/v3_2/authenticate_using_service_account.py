@@ -37,8 +37,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
-    'json_file',
-    help='Path to the JSON file to use for authenticating.')
+    'path_to_service_account_json_file',
+    help='Path to the service account JSON file to use for authenticating.')
 argparser.add_argument(
     '-i',
     '--impersonation_email',
@@ -58,7 +58,7 @@ def main(argv):
 
   # Authenticate using the supplied service account credentials
   http = authenticate_using_service_account(
-      flags.json_file,
+      flags.path_to_service_account_json_file,
       flags.impersonation_email)
 
   # Construct a service object via the discovery service.
@@ -80,11 +80,12 @@ def main(argv):
           'application to re-authorize')
 
 
-def authenticate_using_service_account(json_file, impersonation_email):
+def authenticate_using_service_account(path_to_service_account_json_file,
+                                       impersonation_email):
   """Authorizes an httplib2.Http instance using service account credentials."""
   # Load the service account credentials from the specified JSON keyfile.
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
-      json_file,
+      path_to_service_account_json_file,
       scopes=OAUTH_SCOPES)
 
   # Configure impersonation (if applicable).

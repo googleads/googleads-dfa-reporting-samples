@@ -31,8 +31,8 @@ from oauth2client.file import Storage
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
 argparser.add_argument(
-    'json_file',
-    help='Path to the JSON file to use for authenticating.')
+    'path_to_client_secrets_file',
+    help='Path to the client_secrets.json file to use for authenticating.')
 
 # Filename used for the credential store.
 CREDENTIAL_STORE_FILE = 'auth-sample.dat'
@@ -50,7 +50,7 @@ def main(argv):
   flags = parser.parse_args(argv[1:])
 
   # Authenticate using the supplied user account credentials
-  http = authenticate_using_user_account(flags)
+  http = authenticate_using_user_account(flags.path_to_client_secrets_file)
 
   # Construct a service object via the discovery service.
   service = discovery.build('dfareporting', 'v3.2', http=http)
@@ -71,10 +71,11 @@ def main(argv):
           'application to re-authorize')
 
 
-def authenticate_using_user_account(flags):
+def authenticate_using_user_account(path_to_client_secrets_file):
   """Authorizes an httplib2.Http instance using user account credentials."""
   # Set up a Flow object to be used if we need to authenticate.
-  flow = client.flow_from_clientsecrets(flags.json_file, scope=OAUTH_SCOPES)
+  flow = client.flow_from_clientsecrets(
+      path_to_client_secrets_file, scope=OAUTH_SCOPES)
 
   # Check whether credentials exist in the credential store. Using a credential
   # store allows auth credentials to be cached, so they survive multiple runs
@@ -86,7 +87,8 @@ def authenticate_using_user_account(flags):
   # If no credentials were found, go through the authorization process and
   # persist credentials to the credential store.
   if credentials is None or credentials.invalid:
-    credentials = tools.run_flow(flow, storage, flags)
+    credentials = tools.run_flow(flow, storage,
+                                 tools.argparser.parse_known_args()[0])
 
   # Use the credentials to authorize an httplib2.Http instance.
   http = credentials.authorize(httplib2.Http())
