@@ -22,77 +22,87 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example shares an existing remarketing list with the specified
  * advertiser.
  */
-class ShareRemarketingList extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'list_id',
-             'display' => 'Remarketing List ID',
-             'required' => true]];
-  }
-
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
-
-    printf(
-        '<h2>Sharing remarketing list %s with advertiser ID %s</h2>',
-        $values['list_id'], $values['advertiser_id']
-    );
-
-    // Load the existing share info.
-    $share = $this->service->remarketingListShares->get(
-        $values['user_profile_id'], $values['list_id']);
-
-    $advertiserIds = $share['sharedAdvertiserIds'];
-    if(!isset($advertiserIds)) {
-      $advertiserIds = [];
+class ShareRemarketingList extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'list_id',
+                 'display' => 'Remarketing List ID',
+                 'required' => true]];
     }
 
-    if(!in_array($values['advertiser_id'], $advertiserIds)) {
-      // Add the specified advertiser to the list of shared advertisers.
-      $advertiserIds[] = $values['advertiser_id'];
-      $share->setSharedAdvertiserIds($advertiserIds);
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-      // Update the share info with the newly added advertiser.
-      $result = $this->service->remarketingListShares->update(
-          $values['user_profile_id'], $share);
+        printf(
+            '<h2>Sharing remarketing list %s with advertiser ID %s</h2>',
+            $values['list_id'],
+            $values['advertiser_id']
+        );
 
-      $result['advertiserIds'] = implode(',', $result['sharedAdvertiserIds']);
-      $this->printResultsTable('Remarketing list shared.', [$result]);
-    } else {
-      print '<pre>Remarketing list is already shared with advertiser.</pre>';
+        // Load the existing share info.
+        $share = $this->service->remarketingListShares->get(
+            $values['user_profile_id'],
+            $values['list_id']
+        );
+
+        $advertiserIds = $share['sharedAdvertiserIds'];
+        if (!isset($advertiserIds)) {
+            $advertiserIds = [];
+        }
+
+        if (!in_array($values['advertiser_id'], $advertiserIds)) {
+            // Add the specified advertiser to the list of shared advertisers.
+            $advertiserIds[] = $values['advertiser_id'];
+            $share->setSharedAdvertiserIds($advertiserIds);
+
+            // Update the share info with the newly added advertiser.
+            $result = $this->service->remarketingListShares->update(
+                $values['user_profile_id'],
+                $share
+            );
+
+            $result['advertiserIds'] = implode(',', $result['sharedAdvertiserIds']);
+            $this->printResultsTable('Remarketing list shared.', [$result]);
+        } else {
+            print '<pre>Remarketing list is already shared with advertiser.</pre>';
+        }
     }
-  }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Share Remarketing List With Advertiser';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Share Remarketing List With Advertiser';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['remarketingListId' => 'Remarketing List ID',
-            'advertiserIds' => 'Shared Advertiser IDs'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['remarketingListId' => 'Remarketing List ID',
+                'advertiserIds' => 'Shared Advertiser IDs'];
+    }
 }

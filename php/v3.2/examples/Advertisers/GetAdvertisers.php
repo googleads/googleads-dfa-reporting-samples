@@ -22,67 +22,72 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example displays the name, ID and spotlight configuration ID for every
  * advertiser your DFA user profile can see.
  */
-class GetAdvertisers extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetAdvertisers extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all advertisers</h2>';
+        print '<h2>Listing all advertisers</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Advertisers');
+        $this->printResultsTableHeader('Advertisers');
 
-    do {
-      // Create and execute the advertisers list request.
-      $response = $this->service->advertisers->listAdvertisers(
-          $values['user_profile_id'],
-          ['pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the advertisers list request.
+            $response = $this->service->advertisers->listAdvertisers(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getAdvertisers() as $advertiser) {
-        $this->printResultsTableRow($advertiser);
-      }
+            foreach ($response->getAdvertisers() as $advertiser) {
+                $this->printResultsTableRow($advertiser);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getAdvertisers()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getAdvertisers()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Advertisers';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Advertisers';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Advertiser ID',
-            'name' => 'Advertiser Name',
-            'floodlightConfigurationId' => 'Floodlight Configuration ID'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Advertiser ID',
+                'name' => 'Advertiser Name',
+                'floodlightConfigurationId' => 'Floodlight Configuration ID'];
+    }
 }

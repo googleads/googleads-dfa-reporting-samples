@@ -21,61 +21,68 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example creates a tracking creative associated with a given advertiser.
  */
-class CreateTrackingCreative extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true]];
-  }
+class CreateTrackingCreative extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating tracking creative for advertiser ID %s</h2>',
-        $values['advertiser_id']
-    );
+        printf(
+            '<h2>Creating tracking creative for advertiser ID %s</h2>',
+            $values['advertiser_id']
+        );
 
-    $creative = new Google_Service_Dfareporting_Creative();
-    $creative->setAdvertiserId($values['advertiser_id']);
-    $creative->setName('Test tracking creative');
-    $creative->setType('TRACKING_TEXT');
+        $creative = new Google_Service_Dfareporting_Creative();
+        $creative->setAdvertiserId($values['advertiser_id']);
+        $creative->setName('Test tracking creative');
+        $creative->setType('TRACKING_TEXT');
 
-    $result = $this->service->creatives->insert($values['user_profile_id'],
-        $creative);
+        $result = $this->service->creatives->insert(
+            $values['user_profile_id'],
+            $creative
+        );
 
-    $this->printResultsTable('Tracking creative created.', [$result]);
-  }
+        $this->printResultsTable('Tracking creative created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Tracking Creative';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Tracking Creative';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Creative ID',
-            'name' => 'Creative Name',
-            'type' => 'Creative type'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Creative ID',
+                'name' => 'Creative Name',
+                'type' => 'Creative type'];
+    }
 }

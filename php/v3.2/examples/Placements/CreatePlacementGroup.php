@@ -23,80 +23,89 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * site ID and campaign ID in which the placement group will be created into.
  * To create a campaign, run CreateCampaign. To get a site ID, run GetSite.
  */
-class CreatePlacementGroup extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'campaign_id',
-             'display' => 'Campaign ID',
-             'required' => true],
-            ['name' => 'site_id',
-             'display' => 'Site ID',
-             'required' => true],
-            ['name' => 'group_name',
-             'display' => 'Placement Group Name',
-             'required' => true]];
-  }
+class CreatePlacementGroup extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'campaign_id',
+                 'display' => 'Campaign ID',
+                 'required' => true],
+                ['name' => 'site_id',
+                 'display' => 'Site ID',
+                 'required' => true],
+                ['name' => 'group_name',
+                 'display' => 'Placement Group Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating placement group with name "%s" under campaign ID %s</h2>',
-        $values['group_name'], $values['campaign_id']
-    );
+        printf(
+            '<h2>Creating placement group with name "%s" under campaign ID %s</h2>',
+            $values['group_name'],
+            $values['campaign_id']
+        );
 
-    // Retrieve the campaign.
-    $campaign = $this->service->campaigns->get(
-        $values['user_profile_id'], $values['campaign_id']);
+        // Retrieve the campaign.
+        $campaign = $this->service->campaigns->get(
+            $values['user_profile_id'],
+            $values['campaign_id']
+        );
 
-    $group = new Google_Service_Dfareporting_PlacementGroup();
-    $group->setCampaignId($values['campaign_id']);
-    $group->setName($values['group_name']);
-    $group->setPlacementGroupType('PLACEMENT_PACKAGE');
-    $group->setSiteId($values['site_id']);
+        $group = new Google_Service_Dfareporting_PlacementGroup();
+        $group->setCampaignId($values['campaign_id']);
+        $group->setName($values['group_name']);
+        $group->setPlacementGroupType('PLACEMENT_PACKAGE');
+        $group->setSiteId($values['site_id']);
 
-    // Set the pricing schedule for the placement group.
-    $pricingSchedule = new Google_Service_Dfareporting_PricingSchedule();
-    $pricingSchedule->setEndDate($campaign->getEndDate());
-    $pricingSchedule->setPricingType('PRICING_TYPE_CPM');
-    $pricingSchedule->setStartDate($campaign->getStartDate());
-    $group->setPricingSchedule($pricingSchedule);
+        // Set the pricing schedule for the placement group.
+        $pricingSchedule = new Google_Service_Dfareporting_PricingSchedule();
+        $pricingSchedule->setEndDate($campaign->getEndDate());
+        $pricingSchedule->setPricingType('PRICING_TYPE_CPM');
+        $pricingSchedule->setStartDate($campaign->getStartDate());
+        $group->setPricingSchedule($pricingSchedule);
 
-    // Insert the placement group.
-    $result = $this->service->placementGroups->insert(
-        $values['user_profile_id'], $group
-    );
+        // Insert the placement group.
+        $result = $this->service->placementGroups->insert(
+            $values['user_profile_id'],
+            $group
+        );
 
-    $this->printResultsTable('Placement group created.', [$result]);
-  }
+        $this->printResultsTable('Placement group created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Placement Group';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Placement Group';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Placement Group ID',
-            'name' => 'Placement Group Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Placement Group ID',
+                'name' => 'Placement Group Name'];
+    }
 }

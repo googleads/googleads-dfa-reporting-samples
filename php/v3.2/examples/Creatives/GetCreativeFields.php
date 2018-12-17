@@ -21,66 +21,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example lists all creative fields.
  */
-class GetCreativeFields extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetCreativeFields extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all creative fields</h2>';
+        print '<h2>Listing all creative fields</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Creative Fields');
+        $this->printResultsTableHeader('Creative Fields');
 
-    do {
-      // Create and execute the creative fields list request.
-      $response = $this->service->creativeFields->listCreativeFields(
-          $values['user_profile_id'],
-          ['pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the creative fields list request.
+            $response = $this->service->creativeFields->listCreativeFields(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getCreativeFields() as $fields) {
-        $this->printResultsTableRow($fields);
-      }
+            foreach ($response->getCreativeFields() as $fields) {
+                $this->printResultsTableRow($fields);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getCreativeFields()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getCreativeFields()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Creative Fields';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Creative Fields';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Creative Field ID',
-            'name' => 'Creative Field Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Creative Field ID',
+                'name' => 'Creative Field Name'];
+    }
 }

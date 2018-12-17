@@ -21,68 +21,74 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example displays all sizes for a given width and height.
  */
-class GetSize extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'width',
-             'display' => 'Width (px)',
-             'required' => true],
-            ['name' => 'height',
-             'display' => 'Height (px)',
-             'required' => true]];
-  }
-
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
-
-    printf(
-        '<h2>Listing sizes matching %sx%s</h2>',
-        $values['width']. $values['height']
-    );
-
-    $this->printResultsTableHeader('Sizes');
-
-    // Create and execute the size list request.
-    $response = $this->service->sizes->listSizes(
-        $values['user_profile_id'],
-        ['height' => $values['height'], 'width' => $values['width']]
-    );
-
-    foreach ($response->getSizes() as $sizes) {
-      $this->printResultsTableRow($sizes);
+class GetSize extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'width',
+                 'display' => 'Width (px)',
+                 'required' => true],
+                ['name' => 'height',
+                 'display' => 'Height (px)',
+                 'required' => true]];
     }
 
-    $this->printResultsTableFooter();
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get Size';
-  }
+        printf(
+            '<h2>Listing sizes matching %sx%s</h2>',
+            $values['width']. $values['height']
+        );
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Size ID',
-            'width' => 'Width',
-            'height' => 'Height'];
-  }
+        $this->printResultsTableHeader('Sizes');
+
+        // Create and execute the size list request.
+        $response = $this->service->sizes->listSizes(
+            $values['user_profile_id'],
+            ['height' => $values['height'],
+             'width' => $values['width']]
+        );
+
+        foreach ($response->getSizes() as $sizes) {
+            $this->printResultsTableRow($sizes);
+        }
+
+        $this->printResultsTableFooter();
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get Size';
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Size ID',
+                'width' => 'Width',
+                'height' => 'Height'];
+    }
 }

@@ -21,66 +21,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example lists all existing campaigns for the specified user profile.
  */
-class GetCampaigns extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetCampaigns extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all campaigns</h2>';
+        print '<h2>Listing all campaigns</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Campaigns');
+        $this->printResultsTableHeader('Campaigns');
 
-    do {
-      // Create and execute the ads list request.
-      $response = $this->service->campaigns->listCampaigns(
-          $values['user_profile_id'],
-          ['pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the ads list request.
+            $response = $this->service->campaigns->listCampaigns(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getCampaigns() as $campaigns) {
-        $this->printResultsTableRow($campaigns);
-      }
+            foreach ($response->getCampaigns() as $campaigns) {
+                $this->printResultsTableRow($campaigns);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getCampaigns()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getCampaigns()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Campaigns';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Campaigns';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Campaign ID',
-            'name' => 'Campaign Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Campaign ID',
+                'name' => 'Campaign Name'];
+    }
 }

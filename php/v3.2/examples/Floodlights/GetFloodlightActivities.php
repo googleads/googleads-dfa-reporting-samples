@@ -23,76 +23,80 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  *
  * To create an advertiser, run CreateAdvertiser.
  */
-class GetFloodlightActivities extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true]];
-  }
+class GetFloodlightActivities extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Listing all floodlight activities for advertiser ID %s</h2>',
-        $values['advertiser_id']
-    );
-
-    $response = null;
-    $pageToken = null;
-
-    $this->printResultsTableHeader('Floodlight Activities');
-
-    do {
-      // Create and execute the floodlight activities list request.
-      $response =
-        $this->service->floodlightActivities->listFloodlightActivities(
-            $values['user_profile_id'],
-            ['advertiserId' => $values['advertiser_id'],
-             'pageToken' => $pageToken]
+        printf(
+            '<h2>Listing all floodlight activities for advertiser ID %s</h2>',
+            $values['advertiser_id']
         );
 
-      foreach ($response->getFloodlightActivities() as $activities) {
-        $this->printResultsTableRow($activities);
-      }
+        $response = null;
+        $pageToken = null;
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getFloodlightActivities()) &&
-        !empty($pageToken));
+        $this->printResultsTableHeader('Floodlight Activities');
 
-    $this->printResultsTableFooter();
-  }
+        do {
+            // Create and execute the floodlight activities list request.
+            $response =
+                $this->service->floodlightActivities->listFloodlightActivities(
+                    $values['user_profile_id'],
+                    ['advertiserId' => $values['advertiser_id'],
+                     'pageToken' => $pageToken]
+                );
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Floodlight Activities';
-  }
+            foreach ($response->getFloodlightActivities() as $activities) {
+                $this->printResultsTableRow($activities);
+            }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Floodlight Activity ID',
-            'name' => 'Floodlight Activity Name',
-            'floodlightConfigurationId' => 'Floodlight Configuration ID'];
-  }
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getFloodlightActivities()) && !empty($pageToken));
+
+        $this->printResultsTableFooter();
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Floodlight Activities';
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Floodlight Activity ID',
+                'name' => 'Floodlight Activity Name',
+                'floodlightConfigurationId' => 'Floodlight Configuration ID'];
+    }
 }

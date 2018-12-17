@@ -21,66 +21,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example lists all existing sites.
  */
-class GetSites extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetSites extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all sites</h2>';
+        print '<h2>Listing all sites</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Sites');
+        $this->printResultsTableHeader('Sites');
 
-    do {
-      // Create and execute the sites list request.
-      $response = $this->service->sites->listSites(
-          $values['user_profile_id'],
-          ['pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the sites list request.
+            $response = $this->service->sites->listSites(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getSites() as $sites) {
-        $this->printResultsTableRow($sites);
-      }
+            foreach ($response->getSites() as $sites) {
+                $this->printResultsTableRow($sites);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getSites()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getSites()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Sites';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Sites';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Site ID',
-            'keyName' => 'Site Key Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Site ID',
+                'keyName' => 'Site Key Name'];
+    }
 }

@@ -21,42 +21,48 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example deletes a report.
  */
-class DeleteReport extends BaseExample {
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'report_id',
-             'display' => 'Report ID',
-             'required' => true]];
-  }
+class DeleteReport extends BaseExample
+{
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'report_id',
+                 'display' => 'Report ID',
+                 'required' => true]];
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf('<h2>Deleting report with ID %s</h2>', $values['report_id']);
+        printf('<h2>Deleting report with ID %s</h2>', $values['report_id']);
 
-    $this->service->reports->delete($values['user_profile_id'],
-        $values['report_id']);
+        $this->service->reports->delete(
+            $values['user_profile_id'],
+            $values['report_id']
+        );
 
-    print '<pre>Success</pre>';
-  }
+        print '<pre>Success</pre>';
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Delete Report';
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Delete Report';
+    }
 }

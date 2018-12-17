@@ -23,65 +23,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  *
  * The output is limited to include only ID, name, account ID and subaccount ID.
  */
-class GetUserRoles extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetUserRoles extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all user roles</h2>';
+        print '<h2>Listing all user roles</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('User Roles');
+        $this->printResultsTableHeader('User Roles');
 
-    do {
-      // Create and execute the subaccounts list request.
-      $response = $this->service->userRoles->listUserRoles(
-          $values['user_profile_id'], ['pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the subaccounts list request.
+            $response = $this->service->userRoles->listUserRoles(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getUserRoles() as $userRoles) {
-        $this->printResultsTableRow($userRoles);
-      }
+            foreach ($response->getUserRoles() as $userRoles) {
+                $this->printResultsTableRow($userRoles);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getUserRoles()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getUserRoles()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All User Roles';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All User Roles';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'User Role ID',
-            'name' => 'User Role Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'User Role ID',
+                'name' => 'User Role Name'];
+    }
 }

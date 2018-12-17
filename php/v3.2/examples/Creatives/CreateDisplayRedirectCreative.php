@@ -22,72 +22,79 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example creates a display redirect creative associated with a given
  * advertiser. To get a size ID, run GetSize.
  */
-class CreateDisplayRedirectCreative extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'image_url',
-             'display' => 'Image File URL',
-             'required' => true],
-            ['name' => 'size_id',
-             'display' => 'Size ID',
-             'required' => true]];
-  }
+class CreateDisplayRedirectCreative extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'image_url',
+                 'display' => 'Image File URL',
+                 'required' => true],
+                ['name' => 'size_id',
+                 'display' => 'Size ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating display redirect creative from image URL "%s"</h2>',
-        $values['image_url']
-    );
+        printf(
+            '<h2>Creating display redirect creative from image URL "%s"</h2>',
+            $values['image_url']
+        );
 
-    $creative = new Google_Service_Dfareporting_Creative();
-    $creative->setAdvertiserId($values['advertiser_id']);
-    $creative->setName('Test display redirect creative');
-    $creative->setRedirectUrl($values['image_url']);
-    $creative->setType('DISPLAY_REDIRECT');
+        $creative = new Google_Service_Dfareporting_Creative();
+        $creative->setAdvertiserId($values['advertiser_id']);
+        $creative->setName('Test display redirect creative');
+        $creative->setRedirectUrl($values['image_url']);
+        $creative->setType('DISPLAY_REDIRECT');
 
-    $size = new Google_Service_Dfareporting_Size();
-    $size->setId($values['size_id']);
-    $creative->setSize($size);
+        $size = new Google_Service_Dfareporting_Size();
+        $size->setId($values['size_id']);
+        $creative->setSize($size);
 
-    $result = $this->service->creatives->insert($values['user_profile_id'],
-        $creative);
+        $result = $this->service->creatives->insert(
+            $values['user_profile_id'],
+            $creative
+        );
 
-    $this->printResultsTable('Display redirect creative created.', [$result]);
-  }
+        $this->printResultsTable('Display redirect creative created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Display Redirect Creative';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Display Redirect Creative';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Creative ID',
-            'name' => 'Creative Name',
-            'type' => 'Creative type'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Creative ID',
+                'name' => 'Creative Name',
+                'type' => 'Creative type'];
+    }
 }

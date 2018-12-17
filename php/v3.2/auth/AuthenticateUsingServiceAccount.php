@@ -32,67 +32,71 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
  * within that domain. Using this flag will not allow you to impersonate a user
  * from a domain that you don't own (e.g., gmail.com).
  */
-class AuthenticateUsingServiceAccount {
-  // The OAuth 2.0 scopes to request.
-  private static $OAUTH_SCOPES = [
-      Google_Service_Dfareporting::DFAREPORTING
-  ];
+class AuthenticateUsingServiceAccount
+{
+    // The OAuth 2.0 scopes to request.
+    private static $OAUTH_SCOPES = [
+        Google_Service_Dfareporting::DFAREPORTING
+    ];
 
-  public function run($pathToJsonFile, $email = null) {
-    // Create an authenticated client object.
-    $client = $this->createAuthenticatedClient($pathToJsonFile, $email);
+    public function run($pathToJsonFile, $email = null)
+    {
+        // Create an authenticated client object.
+        $client = $this->createAuthenticatedClient($pathToJsonFile, $email);
 
-    // Create a Dfareporting service object.
-    $service = new Google_Service_Dfareporting($client);
+        // Create a Dfareporting service object.
+        $service = new Google_Service_Dfareporting($client);
 
-    $this->getUserProfiles($service);
-  }
-
-  private function createAuthenticatedClient($pathToJsonFile, $email) {
-    // Create a Google_Client instance.
-    //
-    // Note: application name should be replaced with a value that identifies
-    // your application. Suggested format is "MyCompany-ProductName".
-    $client = new Google_Client();
-    $client->setApplicationName('PHP service account sample');
-    $client->setScopes(self::$OAUTH_SCOPES);
-
-    // Load the service account credentials.
-    $client->setAuthConfig($pathToJsonFile);
-
-    // Configure impersonation (if applicable).
-    if (!is_null($email)) {
-      $client->setSubject($email);
+        $this->getUserProfiles($service);
     }
 
-    return $client;
-  }
+    private function createAuthenticatedClient($pathToJsonFile, $email)
+    {
+        // Create a Google_Client instance.
+        //
+        // Note: application name should be replaced with a value that identifies
+        // your application. Suggested format is "MyCompany-ProductName".
+        $client = new Google_Client();
+        $client->setApplicationName('PHP service account sample');
+        $client->setScopes(self::$OAUTH_SCOPES);
 
-  private function getUserProfiles($service) {
-    // Retrieve and print all user profiles for the current authorized user.
-    $result = $service->userProfiles->listUserProfiles();
-    foreach ($result['items'] as $userProfile) {
-      printf(
-          "User profile \"%s\" (ID: %d) found for account %d.\n",
-          $userProfile->getUserName(),
-          $userProfile->getProfileId(),
-          $userProfile->getAccountId()
-      );
+        // Load the service account credentials.
+        $client->setAuthConfig($pathToJsonFile);
+
+        // Configure impersonation (if applicable).
+        if (!is_null($email)) {
+            $client->setSubject($email);
+        }
+
+        return $client;
     }
-  }
+
+    private function getUserProfiles($service)
+    {
+        // Retrieve and print all user profiles for the current authorized user.
+        $result = $service->userProfiles->listUserProfiles();
+        foreach ($result['items'] as $userProfile) {
+            printf(
+                "User profile \"%s\" (ID: %d) found for account %d.\n",
+                $userProfile->getUserName(),
+                $userProfile->getProfileId(),
+                $userProfile->getAccountId()
+            );
+        }
+    }
 }
 
 if ($argc < 2 || $argc >= 4) {
-  printf(
-      "Usage: %s /path/to/client_secrets.json [email_to_impersonate]\n",
-      $argv[0]
-  );
+    printf(
+        "Usage: %s /path/to/client_secrets.json [email_to_impersonate]\n",
+        $argv[0]
+    );
 } else {
-  $sample = new AuthenticateUsingServiceAccount();
+    $sample = new AuthenticateUsingServiceAccount();
 
-  if ($argc == 2) {
-    $sample->run($argv[1]);
-  } else {
-    $sample->run($argv[1], $argv[2]);
-  }
+    if ($argc == 2) {
+        $sample->run($argv[1]);
+    } else {
+        $sample->run($argv[1], $argv[2]);
+    }
 }

@@ -21,60 +21,65 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example creates a content category with the given name.
  */
-class CreateContentCategory extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'category_name',
-             'display' => 'Content Category Name',
-             'required' => true]];
-  }
+class CreateContentCategory extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'category_name',
+                 'display' => 'Content Category Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating content category with name "%s"</h2>',
-        $values['category_name']
-    );
+        printf(
+            '<h2>Creating content category with name "%s"</h2>',
+            $values['category_name']
+        );
 
-    $category = new Google_Service_Dfareporting_ContentCategory();
-    $category->setName($values['category_name']);
+        $category = new Google_Service_Dfareporting_ContentCategory();
+        $category->setName($values['category_name']);
 
+        $result = $this->service->contentCategories->insert(
+            $values['user_profile_id'],
+            $category
+        );
 
-    $result = $this->service->contentCategories->insert(
-        $values['user_profile_id'], $category
-    );
+        $this->printResultsTable('Content category created.', [$result]);
+    }
 
-    $this->printResultsTable('Content category created.', [$result]);
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Content Category';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Content Category';
-  }
-
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Content Category ID',
-            'name' => 'Content Category Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Content Category ID',
+                'name' => 'Content Category Name'];
+    }
 }

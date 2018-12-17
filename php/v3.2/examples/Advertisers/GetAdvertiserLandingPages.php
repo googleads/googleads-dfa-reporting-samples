@@ -22,75 +22,80 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example displays all advertiser landing pages for the specified
  * advertiser.
  */
-class GetAdvertiserLandingPages extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true]];
-  }
+class GetAdvertiserLandingPages extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Listing all landing pages for advertiser %d</h2>',
-        $values['advertiser_id']
-    );
+        printf(
+            '<h2>Listing all landing pages for advertiser %d</h2>',
+            $values['advertiser_id']
+        );
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Advertiser landing pages');
+        $this->printResultsTableHeader('Advertiser landing pages');
 
-    do {
-      // Create and execute the advertiser landing page list request.
-      $response =
-          $this->service->advertiserLandingPages->listAdvertiserLandingPages(
-              $values['user_profile_id'],
-              ['advertiserIds' => [$values['advertiser_id']],
-               'pageToken' => $pageToken]
-          );
+        do {
+            // Create and execute the advertiser landing page list request.
+            $response =
+                $this->service->advertiserLandingPages->listAdvertiserLandingPages(
+                    $values['user_profile_id'],
+                    ['advertiserIds' => [$values['advertiser_id']],
+                     'pageToken' => $pageToken]
+                );
 
-      foreach ($response->getLandingPages() as $landingPage) {
-        $this->printResultsTableRow($landingPage);
-      }
+            foreach ($response->getLandingPages() as $landingPage) {
+                $this->printResultsTableRow($landingPage);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getLandingPages()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getLandingPages()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Advertiser Landing Pages';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Advertiser Landing Pages';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Advertiser Landing Page ID',
-            'name' => 'Advertiser Landing Page Name',
-            'url' => 'Advertiser Landing Page URL'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Advertiser Landing Page ID',
+                'name' => 'Advertiser Landing Page Name',
+                'url' => 'Advertiser Landing Page URL'];
+    }
 }

@@ -22,39 +22,43 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example gets all DFA user profiles associated with the user's Google
  * Account.
  */
-class GetAllUserProfiles extends BaseExample {
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $result = $this->service->userProfiles->listUserProfiles();
+class GetAllUserProfiles extends BaseExample
+{
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $result = $this->service->userProfiles->listUserProfiles();
 
-    print '<h2>Listing of User Profiles associated with your account</h2>';
+        print '<h2>Listing of User Profiles associated with your account</h2>';
 
-    $this->printResultsTable('User Profiles', $result['items']);
-  }
+        $this->printResultsTable('User Profiles', $result['items']);
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All User Profiles';
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All User Profiles';
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['profileId' => 'Profile ID',
-            'userName' => 'User Name',
-            'accountId' => 'Account ID',
-            'accountName' => 'Account Name',
-            'subAccountId' => 'Subaccount ID',
-            'subAccountName' => 'Subaccount Name'];
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['profileId' => 'Profile ID',
+                'userName' => 'User Name',
+                'accountId' => 'Account ID',
+                'accountName' => 'Account Name',
+                'subAccountId' => 'Subaccount ID',
+                'subAccountName' => 'Subaccount Name'];
+    }
 }

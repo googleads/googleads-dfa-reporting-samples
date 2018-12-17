@@ -23,80 +23,92 @@ require_once dirname(__DIR__) . '/CreativeAssetUtils.php';
  * This example uploads creative assets and creates an in-stream video
  * creative associated with a given advertiser.
  */
-class CreateInstreamVideoCreative extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'asset_file',
-             'display' => 'Video Asset File',
-             'file' => true,
-             'required' => true]];
-  }
+class CreateInstreamVideoCreative extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'asset_file',
+                 'display' => 'Video Asset File',
+                 'file' => true,
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating in-stream video creative from video asset "%s"</h2>',
-        $values['asset_file']['name']
-    );
+        printf(
+            '<h2>Creating in-stream video creative from video asset "%s"</h2>',
+            $values['asset_file']['name']
+        );
 
-    $creative = new Google_Service_Dfareporting_Creative();
-    $creative->setAdvertiserId($values['advertiser_id']);
-    $creative->setName('Test in-stream video creative');
-    $creative->setType('INSTREAM_VIDEO');
+        $creative = new Google_Service_Dfareporting_Creative();
+        $creative->setAdvertiserId($values['advertiser_id']);
+        $creative->setName('Test in-stream video creative');
+        $creative->setType('INSTREAM_VIDEO');
 
-    $size = new Google_Service_Dfareporting_Size();
-    $size->setId($values['size_id']);
-    $creative->setSize($size);
+        $size = new Google_Service_Dfareporting_Size();
+        $size->setId($values['size_id']);
+        $creative->setSize($size);
 
-    // Upload the video asset.
-    $video = uploadAsset($this->service, $values['user_profile_id'],
-        $values['advertiser_id'], $values['asset_file'], 'VIDEO');
+        // Upload the video asset.
+        $video = uploadAsset(
+            $this->service,
+            $values['user_profile_id'],
+            $values['advertiser_id'],
+            $values['asset_file'],
+            'VIDEO'
+        );
 
-    $asset = new Google_Service_Dfareporting_CreativeAsset();
-    $asset->setAssetIdentifier($video->getAssetIdentifier());
-    $asset->setRole('PARENT_VIDEO');
+        $asset = new Google_Service_Dfareporting_CreativeAsset();
+        $asset->setAssetIdentifier($video->getAssetIdentifier());
+        $asset->setRole('PARENT_VIDEO');
 
-    // Add the creative asset.
-    $creative->setCreativeAssets([$asset]);
+        // Add the creative asset.
+        $creative->setCreativeAssets([$asset]);
 
-    $result = $this->service->creatives->insert($values['user_profile_id'],
-        $creative);
+        $result = $this->service->creatives->insert(
+            $values['user_profile_id'],
+            $creative
+        );
 
-    $this->printResultsTable('In-stream video creative created.', [$result]);
-  }
+        $this->printResultsTable('In-stream video creative created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create In-stream Video Creative';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create In-stream Video Creative';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Creative ID',
-            'name' => 'Creative Name',
-            'type' => 'Creative type'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Creative ID',
+                'name' => 'Creative Name',
+                'type' => 'Creative type'];
+    }
 }

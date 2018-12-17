@@ -21,60 +21,65 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example creates a placement strategy with the given name.
  */
-class CreatePlacementStrategy extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'strategy_name',
-             'display' => 'Placement Strategy Name',
-             'required' => true]];
-  }
+class CreatePlacementStrategy extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'strategy_name',
+                 'display' => 'Placement Strategy Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating placement strategy with name "%s"</h2>',
-        $values['strategy_name']
-    );
+        printf(
+            '<h2>Creating placement strategy with name "%s"</h2>',
+            $values['strategy_name']
+        );
 
-    $strategy = new Google_Service_Dfareporting_PlacementStrategy();
-    $strategy->setName($values['strategy_name']);
+        $strategy = new Google_Service_Dfareporting_PlacementStrategy();
+        $strategy->setName($values['strategy_name']);
 
+        $result = $this->service->placementStrategies->insert(
+            $values['user_profile_id'],
+            $strategy
+        );
 
-    $result = $this->service->placementStrategies->insert(
-        $values['user_profile_id'], $strategy
-    );
+        $this->printResultsTable('Placement strategy created.', [$result]);
+    }
 
-    $this->printResultsTable('Placement strategy created.', [$result]);
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Placement Strategy';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Placement Strategy';
-  }
-
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Placement Strategy ID',
-            'name' => 'Placement Strategy Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Placement Strategy ID',
+                'name' => 'Placement Strategy Name'];
+    }
 }

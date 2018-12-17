@@ -21,65 +21,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example displays all subaccounts.
  */
-class GetSubaccounts extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetSubaccounts extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all subaccounts</h2>';
+        print '<h2>Listing all subaccounts</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Subaccounts');
+        $this->printResultsTableHeader('Subaccounts');
 
-    do {
-      // Create and execute the subaccounts list request.
-      $response = $this->service->subaccounts->listSubaccounts(
-          $values['user_profile_id'], ['pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the subaccounts list request.
+            $response = $this->service->subaccounts->listSubaccounts(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getSubaccounts() as $subaccount) {
-        $this->printResultsTableRow($subaccount);
-      }
+            foreach ($response->getSubaccounts() as $subaccount) {
+                $this->printResultsTableRow($subaccount);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getSubaccounts()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getSubaccounts()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Subaccounts';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Subaccounts';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Subaccount ID',
-            'name' => 'Subaccount Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Subaccount ID',
+                'name' => 'Subaccount Name'];
+    }
 }

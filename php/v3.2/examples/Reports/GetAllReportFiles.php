@@ -21,76 +21,81 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example returns all files for the specified report.
  */
-class GetAllReportFiles extends BaseExample {
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'report_id',
-             'display' => 'Report ID',
-             'required' => true]];
-  }
+class GetAllReportFiles extends BaseExample
+{
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'report_id',
+                 'display' => 'Report ID',
+                 'required' => true]];
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Listing all files for report with ID %s</h2>',
-        $values['report_id']
-    );
+        printf(
+            '<h2>Listing all files for report with ID %s</h2>',
+            $values['report_id']
+        );
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Report Files');
+        $this->printResultsTableHeader('Report Files');
 
-    do {
-      $response = $this->service->reports_files->listReportsFiles(
-        $values['user_profile_id'],
-        $values['report_id'],
-        ['pageToken' => $pageToken]
-      );
+        do {
+            $response = $this->service->reports_files->listReportsFiles(
+                $values['user_profile_id'],
+                $values['report_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getItems() as $file) {
-        $file['apiUrl'] = $file->getUrls()->getApiUrl();
-        $this->printResultsTableRow($file);
-      }
+            foreach ($response->getItems() as $file) {
+                $file['apiUrl'] = $file->getUrls()->getApiUrl();
+                $this->printResultsTableRow($file);
+            }
 
-      $pageToken = $response->getNextPageToken();
-    } while (!empty($response->getItems()) && !empty($pageToken));
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getItems()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Report Files';
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Report Files';
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'File ID',
-            'fileName' => 'File Name',
-            'reportId' => 'Report ID',
-            'format' => 'File Format',
-            'status' => 'Status',
-            'apiUrl' => 'API URL'];
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'File ID',
+                'fileName' => 'File Name',
+                'reportId' => 'Report ID',
+                'format' => 'File Format',
+                'status' => 'Status',
+                'apiUrl' => 'API URL'];
+    }
 }

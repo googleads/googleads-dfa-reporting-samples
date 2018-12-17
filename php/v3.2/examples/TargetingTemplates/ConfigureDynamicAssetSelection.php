@@ -26,114 +26,133 @@ require_once dirname(__DIR__) . '/CreativeAssetUtils.php';
  * CreateInstreamVideoCreative. To get a targeting template, run
  * CreateTargetingTemplate.
  */
-class ConfigureDynamicAssetSelection extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'creative_id',
-             'display' => 'In-stream Video Creative ID',
-             'required' => true],
-            ['name' => 'template_id',
-             'display' => 'Targeting Template ID',
-             'required' => true],
-            ['name' => 'asset_file',
-             'display' => 'Video Asset File',
-             'file' => true,
-             'required' => true]];
-  }
-
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
-
-    printf(
-        '<h2>Configuring dynamic asset selection for creative ID %s</h2>',
-        $values['creative_id']
-    );
-
-    // Retrieve the specified creative.
-    $creative = $this->service->creatives->get(
-        $values['user_profile_id'], $values['creative_id']);
-    if(is_null($creative) ||
-        strcmp($creative->getType(), 'INSTREAM_VIDEO') !== 0) {
-      print 'Invalid creative specified.';
-      return;
+class ConfigureDynamicAssetSelection extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'creative_id',
+                 'display' => 'In-stream Video Creative ID',
+                 'required' => true],
+                ['name' => 'template_id',
+                 'display' => 'Targeting Template ID',
+                 'required' => true],
+                ['name' => 'asset_file',
+                 'display' => 'Video Asset File',
+                 'file' => true,
+                 'required' => true]];
     }
 
-    $assetSelection = $creative->getCreativeAssetSelection();
-    if(!$creative->getDynamicAssetSelection()) {
-      // Locate an existing video asset to use as a default.
-      // This example uses the first PARENT_VIDEO asset found.
-      $defaultVideoAssetId = $this->findDefaultVideoAssetId($creative);
-      if($defaultVideoAssetId < 0) {
-        print 'Default video asset could not be found.';
-        return;
-      }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-      // Create a new selection using the existing asset as a default.
-      $assetSelection =
-          new Google_Service_Dfareporting_CreativeAssetSelection();
-      $assetSelection->setDefaultAssetId($defaultVideoAssetId);
-      $assetSelection->setRules([]);
+        printf(
+            '<h2>Configuring dynamic asset selection for creative ID %s</h2>',
+            $values['creative_id']
+        );
 
-      // Enable dynamic asset selection for the creative.
-      $creative->setDynamicAssetSelection(true);
-      $creative->setCreativeAssetSelection($assetSelection);
+        // Retrieve the specified creative.
+        $creative = $this->service->creatives->get(
+            $values['user_profile_id'],
+            $values['creative_id']
+        );
+        if (is_null($creative) || strcmp($creative->getType(), 'INSTREAM_VIDEO') !== 0) {
+            print 'Invalid creative specified.';
+            return;
+        }
+
+        $assetSelection = $creative->getCreativeAssetSelection();
+        if (!$creative->getDynamicAssetSelection()) {
+            // Locate an existing video asset to use as a default.
+            // This example uses the first PARENT_VIDEO asset found.
+            $defaultVideoAssetId = $this->findDefaultVideoAssetId($creative);
+            if ($defaultVideoAssetId < 0) {
+                print 'Default video asset could not be found.';
+                return;
+            }
+
+            // Create a new selection using the existing asset as a default.
+            $assetSelection =
+                new Google_Service_Dfareporting_CreativeAssetSelection();
+            $assetSelection->setDefaultAssetId($defaultVideoAssetId);
+            $assetSelection->setRules([]);
+
+            // Enable dynamic asset selection for the creative.
+            $creative->setDynamicAssetSelection(true);
+            $creative->setCreativeAssetSelection($assetSelection);
+        }
+
+        // Upload the new video asset and add it to the creative.
+        $video = uploadAsset(
+            $this->service,
+            $values['user_profile_id'],
+            $creative->getAdvertiserId(),
+            $values['asset_file'],
+            'VIDEO'
+        );
+        $videoAsset = new Google_Service_Dfareporting_CreativeAsset();
+        $videoAsset->setAssetIdentifier($video->getAssetIdentifier());
+        $videoAsset->setRole('PARENT_VIDEO');
+        $creative->setCreativeAssets(
+            array_merge($creative->getCreativeAssets(), [$videoAsset])
+        );
+
+        // Create a rule targeting the new video asset and add it to the selection.
+        $rule = new Google_Service_Dfareporting_Rule();
+        $rule->setAssetId($video->getId());
+        $rule->setName('Test rule for asset ' . $video->getId());
+        $rule->setTargetingTemplateId($values['template_id']);
+        $assetSelection->setRules(
+            array_merge($assetSelection->getRules(), [$rule])
+        );
+
+        // Update the creative.
+        $result = $this->service->creatives->update(
+            $values['user_profile_id'],
+            $creative
+        );
+
+        printf(
+            'Dynamic asset selection enabled for creative with ID %d.',
+            $result->getId()
+        );
     }
 
-    // Upload the new video asset and add it to the creative.
-    $video = uploadAsset($this->service, $values['user_profile_id'],
-        $creative->getAdvertiserId(), $values['asset_file'], 'VIDEO');
-    $videoAsset = new Google_Service_Dfareporting_CreativeAsset();
-    $videoAsset->setAssetIdentifier($video->getAssetIdentifier());
-    $videoAsset->setRole('PARENT_VIDEO');
-    $creative->setCreativeAssets(
-        array_merge($creative->getCreativeAssets(), [$videoAsset]));
+    private function findDefaultVideoAssetId($creative)
+    {
+        $assets = $creative->getCreativeAssets();
+        $index = array_search(
+            'PARENT_VIDEO',
+            array_map(
+                function ($asset) {
+                    return $asset->getRole();
+                },
+                $assets
+            )
+        );
 
-    // Create a rule targeting the new video asset and add it to the selection.
-    $rule = new Google_Service_Dfareporting_Rule();
-    $rule->setAssetId($video->getId());
-    $rule->setName('Test rule for asset ' . $video->getId());
-    $rule->setTargetingTemplateId($values['template_id']);
-    $assetSelection->setRules(
-        array_merge($assetSelection->getRules(), [$rule]));
+        return $index !== false ? $assets[$index]->getId() : -1;
+    }
 
-    // Update the creative.
-    $result = $this->service->creatives->update($values['user_profile_id'],
-        $creative);
-
-    printf('Dynamic asset selection enabled for creative with ID %d.',
-        $result->getId());
-  }
-
-  private function findDefaultVideoAssetId($creative) {
-    $assets = $creative->getCreativeAssets();
-    $index = array_search('PARENT_VIDEO',
-        array_map(
-            function($asset) {
-              return $asset->getRole();
-            }, $assets
-        )
-    );
-
-    return $index !== false ? $assets[$index]->getId() : -1;
-  }
-
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Configure Dynamic Asset Targeting';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Configure Dynamic Asset Targeting';
+    }
 }

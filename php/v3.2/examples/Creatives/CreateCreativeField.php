@@ -22,63 +22,69 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example creates a creative field associated with a given advertiser.
  * To get an advertiser ID, run GetAdvertisers.
  */
-class CreateCreativeField extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'field_name',
-             'display' => 'Creative Field Name',
-             'required' => true]];
-  }
+class CreateCreativeField extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'field_name',
+                 'display' => 'Creative Field Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating creative field with name "%s"</h2>',
-        $values['field_name']
-    );
+        printf(
+            '<h2>Creating creative field with name "%s"</h2>',
+            $values['field_name']
+        );
 
-    $field = new Google_Service_Dfareporting_CreativeField();
-    $field->setAdvertiserId($values['advertiser_id']);
-    $field->setName($values['field_name']);
+        $field = new Google_Service_Dfareporting_CreativeField();
+        $field->setAdvertiserId($values['advertiser_id']);
+        $field->setName($values['field_name']);
 
-    $result = $this->service->creativeFields->insert(
-        $values['user_profile_id'], $field
-    );
+        $result = $this->service->creativeFields->insert(
+            $values['user_profile_id'],
+            $field
+        );
 
-    $this->printResultsTable('Creative field created.', [$result]);
-  }
+        $this->printResultsTable('Creative field created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Creative Field';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Creative Field';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Creative Field ID',
-            'name' => 'Creative Field Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Creative Field ID',
+                'name' => 'Creative Field Name'];
+    }
 }

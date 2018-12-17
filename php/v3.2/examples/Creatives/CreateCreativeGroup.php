@@ -23,68 +23,74 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * To get an advertiser ID, run GetAdvertisers. Valid group numbers are
  * limited to 1 or 2.
  */
-class CreateCreativeGroup extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'group_name',
-             'display' => 'Creative Group Name',
-             'required' => true],
-            ['name' => 'group_number',
-             'display' => 'Creative Group Number (1-2)',
-             'required' => true]];
-  }
+class CreateCreativeGroup extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'group_name',
+                 'display' => 'Creative Group Name',
+                 'required' => true],
+                ['name' => 'group_number',
+                 'display' => 'Creative Group Number (1-2)',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating creative group with name "%s"</h2>',
-        $values['group_name']
-    );
+        printf(
+            '<h2>Creating creative group with name "%s"</h2>',
+            $values['group_name']
+        );
 
-    $group = new Google_Service_Dfareporting_CreativeGroup();
-    $group->setAdvertiserId($values['advertiser_id']);
-    $group->setGroupNumber($values['group_number']);
-    $group->setName($values['group_name']);
+        $group = new Google_Service_Dfareporting_CreativeGroup();
+        $group->setAdvertiserId($values['advertiser_id']);
+        $group->setGroupNumber($values['group_number']);
+        $group->setName($values['group_name']);
 
-    $result = $this->service->creativeGroups->insert(
-        $values['user_profile_id'], $group
-    );
+        $result = $this->service->creativeGroups->insert(
+            $values['user_profile_id'],
+            $group
+        );
 
-    $this->printResultsTable('Creative group created.', [$result]);
-  }
+        $this->printResultsTable('Creative group created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Creative Group';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Creative Group';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Creative Group ID',
-            'name' => 'Creative Group Name',
-            'groupNumber' => 'Creative Group Number'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Creative Group ID',
+                'name' => 'Creative Group Name',
+                'groupNumber' => 'Creative Group Number'];
+    }
 }

@@ -22,64 +22,69 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example gets all reports available to the given user profile. It
  * demonstrates paging through results.
  */
-class GetAllReports extends BaseExample {
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetAllReports extends BaseExample
+{
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all reports</h2>';
+        print '<h2>Listing all reports</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Reports');
-    do {
-      $response = $this->service->reports->listReports(
-          $values['user_profile_id'],
-          ['pageToken' => $pageToken]
-      );
+        $this->printResultsTableHeader('Reports');
+        do {
+            $response = $this->service->reports->listReports(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getItems() as $report) {
-        $this->printResultsTableRow($report);
-      }
+            foreach ($response->getItems() as $report) {
+                $this->printResultsTableRow($report);
+            }
 
-      $pageToken = $response->getNextPageToken();
-    } while (!empty($response->getItems()) && !empty($pageToken));
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getItems()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Reports';
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Reports';
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Report ID',
-            'name' => 'Report Name',
-            'type' => 'Report Type'];
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Report ID',
+                'name' => 'Report Name',
+                'type' => 'Report Type'];
+    }
 }

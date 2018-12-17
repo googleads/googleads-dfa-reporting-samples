@@ -22,75 +22,80 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example lists all existing active creatives for a given advertiser.
  * To get an advertiser ID, run GetAdvertisers.
  */
-class GetCreatives extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true]];
-  }
+class GetCreatives extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Listing all active creatives for advertiser ID %s</h2>',
-        $values['advertiser_id']
-    );
+        printf(
+            '<h2>Listing all active creatives for advertiser ID %s</h2>',
+            $values['advertiser_id']
+        );
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Creatives');
+        $this->printResultsTableHeader('Creatives');
 
-    do {
-      // Create and execute the creative fields list request.
-      $response = $this->service->creatives->listCreatives(
-          $values['user_profile_id'],
-          ['active' => true,
-           'advertiserId' => $values['advertiser_id'],
-           'pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the creative fields list request.
+            $response = $this->service->creatives->listCreatives(
+                $values['user_profile_id'],
+                ['active' => true,
+                 'advertiserId' => $values['advertiser_id'],
+                 'pageToken' => $pageToken]
+            );
 
-      foreach ($response->getCreatives() as $creatives) {
-        $this->printResultsTableRow($creatives);
-      }
+            foreach ($response->getCreatives() as $creatives) {
+                $this->printResultsTableRow($creatives);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getCreatives()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getCreatives()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Creatives';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Creatives';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Creative ID',
-            'name' => 'Creative Name',
-            'type' => 'Creative Type'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Creative ID',
+                'name' => 'Creative Name',
+                'type' => 'Creative Type'];
+    }
 }

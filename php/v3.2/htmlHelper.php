@@ -23,51 +23,59 @@
  * Opens the HTML.
  * @param string $title the title of the page
  */
-function printHtmlHeader($title) {
-  $htmlTitle = filter_var($title, FILTER_SANITIZE_SPECIAL_CHARS);
-  print '<!DOCTYPE html>';
-  print '<html>';
-  printf('<head><title>%s</title></head>', $htmlTitle);
-  print '<link rel="stylesheet" href="styles/style.css" />';
-  print '<body>';
+function printHtmlHeader($title)
+{
+    $htmlTitle = filter_var($title, FILTER_SANITIZE_SPECIAL_CHARS);
+    print '<!DOCTYPE html>';
+    print '<html>';
+    printf('<head><title>%s</title></head>', $htmlTitle);
+    print '<link rel="stylesheet" href="styles/style.css" />';
+    print '<body>';
 }
 
 /**
  * Closes the HTML.
  */
-function printHtmlFooter() {
-  print '</body>';
-  print '</html>';
+function printHtmlFooter()
+{
+    print '</body>';
+    print '</html>';
 }
 
 /**
  * Closes the HTML for samples.
  */
-function printSampleHtmlFooter() {
-  print '<br><a href="index.php">Go back to samples list</a>';
-  printHtmlFooter();
+function printSampleHtmlFooter()
+{
+    print '<br><a href="index.php">Go back to samples list</a>';
+    printHtmlFooter();
 }
 
 /**
  * Prints the index with links to the examples.
  * @param array $actions supported actions
  */
-function printExamplesIndex($actions) {
-  print '<h2>Select a sample from the list</h2>';
-  print '<ul class="nav">';
+function printExamplesIndex($actions)
+{
+    print '<h2>Select a sample from the list</h2>';
+    print '<ul class="nav">';
 
-  foreach ($actions as $action => $subActions) {
-    printf('<li><b>%s</b><ul>', $action);
+    foreach ($actions as $action => $subActions) {
+        printf('<li><b>%s</b><ul>', $action);
 
-    foreach ($subActions as $subAction) {
-      include_once 'examples/' . $action . '/' . $subAction . '.php';
-      $class = ucfirst($subAction);
-      printf('<li><a href="?action=%s:%s">%s</a></li>', $action, $subAction,
-          $class::getName());
+        foreach ($subActions as $subAction) {
+            include_once 'examples/' . $action . '/' . $subAction . '.php';
+            $class = ucfirst($subAction);
+            printf(
+                '<li><a href="?action=%s:%s">%s</a></li>',
+                $action,
+                $subAction,
+                $class::getName()
+            );
+        }
+
+        print '<li>&nbsp;</li></ul></li>';
     }
 
-    print '<li>&nbsp;</li></ul></li>';
-  }
-
-  print '</ul>';
+    print '</ul>';
 }

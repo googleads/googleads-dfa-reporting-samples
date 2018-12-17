@@ -21,67 +21,72 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example returns all files available to the specified user profile.
  */
-class GetAllFiles extends BaseExample {
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetAllFiles extends BaseExample
+{
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all report files</h2>';
+        print '<h2>Listing all report files</h2>';
 
-    $this->printResultsTableHeader('Files');
+        $this->printResultsTableHeader('Files');
 
-    do {
-      $files = $this->service->files->listFiles(
-          $values['user_profile_id'],
-          ['pageToken' => $pageToken]
-      );
+        do {
+            $files = $this->service->files->listFiles(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($files['items'] as $file) {
-        $url = $file['urls']['browserUrl'];
-        $file['download'] = '<a href="' . $url . '">Link</a>';
-        $this->printResultsTableRow($file);
-      }
+            foreach ($files['items'] as $file) {
+                $url = $file['urls']['browserUrl'];
+                $file['download'] = '<a href="' . $url . '">Link</a>';
+                $this->printResultsTableRow($file);
+            }
 
-      $pageToken = $files['nextPageToken'];
-    } while (!empty($files['items']) && !empty($pageToken));
+            $pageToken = $files['nextPageToken'];
+        } while (!empty($files['items']) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Files';
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Files';
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'File ID',
-            'fileName' => 'File Name',
-            'reportId' => 'Report ID',
-            'format' => 'File Format',
-            'status' => 'Status',
-            'download' => 'Download'];
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'File ID',
+                'fileName' => 'File Name',
+                'reportId' => 'Report ID',
+                'format' => 'File Format',
+                'status' => 'Status',
+                'download' => 'Download'];
+    }
 }

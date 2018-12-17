@@ -24,62 +24,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * CAUTION: An advertiser that has campaigns associated with it cannot be
  * removed from an advertiser group once assigned.
  */
-class AssignAdvertisersToAdvertiserGroup extends BaseExample {
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'advertiser_group_id',
-             'display' => 'Advertiser Group ID',
-             'required' => true]];
-  }
+class AssignAdvertisersToAdvertiserGroup extends BaseExample
+{
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'advertiser_group_id',
+                 'display' => 'Advertiser Group ID',
+                 'required' => true]];
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Assigning advertiser ID %s to advertiser group ID %s</h2>',
-        $values['advertiser_id'], $values['advertiser_group_id']
-    );
+        printf(
+            '<h2>Assigning advertiser ID %s to advertiser group ID %s</h2>',
+            $values['advertiser_id'],
+            $values['advertiser_group_id']
+        );
 
-    $advertiser = new Google_Service_Dfareporting_Advertiser();
-    $advertiser->setAdvertiserGroupId($values['advertiser_group_id']);
+        $advertiser = new Google_Service_Dfareporting_Advertiser();
+        $advertiser->setAdvertiserGroupId($values['advertiser_group_id']);
 
-    $result = $this->service->advertisers->patch($values['user_profile_id'],
-        $values['advertiser_id'], $advertiser);
+        $result = $this->service->advertisers->patch(
+            $values['user_profile_id'],
+            $values['advertiser_id'],
+            $advertiser
+        );
 
-    $this->printResultsTable('Advertiser', [$result]);
-  }
+        $this->printResultsTable('Advertiser', [$result]);
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Assign Advertiser To Advertiser Group';
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Assign Advertiser To Advertiser Group';
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Advertiser ID',
-            'name' => 'Advertiser Name',
-            'advertiserGroupId' => 'Advertiser Group ID'];
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Advertiser ID',
+                'name' => 'Advertiser Name',
+                'advertiserGroupId' => 'Advertiser Group ID'];
+    }
 }

@@ -22,67 +22,72 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example displays the name, ID and advertiser ID for every active ad
  * your DCM user profile can see.
  */
-class GetAds extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetAds extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all ads</h2>';
+        print '<h2>Listing all ads</h2>';
 
-    $this->printResultsTableHeader('Ads');
+        $this->printResultsTableHeader('Ads');
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    do {
-      // Create and execute the ads list request.
-      $response = $this->service->ads->listAds(
-          $values['user_profile_id'],
-          ['active' => true, 'pageToken' => $pageToken]
-      );
+        do {
+            // Create and execute the ads list request.
+            $response = $this->service->ads->listAds(
+                $values['user_profile_id'],
+                ['active' => true, 'pageToken' => $pageToken]
+            );
 
-      foreach ($response->getAds() as $ads) {
-        $this->printResultsTableRow($ads);
-      }
+            foreach ($response->getAds() as $ads) {
+                $this->printResultsTableRow($ads);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getAds()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getAds()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Ads';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Ads';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Ad ID',
-            'name' => 'Ad Name',
-            'advertiserId' => 'Associated Advertiser ID'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Ad ID',
+                'name' => 'Ad Name',
+                'advertiserId' => 'Associated Advertiser ID'];
+    }
 }

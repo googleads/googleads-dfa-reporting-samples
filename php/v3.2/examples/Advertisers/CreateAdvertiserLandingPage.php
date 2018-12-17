@@ -21,68 +21,75 @@ require_once dirname(__DIR__) . '/BaseExample.php';
 /**
  * This example creates an advertiser landing page.
  */
-class CreateAdvertiserLandingPage extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'landing_page_name',
-             'display' => 'Landing Page Name',
-             'required' => true],
-            ['name' => 'landing_page_url',
-             'display' => 'Landing Page URL',
-             'required' => true]];
-  }
+class CreateAdvertiserLandingPage extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'landing_page_name',
+                 'display' => 'Landing Page Name',
+                 'required' => true],
+                ['name' => 'landing_page_url',
+                 'display' => 'Landing Page URL',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating advertiser landing page for advertiser %d</h2>',
-        $values['advertiser_id']
-    );
+        printf(
+            '<h2>Creating advertiser landing page for advertiser %d</h2>',
+            $values['advertiser_id']
+        );
 
-    $landingPage = new Google_Service_Dfareporting_LandingPage();
-    $landingPage->setAdvertiserId($values['advertiser_id']);
-    $landingPage->setArchived(false);
-    $landingPage->setName($values['landing_page_name']);
-    $landingPage->setUrl($values['landing_page_url']);
+        $landingPage = new Google_Service_Dfareporting_LandingPage();
+        $landingPage->setAdvertiserId($values['advertiser_id']);
+        $landingPage->setArchived(false);
+        $landingPage->setName($values['landing_page_name']);
+        $landingPage->setUrl($values['landing_page_url']);
 
-    $result = $this->service->advertiserLandingPages->insert(
-        $values['user_profile_id'], $landingPage);
+        $result = $this->service->advertiserLandingPages->insert(
+            $values['user_profile_id'],
+            $landingPage
+        );
 
-    $this->printResultsTable('Advertiser landing page created.', [$result]);
-  }
+        $this->printResultsTable('Advertiser landing page created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Advertiser Landing Page';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Advertiser Landing Page';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Advertiser Landing Page ID',
-            'name' => 'Advertiser Landing Page Name',
-            'url' => 'Advertiser Landing Page URL'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Advertiser Landing Page ID',
+                'name' => 'Advertiser Landing Page Name',
+                'url' => 'Advertiser Landing Page URL'];
+    }
 }

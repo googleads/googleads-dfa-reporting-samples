@@ -24,108 +24,117 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * creatives, run one of the Create*Creative examples. To get available
  * placements, run GetPlacements.
  */
-class CreateRotationGroup extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'campaign_id',
-             'display' => 'Campaign ID',
-             'required' => true],
-            ['name' => 'creative_id',
-             'display' => 'Creative ID',
-             'required' => true],
-            ['name' => 'placement_id',
-             'display' => 'Placement ID',
-             'required' => true],
-            ['name' => 'ad_name',
-             'display' => 'Ad Name',
-             'required' => true]];
-  }
+class CreateRotationGroup extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'campaign_id',
+                 'display' => 'Campaign ID',
+                 'required' => true],
+                ['name' => 'creative_id',
+                 'display' => 'Creative ID',
+                 'required' => true],
+                ['name' => 'placement_id',
+                 'display' => 'Placement ID',
+                 'required' => true],
+                ['name' => 'ad_name',
+                 'display' => 'Ad Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating rotation group ad with name "%s" for placement ID'
-        . ' %s</h2>', $values['ad_name'], $values['placement_id']
-    );
+        printf(
+            '<h2>Creating rotation group ad with name "%s" for placement ID'
+            . ' %s</h2>',
+            $values['ad_name'],
+            $values['placement_id']
+        );
 
-    // Retrieve the campaign.
-    $campaign = $this->service->campaigns->get($values['user_profile_id'],
-        $values['campaign_id']);
+        // Retrieve the campaign.
+        $campaign = $this->service->campaigns->get(
+            $values['user_profile_id'],
+            $values['campaign_id']
+        );
 
-    // Create a click-through URL.
-    $url = new Google_Service_Dfareporting_ClickThroughUrl();
-    $url->setDefaultLandingPage(true);
+        // Create a click-through URL.
+        $url = new Google_Service_Dfareporting_ClickThroughUrl();
+        $url->setDefaultLandingPage(true);
 
-    // Create a creative assignment.
-    $creativeAssignment =
-        new Google_Service_Dfareporting_CreativeAssignment();
-    $creativeAssignment->setActive(true);
-    $creativeAssignment->setCreativeId($values['creative_id']);
-    $creativeAssignment->setClickThroughUrl($url);
+        // Create a creative assignment.
+        $creativeAssignment =
+            new Google_Service_Dfareporting_CreativeAssignment();
+        $creativeAssignment->setActive(true);
+        $creativeAssignment->setCreativeId($values['creative_id']);
+        $creativeAssignment->setClickThroughUrl($url);
 
-    // Create a placement assignment.
-    $placementAssignment =
-        new Google_Service_Dfareporting_PlacementAssignment();
-    $placementAssignment->setActive(true);
-    $placementAssignment->setPlacementId($values['placement_id']);
+        // Create a placement assignment.
+        $placementAssignment =
+            new Google_Service_Dfareporting_PlacementAssignment();
+        $placementAssignment->setActive(true);
+        $placementAssignment->setPlacementId($values['placement_id']);
 
-    // Create a creative rotation.
-    $creativeRotation = new Google_Service_Dfareporting_CreativeRotation();
-    $creativeRotation->setCreativeAssignments([$creativeAssignment]);
+        // Create a creative rotation.
+        $creativeRotation = new Google_Service_Dfareporting_CreativeRotation();
+        $creativeRotation->setCreativeAssignments([$creativeAssignment]);
 
-    // Create a delivery schedule.
-    $deliverySchedule = new Google_Service_Dfareporting_DeliverySchedule();
-    $deliverySchedule->setImpressionRatio(1);
-    $deliverySchedule->SetPriority('AD_PRIORITY_01');
+        // Create a delivery schedule.
+        $deliverySchedule = new Google_Service_Dfareporting_DeliverySchedule();
+        $deliverySchedule->setImpressionRatio(1);
+        $deliverySchedule->SetPriority('AD_PRIORITY_01');
 
-    $startDate = new DateTime('today');
-    $endDate = new DateTime($campaign->getEndDate());
+        $startDate = new DateTime('today');
+        $endDate = new DateTime($campaign->getEndDate());
 
-    // Create a rotation group.
-    $ad = new Google_Service_Dfareporting_Ad();
-    $ad->setActive(true);
-    $ad->setCampaignId($values['campaign_id']);
-    $ad->setCreativeRotation($creativeRotation);
-    $ad->setDeliverySchedule($deliverySchedule);
-    $ad->setStartTime($startDate->format('Y-m-d') . 'T23:59:59Z');
-    $ad->setEndTime($endDate->format('Y-m-d') . 'T00:00:00Z');
-    $ad->setName($values['ad_name']);
-    $ad->setPlacementAssignments([$placementAssignment]);
-    $ad->setType('AD_SERVING_STANDARD_AD');
+        // Create a rotation group.
+        $ad = new Google_Service_Dfareporting_Ad();
+        $ad->setActive(true);
+        $ad->setCampaignId($values['campaign_id']);
+        $ad->setCreativeRotation($creativeRotation);
+        $ad->setDeliverySchedule($deliverySchedule);
+        $ad->setStartTime($startDate->format('Y-m-d') . 'T23:59:59Z');
+        $ad->setEndTime($endDate->format('Y-m-d') . 'T00:00:00Z');
+        $ad->setName($values['ad_name']);
+        $ad->setPlacementAssignments([$placementAssignment]);
+        $ad->setType('AD_SERVING_STANDARD_AD');
 
-    $result = $this->service->ads->insert($values['user_profile_id'], $ad);
+        $result = $this->service->ads->insert($values['user_profile_id'], $ad);
 
-    $this->printResultsTable('Rotation group ad created.', [$result]);
-  }
+        $this->printResultsTable('Rotation group ad created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Rotation Group Ad';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Rotation Group Ad';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Ad ID',
-            'name' => 'Ad Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Ad ID',
+                'name' => 'Ad Name'];
+    }
 }

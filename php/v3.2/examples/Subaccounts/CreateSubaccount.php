@@ -22,70 +22,78 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example creates a subaccount in a given DoubleClick Campaign Manager
  * account. To get available permissions, run GetUserRolePermissions.
  */
-class CreateSubaccount extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'account_id',
-             'display' => 'Account ID',
-             'required' => true],
-            ['name' => 'permission_one',
-             'display' => 'First Permission ID',
-             'required' => true],
-            ['name' => 'permission_two',
-             'display' => 'Second Permission ID',
-             'required' => true],
-            ['name' => 'subaccount_name',
-             'display' => 'Subaccount Name',
-             'required' => true]];
-  }
+class CreateSubaccount extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'account_id',
+                 'display' => 'Account ID',
+                 'required' => true],
+                ['name' => 'permission_one',
+                 'display' => 'First Permission ID',
+                 'required' => true],
+                ['name' => 'permission_two',
+                 'display' => 'Second Permission ID',
+                 'required' => true],
+                ['name' => 'subaccount_name',
+                 'display' => 'Subaccount Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating subaccount with name "%s" for account ID %s</h2>',
-        $values['subaccount_name'], $values['account_id']
-    );
+        printf(
+            '<h2>Creating subaccount with name "%s" for account ID %s</h2>',
+            $values['subaccount_name'],
+            $values['account_id']
+        );
 
-    $subaccount = new Google_Service_Dfareporting_Subaccount();
-    $subaccount->setName($values['subaccount_name']);
-    $subaccount->setAvailablePermissionIds(
-        [$values['permission_one'], $values['permission_two']]);
+        $subaccount = new Google_Service_Dfareporting_Subaccount();
+        $subaccount->setName($values['subaccount_name']);
+        $subaccount->setAvailablePermissionIds(
+            [$values['permission_one'], $values['permission_two']]
+        );
 
-    $result = $this->service->subaccounts->insert(
-        $values['user_profile_id'], $subaccount
-    );
+        $result = $this->service->subaccounts->insert(
+            $values['user_profile_id'],
+            $subaccount
+        );
 
-    $this->printResultsTable('Subaccount created.', [$result]);
-  }
+        $this->printResultsTable('Subaccount created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Subaccount';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Subaccount';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Subaccount ID',
-            'name' => 'Subaccount Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Subaccount ID',
+                'name' => 'Subaccount Name'];
+    }
 }

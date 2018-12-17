@@ -22,69 +22,77 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example creates a floodlight activity in a given activity group. To
  * create an activity group, run CreateFloodlightActivityGroup.
  */
-class CreateFloodlightActivity extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'activity_group_id',
-             'display' => 'Floodlight Activity Group ID',
-             'required' => true],
-            ['name' => 'activity_name',
-             'display' => 'Floodlight Activity Name',
-             'required' => true],
-            ['name' => 'url',
-             'display' => 'Expected URL',
-             'required' => true]];
-  }
+class CreateFloodlightActivity extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'activity_group_id',
+                 'display' => 'Floodlight Activity Group ID',
+                 'required' => true],
+                ['name' => 'activity_name',
+                 'display' => 'Floodlight Activity Name',
+                 'required' => true],
+                ['name' => 'url',
+                 'display' => 'Expected URL',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating floodlight activity with name "%s" under group ID'
-        . ' %s</h2>', $values['activity_name'], $values['activity_group_id']
-    );
+        printf(
+            '<h2>Creating floodlight activity with name "%s" under group ID'
+            . ' %s</h2>',
+            $values['activity_name'],
+            $values['activity_group_id']
+        );
 
-    $activity = new Google_Service_Dfareporting_FloodlightActivity();
-    $activity->setCountingMethod('STANDARD_COUNTING');
-    $activity->setExpectedUrl($values['url']);
-    $activity->setFloodlightActivityGroupId($values['activity_group_id']);
-    $activity->setFloodlightTagType('GLOBAL_SITE_TAG');
-    $activity->setName($values['activity_name']);
+        $activity = new Google_Service_Dfareporting_FloodlightActivity();
+        $activity->setCountingMethod('STANDARD_COUNTING');
+        $activity->setExpectedUrl($values['url']);
+        $activity->setFloodlightActivityGroupId($values['activity_group_id']);
+        $activity->setFloodlightTagType('GLOBAL_SITE_TAG');
+        $activity->setName($values['activity_name']);
 
-    $result = $this->service->floodlightActivities->insert(
-        $values['user_profile_id'], $activity
-    );
+        $result = $this->service->floodlightActivities->insert(
+            $values['user_profile_id'],
+            $activity
+        );
 
-    $this->printResultsTable('Floodlight activity created.', [$result]);
-  }
+        $this->printResultsTable('Floodlight activity created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Floodlight Activity';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Floodlight Activity';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Floodlight Activity ID',
-            'name' => 'Floodlight Activity Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Floodlight Activity ID',
+                'name' => 'Floodlight Activity Name'];
+    }
 }

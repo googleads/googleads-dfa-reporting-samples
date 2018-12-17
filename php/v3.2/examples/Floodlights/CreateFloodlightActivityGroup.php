@@ -22,65 +22,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example creates a new activity group for a given floodlight
  * configuration. To get a floodlight tag configuration ID, run GetAdvertisers.
  */
-class CreateFloodlightActivityGroup extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'group_name',
-             'display' => 'Floodlight Activity Group Name',
-             'required' => true],
-            ['name' => 'configuration_id',
-             'display' => 'Floodlight Configuration (Advertiser) ID',
-             'required' => true]];
-  }
+class CreateFloodlightActivityGroup extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'group_name',
+                 'display' => 'Floodlight Activity Group Name',
+                 'required' => true],
+                ['name' => 'configuration_id',
+                 'display' => 'Floodlight Configuration (Advertiser) ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating floodlight activity group with name "%s"</h2>',
-        $values['group_name']
-    );
+        printf(
+            '<h2>Creating floodlight activity group with name "%s"</h2>',
+            $values['group_name']
+        );
 
-    $group = new Google_Service_Dfareporting_FloodlightActivityGroup();
-    $group->setFloodlightConfigurationId($values['configuration_id']);
-    $group->setName($values['group_name']);
-    $group->setType('COUNTER');
+        $group = new Google_Service_Dfareporting_FloodlightActivityGroup();
+        $group->setFloodlightConfigurationId($values['configuration_id']);
+        $group->setName($values['group_name']);
+        $group->setType('COUNTER');
 
-    $result = $this->service->floodlightActivityGroups->insert(
-        $values['user_profile_id'], $group
-    );
+        $result = $this->service->floodlightActivityGroups->insert(
+            $values['user_profile_id'],
+            $group
+        );
 
-    $this->printResultsTable('Floodlight activity group created.', [$result]);
-  }
+        $this->printResultsTable('Floodlight activity group created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Floodlight Activity Group';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Floodlight Activity Group';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Floodlight Activity Group ID',
-            'name' => 'Floodlight Activity Group Name',
-            'floodlightConfigurationId' => 'Floodlight Configuration ID'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Floodlight Activity Group ID',
+                'name' => 'Floodlight Activity Group Name',
+                'floodlightConfigurationId' => 'Floodlight Configuration ID'];
+    }
 }

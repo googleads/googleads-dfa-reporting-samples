@@ -22,60 +22,66 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example creates an advertiser in a given DFA account. To get
  * advertisers, see GetAdvertisers.
  */
-class CreateAdvertiser extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_name',
-             'display' => 'Advertiser Name',
-             'required' => true]];
-  }
+class CreateAdvertiser extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_name',
+                 'display' => 'Advertiser Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating advertiser with name "%s"</h2>',
-        $values['advertiser_name']
-    );
+        printf(
+            '<h2>Creating advertiser with name "%s"</h2>',
+            $values['advertiser_name']
+        );
 
-    $advertiser = new Google_Service_Dfareporting_Advertiser();
-    $advertiser->setName($values['advertiser_name']);
-    $advertiser->setStatus('APPROVED');
+        $advertiser = new Google_Service_Dfareporting_Advertiser();
+        $advertiser->setName($values['advertiser_name']);
+        $advertiser->setStatus('APPROVED');
 
-    $result = $this->service->advertisers->insert(
-        $values['user_profile_id'], $advertiser
-    );
+        $result = $this->service->advertisers->insert(
+            $values['user_profile_id'],
+            $advertiser
+        );
 
-    $this->printResultsTable('Advertiser created.', [$result]);
-  }
+        $this->printResultsTable('Advertiser created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Advertiser';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Advertiser';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Advertiser ID',
-            'name' => 'Advertiser Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Advertiser ID',
+                'name' => 'Advertiser Name'];
+    }
 }

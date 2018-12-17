@@ -24,61 +24,68 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  *
  * To get a subaccount ID, run GetSubaccounts.
  */
-class GetSubaccountPermissions extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'subaccount_id',
-             'display' => 'Subaccount ID',
-             'required' => true]];
-  }
+class GetSubaccountPermissions extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'subaccount_id',
+                 'display' => 'Subaccount ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    $subaccount = $this->service->subaccounts->get(
-        $values['user_profile_id'], $values['subaccount_id']
-    );
-
-    printf('<h2>Listing all permissions for subaccount "%s"</h2>',
-        $subaccount->getName()
-    );
-
-    $permissions =
-        $this->service->userRolePermissions->listUserRolePermissions(
+        $subaccount = $this->service->subaccounts->get(
             $values['user_profile_id'],
-            ['ids' => $subaccount->getAvailablePermissionIds()]
+            $values['subaccount_id']
         );
 
-    $this->printResultsTable('Subaccount Permissions', $permissions);
-  }
+        printf(
+            '<h2>Listing all permissions for subaccount "%s"</h2>',
+            $subaccount->getName()
+        );
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get Subaccount Permissions';
-  }
+        $permissions =
+            $this->service->userRolePermissions->listUserRolePermissions(
+                $values['user_profile_id'],
+                ['ids' => $subaccount->getAvailablePermissionIds()]
+            );
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Permission ID',
-            'name' => 'Permission Name'];
-  }
+        $this->printResultsTable('Subaccount Permissions', $permissions);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get Subaccount Permissions';
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Permission ID',
+                'name' => 'Permission Name'];
+    }
 }

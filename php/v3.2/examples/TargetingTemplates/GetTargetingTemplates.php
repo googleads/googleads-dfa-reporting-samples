@@ -22,65 +22,72 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example displays the name, ID and advertiser ID for every targeting
  * template your DCM user profile can see.
  */
-class GetTargetingTemplates extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true]];
-  }
+class GetTargetingTemplates extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    print '<h2>Listing all targeting templates</h2>';
+        print '<h2>Listing all targeting templates</h2>';
 
-    $response = null;
-    $pageToken = null;
+        $response = null;
+        $pageToken = null;
 
-    $this->printResultsTableHeader('Targeting Templates');
+        $this->printResultsTableHeader('Targeting Templates');
 
-    do {
-      // Create and execute the targeting templates list request.
-      $response = $this->service->targetingTemplates->listTargetingTemplates(
-          $values['user_profile_id'], ['pageToken' => $pageToken]);
+        do {
+            // Create and execute the targeting templates list request.
+            $response = $this->service->targetingTemplates->listTargetingTemplates(
+                $values['user_profile_id'],
+                ['pageToken' => $pageToken]
+            );
 
-      foreach ($response->getTargetingTemplates() as $template) {
-        $this->printResultsTableRow($template);
-      }
+            foreach ($response->getTargetingTemplates() as $template) {
+                $this->printResultsTableRow($template);
+            }
 
-      // Update the next page token.
-      $pageToken = $response->getNextPageToken();
-    } while(!empty($response->getTargetingTemplates()) && !empty($pageToken));
+            // Update the next page token.
+            $pageToken = $response->getNextPageToken();
+        } while (!empty($response->getTargetingTemplates()) && !empty($pageToken));
 
-    $this->printResultsTableFooter();
-  }
+        $this->printResultsTableFooter();
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get All Targeting Templates';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get All Targeting Templates';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Template ID',
-            'name' => 'Template Name',
-            'advertiserId' => 'Advertiser ID'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Template ID',
+                'name' => 'Template Name',
+                'advertiserId' => 'Advertiser ID'];
+    }
 }

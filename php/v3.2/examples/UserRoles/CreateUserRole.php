@@ -24,75 +24,83 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * available permissions, run GetUserRolePermissions. To get the parent user
  * role ID, run GetUserRoles.
  */
-class CreateUserRole extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'parent_user_role_id',
-             'display' => 'Parent User Role ID',
-             'required' => true],
-            ['name' => 'subaccount_id',
-             'display' => 'Subaccount ID',
-             'required' => true],
-            ['name' => 'permission_one',
-             'display' => 'First Permission ID',
-             'required' => true],
-            ['name' => 'permission_two',
-             'display' => 'Second Permission ID',
-             'required' => true],
-            ['name' => 'user_role_name',
-             'display' => 'User Role Name',
-             'required' => true]];
-  }
+class CreateUserRole extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'parent_user_role_id',
+                 'display' => 'Parent User Role ID',
+                 'required' => true],
+                ['name' => 'subaccount_id',
+                 'display' => 'Subaccount ID',
+                 'required' => true],
+                ['name' => 'permission_one',
+                 'display' => 'First Permission ID',
+                 'required' => true],
+                ['name' => 'permission_two',
+                 'display' => 'Second Permission ID',
+                 'required' => true],
+                ['name' => 'user_role_name',
+                 'display' => 'User Role Name',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating user role with name "%s" under parent role ID %s</h2>',
-        $values['user_role_name'], $values['parent_user_role_id']
-    );
+        printf(
+            '<h2>Creating user role with name "%s" under parent role ID %s</h2>',
+            $values['user_role_name'],
+            $values['parent_user_role_id']
+        );
 
-    $userRole = new Google_Service_Dfareporting_UserRole();
-    $userRole->setName($values['user_role_name']);
-    $userRole->setParentUserRoleId($values['parent_user_role_id']);
-    $userRole->setPermissions(
-        [$values['permission_one'], $values['permission_two']]);
-    $userRole->setSubaccountId($values['subaccount_id']);
+        $userRole = new Google_Service_Dfareporting_UserRole();
+        $userRole->setName($values['user_role_name']);
+        $userRole->setParentUserRoleId($values['parent_user_role_id']);
+        $userRole->setPermissions(
+            [$values['permission_one'], $values['permission_two']]
+        );
+        $userRole->setSubaccountId($values['subaccount_id']);
 
-    $result = $this->service->userRoles->insert(
-        $values['user_profile_id'], $userRole
-    );
+        $result = $this->service->userRoles->insert(
+            $values['user_profile_id'],
+            $userRole
+        );
 
-    $this->printResultsTable('User role created.', [$result]);
-  }
+        $this->printResultsTable('User role created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create User Role';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create User Role';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'User Role ID',
-            'name' => 'User Role Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'User Role ID',
+                'name' => 'User Role Name'];
+    }
 }

@@ -26,66 +26,71 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * For our examples, you need a "dfa:advertiser" to create a standard report and
  * a "dfa:floodlightConfigId" to create a Floodlight report.
  */
-class GetDimensionValues extends BaseExample {
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'dimension_name',
-             'display' => 'Dimension Name',
-             'required' => true],
-            ['name' => 'start_date',
-             'display' => 'Start Date (yyyy-MM-dd)',
-             'required' => true],
-            ['name' => 'end_date',
-             'display' => 'End Date (yyyy-MM-dd)',
-             'required' => true]];
-  }
+class GetDimensionValues extends BaseExample
+{
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'dimension_name',
+                 'display' => 'Dimension Name',
+                 'required' => true],
+                ['name' => 'start_date',
+                 'display' => 'Start Date (yyyy-MM-dd)',
+                 'required' => true],
+                ['name' => 'end_date',
+                 'display' => 'End Date (yyyy-MM-dd)',
+                 'required' => true]];
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    $dimensionValueRequest =
-        new Google_Service_Dfareporting_DimensionValueRequest();
-    $dimensionValueRequest->setDimensionName($values['dimension_name']);
-    $dimensionValueRequest->setStartDate($values['start_date']);
-    $dimensionValueRequest->setEndDate($values['end_date']);
+        $dimensionValueRequest =
+            new Google_Service_Dfareporting_DimensionValueRequest();
+        $dimensionValueRequest->setDimensionName($values['dimension_name']);
+        $dimensionValueRequest->setStartDate($values['start_date']);
+        $dimensionValueRequest->setEndDate($values['end_date']);
 
-    $dimensionValues = $this->service->dimensionValues->query(
-        $values['user_profile_id'],
-        $dimensionValueRequest
-    );
+        $dimensionValues = $this->service->dimensionValues->query(
+            $values['user_profile_id'],
+            $dimensionValueRequest
+        );
 
-    printf('<h2>Listing available %s values</h2>', $values['dimension_name']);
+        printf('<h2>Listing available %s values</h2>', $values['dimension_name']);
 
-    $this->printResultsTable('Dimension Values', $dimensionValues['items']);
-  }
+        $this->printResultsTable('Dimension Values', $dimensionValues['items']);
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Get Dimension Values';
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Get Dimension Values';
+    }
 
-  /**
-   * {@inheritdoc}
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['value' => 'Dimension Value',
-            'id' => 'Dimension ID'];
-  }
+    /**
+     * {@inheritdoc}
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['value' => 'Dimension Value',
+                'id' => 'Dimension ID'];
+    }
 }

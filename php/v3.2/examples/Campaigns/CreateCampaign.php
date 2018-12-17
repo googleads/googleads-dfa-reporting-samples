@@ -22,72 +22,78 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * This example creates a campaign associated with a given advertiser. To
  * create an advertiser, run CreateAdvertiser.
  */
-class CreateCampaign extends BaseExample {
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getInputParameters()
-   * @return array
-   */
-  protected function getInputParameters() {
-    return [['name' => 'user_profile_id',
-             'display' => 'User Profile ID',
-             'required' => true],
-            ['name' => 'advertiser_id',
-             'display' => 'Advertiser ID',
-             'required' => true],
-            ['name' => 'campaign_name',
-             'display' => 'Campaign Name',
-             'required' => true],
-            ['name' => 'default_landing_page_id',
-             'display' => 'Default Landing Page ID',
-             'required' => true]];
-  }
+class CreateCampaign extends BaseExample
+{
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getInputParameters()
+     * @return array
+     */
+    protected function getInputParameters()
+    {
+        return [['name' => 'user_profile_id',
+                 'display' => 'User Profile ID',
+                 'required' => true],
+                ['name' => 'advertiser_id',
+                 'display' => 'Advertiser ID',
+                 'required' => true],
+                ['name' => 'campaign_name',
+                 'display' => 'Campaign Name',
+                 'required' => true],
+                ['name' => 'default_landing_page_id',
+                 'display' => 'Default Landing Page ID',
+                 'required' => true]];
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::run()
-   */
-  public function run() {
-    $values = $this->formValues;
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::run()
+     */
+    public function run()
+    {
+        $values = $this->formValues;
 
-    printf(
-        '<h2>Creating campaign with name "%s"</h2>', $values['campaign_name']
-    );
+        printf(
+            '<h2>Creating campaign with name "%s"</h2>',
+            $values['campaign_name']
+        );
 
-    $startDate = new DateTime('today');
-    $endDate = new DateTime('+1 month');
+        $startDate = new DateTime('today');
+        $endDate = new DateTime('+1 month');
 
-    $campaign = new Google_Service_Dfareporting_Campaign();
-    $campaign->setAdvertiserId($values['advertiser_id']);
-    $campaign->setDefaultLandingPageId($values['default_landing_page_id']);
-    $campaign->setName($values['campaign_name']);
-    $campaign->setStartDate($startDate->format('Y-m-d'));
-    $campaign->setEndDate($endDate->format('Y-m-d'));
+        $campaign = new Google_Service_Dfareporting_Campaign();
+        $campaign->setAdvertiserId($values['advertiser_id']);
+        $campaign->setDefaultLandingPageId($values['default_landing_page_id']);
+        $campaign->setName($values['campaign_name']);
+        $campaign->setStartDate($startDate->format('Y-m-d'));
+        $campaign->setEndDate($endDate->format('Y-m-d'));
 
-    $result = $this->service->campaigns->insert(
-        $values['user_profile_id'],
-        $campaign
-    );
+        $result = $this->service->campaigns->insert(
+            $values['user_profile_id'],
+            $campaign
+        );
 
-    $this->printResultsTable('Campaign created.', [$result]);
-  }
+        $this->printResultsTable('Campaign created.', [$result]);
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getName()
-   * @return string
-   */
-  public function getName() {
-    return 'Create Campaign';
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getName()
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Create Campaign';
+    }
 
-  /**
-   * (non-PHPdoc)
-   * @see BaseExample::getResultsTableHeaders()
-   * @return array
-   */
-  public function getResultsTableHeaders() {
-    return ['id' => 'Campaign ID',
-            'name' => 'Campaign Name'];
-  }
+    /**
+     * (non-PHPdoc)
+     * @see BaseExample::getResultsTableHeaders()
+     * @return array
+     */
+    public function getResultsTableHeaders()
+    {
+        return ['id' => 'Campaign ID',
+                'name' => 'Campaign Name'];
+    }
 }

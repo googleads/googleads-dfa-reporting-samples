@@ -15,21 +15,28 @@
  * limitations under the License.
  */
 
-function uploadAsset($service, $userProfileId, $advertiserId, $asset,
-  $type) {
-  $assetId = new Google_Service_Dfareporting_CreativeAssetId();
-  $assetId->setName($asset['name']);
-  $assetId->setType($type);
+function uploadAsset(
+    $service,
+    $userProfileId,
+    $advertiserId,
+    $asset,
+    $type
+) {
+    $assetId = new Google_Service_Dfareporting_CreativeAssetId();
+    $assetId->setName($asset['name']);
+    $assetId->setType($type);
 
-  $metadata = new Google_Service_Dfareporting_CreativeAssetMetadata();
-  $metadata->setAssetIdentifier($assetId);
+    $metadata = new Google_Service_Dfareporting_CreativeAssetMetadata();
+    $metadata->setAssetIdentifier($assetId);
 
-  $result = $service->creativeAssets->insert(
-      $userProfileId, $advertiserId, $metadata,
-      ['data' => file_get_contents($asset['tmp_name']),
-       'mimeType' => $asset['type'],
-       'uploadType' => 'multipart']
-  );
+    $result = $service->creativeAssets->insert(
+        $userProfileId,
+        $advertiserId,
+        $metadata,
+        ['data' => file_get_contents($asset['tmp_name']),
+         'mimeType' => $asset['type'],
+         'uploadType' => 'multipart']
+    );
 
-  return $result;
+    return $result;
 }
