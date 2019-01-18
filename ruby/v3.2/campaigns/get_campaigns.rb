@@ -25,7 +25,7 @@ def get_campaigns(profile_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_campaigns(profile_id,
       page_token: token,
       fields: 'nextPageToken,campaigns(id,name)')
@@ -33,7 +33,8 @@ def get_campaigns(profile_id)
     # Display results.
     if result.campaigns.any?
       result.campaigns.each do |campaign|
-        puts format('Found campaign with ID %d and name "%s".', campaign.id, campaign.name)
+        puts format('Found campaign with ID %d and name "%s".', campaign.id,
+          campaign.name)
       end
 
       token = result.next_page_token
@@ -41,7 +42,9 @@ def get_campaigns(profile_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

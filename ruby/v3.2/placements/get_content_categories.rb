@@ -25,7 +25,7 @@ def get_content_categories(profile_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_content_categories(profile_id,
       page_token: token,
       fields: 'nextPageToken,contentCategories(id,name)')
@@ -33,7 +33,8 @@ def get_content_categories(profile_id)
     # Display results.
     if result.content_categories.any?
       result.content_categories.each do |category|
-        puts format('Found content category with ID %d and name "%s".', category.id, category.name)
+        puts format('Found content category with ID %d and name "%s".',
+          category.id, category.name)
       end
 
       token = result.next_page_token
@@ -41,7 +42,9 @@ def get_content_categories(profile_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

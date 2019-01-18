@@ -26,7 +26,7 @@ def get_advertiser_landing_pages(profile_id, advertiser_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_advertiser_landing_pages(profile_id,
       advertiser_ids: [advertiser_id],
       page_token: token,
@@ -35,7 +35,8 @@ def get_advertiser_landing_pages(profile_id, advertiser_id)
     # Display results.
     if result.landing_pages.any?
       result.landing_pages.each do |landing_page|
-        puts format('Found advertiser landing page with ID %d and name "%s".', landing_page.id, landing_page.name)
+        puts format('Found advertiser landing page with ID %d and name "%s".',
+          landing_page.id, landing_page.name)
       end
 
       token = result.next_page_token
@@ -43,7 +44,9 @@ def get_advertiser_landing_pages(profile_id, advertiser_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

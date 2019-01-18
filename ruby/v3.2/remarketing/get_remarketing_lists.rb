@@ -30,7 +30,7 @@ def get_remarketing_lists(profile_id, advertiser_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_remarketing_lists(profile_id, advertiser_id,
       page_token: token,
       fields: 'nextPageToken,remarketingLists(id,name)')
@@ -38,7 +38,8 @@ def get_remarketing_lists(profile_id, advertiser_id)
     # Display results.
     if result.remarketing_lists.any?
       result.remarketing_lists.each do |list|
-        puts format('Found remarketing list with ID %d and name "%s".', list.id, list.name)
+        puts format('Found remarketing list with ID %d and name "%s".',
+          list.id, list.name)
       end
 
       token = result.next_page_token
@@ -46,7 +47,9 @@ def get_remarketing_lists(profile_id, advertiser_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

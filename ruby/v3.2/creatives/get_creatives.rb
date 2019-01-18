@@ -27,7 +27,7 @@ def get_creatives(profile_id, _advertiser_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_creatives(profile_id,
       page_token: token,
       fields: 'nextPageToken,creatives(id,name,type)')
@@ -35,7 +35,8 @@ def get_creatives(profile_id, _advertiser_id)
     # Display results.
     if result.creatives.any?
       result.creatives.each do |creative|
-        puts format('Found %s creative with ID %d and name "%s".', creative.type, creative.id, creative.name)
+        puts format('Found %s creative with ID %d and name "%s".',
+          creative.type, creative.id, creative.name)
       end
 
       token = result.next_page_token
@@ -43,7 +44,9 @@ def get_creatives(profile_id, _advertiser_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

@@ -34,7 +34,8 @@ def find_and_download_file(profile_id, report_id)
     # 3. Directly download the file.
     direct_download_file(service, report_id, report_file.id)
   else
-    puts format('No file found for profile ID %d and report ID %d.', profile_id, report_id)
+    puts format('No file found for profile ID %d and report ID %d.',
+      profile_id, report_id)
   end
 end
 
@@ -42,7 +43,7 @@ def find_file(service, profile_id, report_id)
   page_token = nil
   target = nil
 
-  begin
+  loop do
     result = service.list_report_files(profile_id, report_id,
       page_token: page_token)
 
@@ -54,14 +55,17 @@ def find_file(service, profile_id, report_id)
     end
 
     page_token = (result.next_page_token if target.nil? && result.items.any?)
-  end until page_token.to_s.empty?
+    break if page_token.to_s.empty?
+  end
 
   if target
-    puts format('Found file %s with filename "%s".', target.id, target.file_name)
+    puts format('Found file %s with filename "%s".', target.id,
+      target.file_name)
     return target
   end
 
-  puts format('Unable to find file for profile ID %d and report ID %d.', profile_id, report_id)
+  puts format('Unable to find file for profile ID %d and report ID %d.',
+    profile_id, report_id)
   nil
 end
 
@@ -89,7 +93,8 @@ def direct_download_file(service, report_id, file_id)
     # retrieves the file contents rather than the file metadata.
     service.get_file(report_id, file_id, download_dest: out_file)
 
-    puts format('File %s downloaded to %s', file_id, File.absolute_path(out_file.path))
+    puts format('File %s downloaded to %s', file_id,
+      File.absolute_path(out_file.path))
   end
 end
 

@@ -27,7 +27,7 @@ def get_floodlight_activities(profile_id, advertiser_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_floodlight_activities(profile_id,
       advertiser_id: advertiser_id,
       page_token: token,
@@ -36,7 +36,8 @@ def get_floodlight_activities(profile_id, advertiser_id)
     # Display results.
     if result.floodlight_activities.any?
       result.floodlight_activities.each do |activity|
-        puts format('Found floodlight activity with ID %d and name "%s".', activity.id, activity.name)
+        puts format('Found floodlight activity with ID %d and name "%s".',
+          activity.id, activity.name)
       end
 
       token = result.next_page_token
@@ -44,7 +45,9 @@ def get_floodlight_activities(profile_id, advertiser_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

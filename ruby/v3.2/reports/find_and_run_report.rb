@@ -49,7 +49,7 @@ def find_report(service, profile_id)
   page_token = nil
   target = nil
 
-  begin
+  loop do
     result = service.list_reports(profile_id, page_token: page_token)
 
     result.items.each do |report|
@@ -60,10 +60,12 @@ def find_report(service, profile_id)
     end
 
     page_token = (result.next_page_token if target.nil? && result.items.any?)
-  end until page_token.to_s.empty?
+    break if page_token.to_s.empty?
+  end
 
   if target
-    puts format('Found report %s with filename "%s".', target.id, target.file_name)
+    puts format('Found report %s with filename "%s".', target.id,
+      target.file_name)
     return target
   end
 
@@ -81,7 +83,8 @@ def run_report(service, profile_id, report_id)
   # Run the report.
   report_file = service.run_report(profile_id, report_id)
 
-  puts format('Running report %d, current file status is %s.', report_id, report_file.status)
+  puts format('Running report %d, current file status is %s.', report_id,
+    report_file.status)
   report_file
 end
 
@@ -106,7 +109,8 @@ def wait_for_report_file(service, report_id, file_id)
     end
 
     interval = next_sleep_interval(interval)
-    puts format('File status is %s, sleeping for %d seconds.', status, interval)
+    puts format('File status is %s, sleeping for %d seconds.', status,
+      interval)
     sleep(interval)
   end
 end

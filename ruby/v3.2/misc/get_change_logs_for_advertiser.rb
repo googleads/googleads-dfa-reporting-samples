@@ -28,7 +28,7 @@ def get_change_logs_for_advertiser(profile_id, advertiser_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_change_logs(profile_id,
       object_ids: [advertiser_id],
       object_type: 'OBJECT_ADVERTISER',
@@ -38,7 +38,8 @@ def get_change_logs_for_advertiser(profile_id, advertiser_id)
     # Display results.
     if result.change_logs.any?
       result.change_logs.each do |log|
-        puts format('%s: Field "%s" from "%s" to "%s".', log.action, log.field_name, log.old_value, log.new_value)
+        puts format('%s: Field "%s" from "%s" to "%s".', log.action,
+          log.field_name, log.old_value, log.new_value)
       end
 
       token = result.next_page_token
@@ -46,7 +47,9 @@ def get_change_logs_for_advertiser(profile_id, advertiser_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

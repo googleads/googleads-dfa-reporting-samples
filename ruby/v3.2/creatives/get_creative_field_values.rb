@@ -25,7 +25,7 @@ def get_creative_field_values(profile_id, field_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_creative_field_values(profile_id, field_id,
       page_token: token,
       fields: 'nextPageToken,creativeFieldValues(id,value)')
@@ -33,7 +33,8 @@ def get_creative_field_values(profile_id, field_id)
     # Display results.
     if result.creative_field_values.any?
       result.creative_field_values.each do |value|
-        puts format('Found creative field value with ID %d and value "%s".', value.id, value.value)
+        puts format('Found creative field value with ID %d and value "%s".',
+          value.id, value.value)
       end
 
       token = result.next_page_token
@@ -41,7 +42,9 @@ def get_creative_field_values(profile_id, field_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

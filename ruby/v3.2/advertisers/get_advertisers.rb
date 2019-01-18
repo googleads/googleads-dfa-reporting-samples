@@ -25,7 +25,7 @@ def get_advertisers(profile_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_advertisers(profile_id,
       page_token: token,
       fields: 'nextPageToken,advertisers(id,name)')
@@ -33,7 +33,8 @@ def get_advertisers(profile_id)
     # Display results.
     if result.advertisers.any?
       result.advertisers.each do |advertiser|
-        puts format('Found advertiser with ID %d and name "%s".', advertiser.id, advertiser.name)
+        puts format('Found advertiser with ID %d and name "%s".',
+          advertiser.id, advertiser.name)
       end
 
       token = result.next_page_token
@@ -41,7 +42,9 @@ def get_advertisers(profile_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

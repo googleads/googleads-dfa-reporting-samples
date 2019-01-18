@@ -25,7 +25,7 @@ def get_placements(profile_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_placements(profile_id,
       page_token: token,
       fields: 'nextPageToken,placements(campaignId,id,name)')
@@ -33,7 +33,10 @@ def get_placements(profile_id)
     # Display results.
     if result.placements.any?
       result.placements.each do |placement|
-        puts format('Found placement with ID %d and name "%s" for campaign %d.', placement.id, placement.name, placement.campaign_id)
+        puts format(
+          'Found placement with ID %d and name "%s" for campaign %d.',
+          placement.id, placement.name, placement.campaign_id
+        )
       end
 
       token = result.next_page_token
@@ -41,7 +44,9 @@ def get_placements(profile_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

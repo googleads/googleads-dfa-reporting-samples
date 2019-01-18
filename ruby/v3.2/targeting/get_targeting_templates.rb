@@ -27,7 +27,7 @@ def get_targeting_templates(profile_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_targeting_templates(profile_id,
       page_token: token,
       fields: 'nextPageToken,targetingTemplates(advertiserId,id,name)')
@@ -35,8 +35,11 @@ def get_targeting_templates(profile_id)
     # Display results.
     if result.targeting_templates.any?
       result.targeting_templates.each do |template|
-        puts format('Found targeting template with ID %d and name "%s" associated ' \
-              'with advertiser ID %d.', template.id, template.name, template.advertiser_id)
+        puts format(
+          'Found targeting template with ID %d and name "%s" associated with ' \
+          'advertiser ID %d.', template.id, template.name,
+          template.advertiser_id
+        )
       end
 
       token = result.next_page_token
@@ -44,7 +47,9 @@ def get_targeting_templates(profile_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

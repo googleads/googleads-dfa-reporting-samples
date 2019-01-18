@@ -25,7 +25,7 @@ def get_report_files(profile_id, report_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_report_files(profile_id, report_id,
       page_token: token,
       fields: 'nextPageToken,items(fileName,id,status)')
@@ -33,7 +33,10 @@ def get_report_files(profile_id, report_id)
     # Display results.
     if result.items.any?
       result.items.each do |file|
-        puts format('Report file with ID %d and file name "%s" has status "%s".', file.id, file.file_name, file.status)
+        puts format(
+          'Report file with ID %d and file name "%s" has status "%s".',
+          file.id, file.file_name, file.status
+        )
       end
 
       token = result.next_page_token
@@ -41,7 +44,9 @@ def get_report_files(profile_id, report_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

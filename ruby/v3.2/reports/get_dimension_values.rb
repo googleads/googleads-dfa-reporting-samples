@@ -33,7 +33,7 @@ def get_dimension_values(profile_id)
   )
 
   token = nil
-  begin
+  loop do
     result = service.query_dimension_value(
       profile_id, dimension,
       page_token: token,
@@ -52,7 +52,9 @@ def get_dimension_values(profile_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__

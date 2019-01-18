@@ -29,7 +29,7 @@ def get_subaccounts(profile_id)
   service = DfareportingUtils.get_service
 
   token = nil
-  begin
+  loop do
     result = service.list_subaccounts(profile_id,
       page_token: token,
       fields: 'nextPageToken,subaccounts(id,name)')
@@ -37,7 +37,8 @@ def get_subaccounts(profile_id)
     # Display results.
     if result.subaccounts.any?
       result.subaccounts.each do |subaccount|
-        puts format('Found subaccount with ID %d and name "%s".', subaccount.id, subaccount.name)
+        puts format('Found subaccount with ID %d and name "%s".', subaccount.id,
+          subaccount.name)
       end
 
       token = result.next_page_token
@@ -45,7 +46,9 @@ def get_subaccounts(profile_id)
       # Stop paging if there are no more results.
       token = nil
     end
-  end until token.to_s.empty?
+
+    break if token.to_s.empty?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__
