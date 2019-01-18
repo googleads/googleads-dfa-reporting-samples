@@ -24,25 +24,44 @@
 
 require_relative '../dfareporting_utils'
 
-def update_offline_user_conversion(profile_id, encrypted_user_id,
-  encryption_source, encryption_entity_id, encryption_entity_type,
-  floodlight_activity_id, ordinal, timestamp, new_quantity, new_value)
+# Updates an offline user conversion with the specified values.
+#
+# @param profile_id [Number] The ID of the DCM user issuing this request.
+# @param new_quantity [Number] The new quantity value to assign to the
+#   specified conversion.
+# @param new_value [Number] The new value to assign to the specified
+#   conversion.
+# @param existing_conversion [Object] A hash containing values that identify
+#   an existing offline user conversion. The expected format is:
+#      {
+#        encryption: {
+#          source: <The encryption source>,
+#          entity_id: <The encryption entity ID>,
+#          entity_type: <The encryption entity type>
+#        },
+#        encrypted_user_id: <The encrypted user ID>,
+#        floodlight_activity_id: <The Floodlight activity ID>,
+#        ordinal: <The conversion ordinal value>,
+#        timestamp: <The conversion timestamp>
+#      }
+def update_offline_user_conversion(profile_id, new_quantity, new_value,
+  existing_conversion = {})
   # Authenticate and initialize API service.
   service = DfareportingUtils.get_service
 
   # Look up the Floodlight configuration ID based on activity ID.
   floodlight_activity = service.get_floodlight_activity(profile_id,
-    floodlight_activity_id)
+    existing_conversion[:floodlight_activity_id])
   floodlight_config_id = floodlight_activity.floodlight_configuration_id
 
   # Construct the conversion with values that identify the conversion to
   # update.
   conversion = DfareportingUtils::API_NAMESPACE::Conversion.new(
-    encrypted_user_id: encrypted_user_id,
-    floodlight_activity_id: floodlight_activity_id,
+    encrypted_user_id: existing_conversion[:encrypted_user_id],
+    floodlight_activity_id: existing_conversion[:floodlight_activity_id],
     floodlight_configuration_id: floodlight_config_id,
-    ordinal: ordinal,
-    timestamp_micros: timestamp
+    ordinal: existing_conversion[:ordinal],
+    timestamp_micros: existing_conversion[:timestamp]
   )
 
   # Set the fields to be updated. These fields are required; to preserve a
@@ -52,9 +71,9 @@ def update_offline_user_conversion(profile_id, encrypted_user_id,
 
   # Construct the encryption info.
   encryption_info = DfareportingUtils::API_NAMESPACE::EncryptionInfo.new(
-    encryption_entity_id: encryption_entity_id,
-    encryption_entity_type: encryption_entity_type,
-    encryption_source: encryption_source
+    encryption_entity_id: existing_conversion[:encryption][:entity_id],
+    encryption_entity_type: existing_conversion[:encryption][:entity_type],
+    encryption_source: existing_conversion[:encryption][:source]
   )
 
   # Construct the batch update request.
@@ -68,14 +87,16 @@ def update_offline_user_conversion(profile_id, encrypted_user_id,
   result = service.batchupdate_conversion(profile_id, batch_update_request)
 
   if result.has_failures
-    puts format('Error(s) updating conversion for encrypted user ID %s.', encrypted_user_id)
+    puts format('Error(s) updating conversion for encrypted user ID %s.',
+      existing_conversion[:encrypted_user_id])
 
     status = result.status[0]
     status.errors.each do |error|
       puts format("\t[%s]: %s", error.code, error.message)
     end
   else
-    puts format('Successfully updated conversion for encrypted user ID %s.', encrypted_user_id)
+    puts format('Successfully updated conversion for encrypted user ID %s.',
+      existing_conversion[:encrypted_user_id])
   end
 end
 
@@ -85,8 +106,16 @@ if $PROGRAM_NAME == __FILE__
     :encryption_source, :encryption_entity_id, :encryption_entity_type,
     :floodlight_activity_id, :ordinal, :timestamp, :new_quantity, :new_value)
 
-  update_offline_user_conversion(args[:profile_id], args[:encrypted_user_id],
-    args[:encryption_source], args[:encryption_entity_id],
-    args[:encryption_entity_type], args[:floodlight_activity_id],
-    args[:ordinal], args[:timestamp], args[:new_quantity], args[:new_value])
+  update_offline_user_conversion(
+    args[:profile_id], args[:new_quantity], args[:new_value],
+    encryption: {
+      source: args[:encryption_source],
+      entity_id: args[:encryption_entity_id],
+      entity_type: args[:encryption_entity_type]
+    },
+    encrypted_user_id: args[:encrypted_user_id],
+    floodlight_activity_id: args[:floodlight_activity_id],
+    ordinal: args[:ordinal],
+    timestamp: args[:timestamp]
+  )
 end

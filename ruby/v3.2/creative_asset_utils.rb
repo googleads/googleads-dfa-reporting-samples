@@ -21,6 +21,8 @@
 
 require_relative 'dfareporting_utils'
 
+# Creative asset utilities used by DFA Reporting and Trafficking API creative
+# examples.
 class CreativeAssetUtils
   # Creates a new instance of CreativeAssetUtils.
   def initialize(service, profile_id)

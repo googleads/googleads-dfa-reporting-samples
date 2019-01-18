@@ -53,7 +53,7 @@ def find_report(service, profile_id)
     result = service.list_reports(profile_id, page_token: page_token)
 
     result.items.each do |report|
-      if is_target_report(report)
+      if target_report?(report)
         target = report
         break
       end
@@ -71,7 +71,7 @@ def find_report(service, profile_id)
   nil
 end
 
-def is_target_report(report)
+def target_report?(report)
   # Provide custom validation logic here.
   # For example purposes, any report is considered valid.
   !report.nil?

@@ -22,9 +22,22 @@
 require_relative '../dfareporting_utils'
 require 'date'
 
+# Inserts an offline user conversions with the specified values.
+#
+# @param profile_id [Number] The ID of the DCM user issuing this request.
+# @param encrypted_user_id [String] The encrypted user ID to which the
+#   conversion should be attributed.
+# @param floodlight_activity_id [Number] The Floodlight activity ID to which
+#   the conversion should be attributed.
+# @param encryption [Object] A hash containing the values used to encrypt the
+#   specified user ID. The expected format is:
+#      {
+#        source: <The encryption source>,
+#        entity_id: <The encryption entity ID>,
+#        entity_type: <The encryption entity type>
+#      }
 def insert_offline_user_conversion(profile_id, encrypted_user_id,
-  encryption_source, encryption_entity_id, encryption_entity_type,
-  floodlight_activity_id)
+  floodlight_activity_id, encryption = {})
   # Authenticate and initialize API service.
   service = DfareportingUtils.get_service
 
@@ -46,9 +59,9 @@ def insert_offline_user_conversion(profile_id, encrypted_user_id,
 
   # Construct the encryption info.
   encryption_info = DfareportingUtils::API_NAMESPACE::EncryptionInfo.new(
-    encryption_entity_id: encryption_entity_id,
-    encryption_entity_type: encryption_entity_type,
-    encryption_source: encryption_source
+    encryption_entity_id: encryption[:entity_id],
+    encryption_entity_type: encryption[:entity_type],
+    encryption_source: encryption[:source]
   )
 
   # Construct the batch insert request.
@@ -62,14 +75,16 @@ def insert_offline_user_conversion(profile_id, encrypted_user_id,
   result = service.batchinsert_conversion(profile_id, batch_insert_request)
 
   if result.has_failures
-    puts format('Error(s) inserting conversion for encrypted user ID %s.', encrypted_user_id)
+    puts format('Error(s) inserting conversion for encrypted user ID %s.',
+      encrypted_user_id)
 
     status = result.status[0]
     status.errors.each do |error|
       puts format("\t[%s]: %s", error.code, error.message)
     end
   else
-    puts format('Successfully inserted conversion for encrypted user ID %s.', encrypted_user_id)
+    puts format('Successfully inserted conversion for encrypted user ID %s.',
+      encrypted_user_id)
   end
 end
 
@@ -80,6 +95,8 @@ if $PROGRAM_NAME == __FILE__
     :floodlight_activity_id)
 
   insert_offline_user_conversion(args[:profile_id], args[:encrypted_user_id],
-    args[:encryption_source], args[:encryption_entity_id],
-    args[:encryption_entity_type], args[:floodlight_activity_id])
+    args[:floodlight_activity_id],
+    source: args[:encryption_source],
+    entity_id: args[:encryption_entity_id],
+    entity_type: args[:encryption_entity_type])
 end

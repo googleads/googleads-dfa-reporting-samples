@@ -90,7 +90,8 @@ def get_advertiser_landing_page(service, profile_id, advertiser_id)
     max_results: 1)
 
   if result.landing_pages.none?
-    abort format('No landing pages for for advertiser with ID %d', advertiser_id)
+    abort format('No landing pages for for advertiser with ID %d',
+      advertiser_id)
   end
 
   result.landing_pages[0]

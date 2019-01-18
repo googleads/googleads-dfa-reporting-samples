@@ -34,9 +34,8 @@ def configure_dynamic_asset_selection(profile_id, creative_id, template_id,
   # Retrieve the specified creative.
   creative = service.get_creative(profile_id, creative_id)
 
-  if creative.nil? || (creative.type != 'INSTREAM_VIDEO')
-    abort 'Invalid creative specified'
-  end
+  abort 'Invalid creative specified' if
+    creative.nil? || (creative.type != 'INSTREAM_VIDEO')
 
   unless creative.dynamic_asset_selection?
     # Locate an existing video asset to use as a default.
@@ -78,7 +77,8 @@ def configure_dynamic_asset_selection(profile_id, creative_id, template_id,
 
   result = service.update_creative(profile_id, creative)
 
-  puts format('Dynamic asset selection enabled for creative with ID %d.', result.id)
+  puts format('Dynamic asset selection enabled for creative with ID %d.',
+    result.id)
 end
 
 if $PROGRAM_NAME == __FILE__

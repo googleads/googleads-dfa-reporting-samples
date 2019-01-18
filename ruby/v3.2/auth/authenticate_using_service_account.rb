@@ -51,9 +51,8 @@ def authenticate_using_service_account(path_to_json_file, impersonation_email)
   end
 
   # Configure impersonation (if applicable).
-  unless impersonation_email.nil?
-    service.authorization.sub = impersonation_email
-  end
+  service.authorization.sub = impersonation_email unless
+    impersonation_email.nil?
 
   service
 end
@@ -64,7 +63,10 @@ def get_userprofiles(service)
 
   # Display results.
   result.items.each do |profile|
-    puts format('User profile with ID %d and name "%s" was found for account %d.', profile.profile_id, profile.user_name, profile.account_id)
+    puts format(
+      'User profile with ID %d and name "%s" was found for account %d.',
+      profile.profile_id, profile.user_name, profile.account_id
+    )
   end
 end
 
@@ -82,7 +84,7 @@ if $PROGRAM_NAME == __FILE__
 
   if ARGV.empty?
     puts optparse
-    exit -1
+    exit(-1)
   end
 
   # Authenticate and initialize API service using service account.

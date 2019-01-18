@@ -22,6 +22,7 @@ require 'google/apis/dfareporting_v3_2'
 require 'googleauth'
 require 'googleauth/stores/file_token_store'
 
+# Utility methods used by all DFA Reporting and Trafficking API samples.
 module DfareportingUtils
   API_NAME = 'dfareporting'.freeze
   API_NAMESPACE = Google::Apis::DfareportingV3_2
@@ -46,14 +47,14 @@ module DfareportingUtils
 
   # Validates the number of command line arguments matches what was expected
   def self.validate_arguments(argument_values, *argument_names)
-    unless argument_values.length == argument_names.length
-      # Format the arguments for display (ie, '<profile_id>')
-      formatted_arguments = argument_names.map { |a| '<' + a.to_s + '>' }
+    return if argument_values.length == argument_names.length
 
-      # Display a message to the user and exit
-      puts format('Usage: %s %s', $PROGRAM_NAME, formatted_arguments.join(' '))
-      exit
-    end
+    # Format the arguments for display (ie, '<profile_id>')
+    formatted_arguments = argument_names.map { |a| '<' + a.to_s + '>' }
+
+    # Display a message to the user and exit
+    puts format('Usage: %s %s', $PROGRAM_NAME, formatted_arguments.join(' '))
+    exit
   end
   private_class_method :validate_arguments
 
@@ -106,8 +107,8 @@ module DfareportingUtils
   end
   private_class_method :get_dfareporting_service_instance
 
-  # Attempts to load application default credentials and return an authorization
-  # object that can be used to make requests.
+  # Attempts to load application default credentials and return an
+  # authorization object that can be used to make requests.
   def self.authorize_application_default_credentials
     Google::Auth.get_application_default(API_SCOPES)
   rescue StandardError

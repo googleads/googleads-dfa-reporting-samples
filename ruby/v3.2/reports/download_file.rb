@@ -26,16 +26,15 @@ def download_file(report_id, file_id)
 
   # Retrieve the file metadata.
   report_file = service.get_file(report_id, file_id)
+  return unless report_file.status == 'REPORT_AVAILABLE'
 
-  if report_file.status == 'REPORT_AVAILABLE'
-    # Prepare a local file to download the report contents to.
-    File.open(generate_file_name(report_file), 'w') do |out_file|
-      # Execute the download request. Providing a download destination
-      # retrieves the file contents rather than the file metadata.
-      service.get_file(report_id, file_id, download_dest: out_file)
+  # Prepare a local file to download the report contents to.
+  File.open(generate_file_name(report_file), 'w') do |out_file|
+    # Execute the download request. Providing a download destination
+    # retrieves the file contents rather than the file metadata.
+    service.get_file(report_id, file_id, download_dest: out_file)
 
-      puts format('File %s downloaded to %s', file_id, File.absolute_path(out_file.path))
-    end
+    puts format('File %s downloaded to %s', file_id, File.absolute_path(out_file.path))
   end
 end
 

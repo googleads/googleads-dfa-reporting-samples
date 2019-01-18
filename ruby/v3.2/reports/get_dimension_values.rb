@@ -34,14 +34,17 @@ def get_dimension_values(profile_id)
 
   token = nil
   begin
-    result = service.query_dimension_value(profile_id, dimension,
+    result = service.query_dimension_value(
+      profile_id, dimension,
       page_token: token,
-      fields: 'nextPageToken,items(id,value)')
+      fields: 'nextPageToken,items(id,value)'
+    )
 
     # Display results.
     if result.items.any?
-      result.items.each do |dimension|
-        puts format('Dimension with ID %d and value "%s" was found.', dimension.id, dimension.value)
+      result.items.each do |dimension_value|
+        puts format('Dimension with ID %d and value "%s" was found.',
+          dimension_value.id, dimension_value.value)
       end
 
       token = result.next_page_token
