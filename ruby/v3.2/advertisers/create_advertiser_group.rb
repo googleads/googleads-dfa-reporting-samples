@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -23,22 +23,21 @@ require 'securerandom'
 
 def create_advertiser_group(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new advertiser group resource to insert.
-  advertiser_group = DfareportingUtils::API_NAMESPACE::AdvertiserGroup.new({
-    :name => 'Example Advertiser Group #%s' % SecureRandom.hex(3),
-  })
+  advertiser_group = DfareportingUtils::API_NAMESPACE::AdvertiserGroup.new(
+    name: format('Example Advertiser Group #%s', SecureRandom.hex(3))
+  )
 
   # Insert the advertiser group.
   result = service.insert_advertiser_group(profile_id, advertiser_group)
 
   # Display results.
-  puts 'Created advertiser group with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created advertiser group with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -25,45 +25,43 @@ require 'securerandom'
 
 def create_campaign(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Locate an advertiser landing page to use as a default.
   default_landing_page = get_advertiser_landing_page(service, profile_id,
-      advertiser_id)
+    advertiser_id)
 
   # Create a new campaign resource to insert.
-  campaign = DfareportingUtils::API_NAMESPACE::Campaign.new({
-    :advertiser_id => advertiser_id,
-    :archived => false,
-    :default_landing_page_id => default_landing_page.id,
-    :name => 'Example Campaign #%s' % SecureRandom.hex(3),
-    :start_date => '2014-01-01',
-    :end_date => '2020-01-01'
-  })
+  campaign = DfareportingUtils::API_NAMESPACE::Campaign.new(
+    advertiser_id: advertiser_id,
+    archived: false,
+    default_landing_page_id: default_landing_page.id,
+    name: format('Example Campaign #%s', SecureRandom.hex(3)),
+    start_date: '2014-01-01',
+    end_date: '2020-01-01'
+  )
 
   # Insert the campaign.
   result = service.insert_campaign(profile_id, campaign)
 
   # Display results.
-  puts 'Created campaign with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created campaign with ID %d and name "%s".', result.id, result.name)
 end
 
 def get_advertiser_landing_page(service, profile_id, advertiser_id)
   # Retrieve a sigle landing page from the specified advertiser.
-  result = service.list_advertiser_landing_pages(profile_id, {
-    :advertiser_ids => [advertiser_id],
-    :max_results => 1
-  })
+  result = service.list_advertiser_landing_pages(profile_id,
+    advertiser_ids: [advertiser_id],
+    max_results: 1)
 
-  if !result.landing_pages.any?
-    abort 'No landing pages for for advertiser with ID %d' % advertiser_id
+  if result.landing_pages.none?
+    abort format('No landing pages for for advertiser with ID %d', advertiser_id)
   end
 
-  return result.landing_pages[0]
+  result.landing_pages[0]
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
 

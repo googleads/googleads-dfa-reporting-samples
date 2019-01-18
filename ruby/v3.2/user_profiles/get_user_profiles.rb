@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -20,20 +20,17 @@
 
 require_relative '../dfareporting_utils'
 
-def get_user_profiles()
+def get_user_profiles
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Get all user profiles.
-  result = service.list_user_profiles()
+  result = service.list_user_profiles
 
   # Display results.
   result.items.each do |profile|
-    puts 'User profile with ID %d and name "%s" was found for account %d.' %
-        [profile.profile_id, profile.user_name, profile.account_id]
+    puts format('User profile with ID %d and name "%s" was found for account %d.', profile.profile_id, profile.user_name, profile.account_id)
   end
 end
 
-if __FILE__ == $0
-  get_user_profiles()
-end
+get_user_profiles if $PROGRAM_NAME == __FILE__

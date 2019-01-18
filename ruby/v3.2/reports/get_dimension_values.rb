@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -23,27 +23,25 @@ require 'date'
 
 def get_dimension_values(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create the dimension to query.
-  dimension = DfareportingUtils::API_NAMESPACE::DimensionValueRequest.new({
-    :dimension_name => 'dfa:advertiser',
-    :start_date => DateTime.now.prev_year.strftime('%Y-%m-%d'),
-    :end_date => DateTime.now.strftime('%Y-%m-%d')
-  })
+  dimension = DfareportingUtils::API_NAMESPACE::DimensionValueRequest.new(
+    dimension_name: 'dfa:advertiser',
+    start_date: DateTime.now.prev_year.strftime('%Y-%m-%d'),
+    end_date: DateTime.now.strftime('%Y-%m-%d')
+  )
 
   token = nil
   begin
-    result = service.query_dimension_value(profile_id, dimension, {
-      :page_token => token,
-      :fields => 'nextPageToken,items(id,value)'
-    })
+    result = service.query_dimension_value(profile_id, dimension,
+      page_token: token,
+      fields: 'nextPageToken,items(id,value)')
 
     # Display results.
     if result.items.any?
       result.items.each do |dimension|
-        puts 'Dimension with ID %d and value "%s" was found.' %
-            [dimension.id, dimension.value]
+        puts format('Dimension with ID %d and value "%s" was found.', dimension.id, dimension.value)
       end
 
       token = result.next_page_token
@@ -54,7 +52,7 @@ def get_dimension_values(profile_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

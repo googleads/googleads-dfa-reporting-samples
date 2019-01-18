@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -26,24 +26,23 @@ require 'securerandom'
 
 def create_creative_group(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new creative group resource to insert.
-  creative_group = DfareportingUtils::API_NAMESPACE::CreativeGroup.new({
-    :advertiser_id => advertiser_id,
-    :group_number => 1,
-    :name => 'Example Creative Group #%s' % SecureRandom.hex(3)
-  })
+  creative_group = DfareportingUtils::API_NAMESPACE::CreativeGroup.new(
+    advertiser_id: advertiser_id,
+    group_number: 1,
+    name: format('Example Creative Group #%s', SecureRandom.hex(3))
+  )
 
   # Insert the creative group.
   result = service.insert_creative_group(profile_id, creative_group)
 
   # Display results.
-  puts 'Created creative group with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created creative group with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
 

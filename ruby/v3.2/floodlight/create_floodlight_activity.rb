@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -25,26 +25,25 @@ require 'securerandom'
 
 def create_floodlight_activity(profile_id, activity_group_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new floodlight activity resource to insert.
-  activity = DfareportingUtils::API_NAMESPACE::FloodlightActivity.new({
-    :counting_method => 'STANDARD_COUNTING',
-    :expected_url => 'http://www.google.com',
-    :floodlight_activity_group_id => activity_group_id,
-    :floodlight_tag_type => 'GLOBAL_SITE_TAG',
-    :name => 'Example Floodlight Activity #%s' % SecureRandom.hex(3),
-  })
+  activity = DfareportingUtils::API_NAMESPACE::FloodlightActivity.new(
+    counting_method: 'STANDARD_COUNTING',
+    expected_url: 'http://www.google.com',
+    floodlight_activity_group_id: activity_group_id,
+    floodlight_tag_type: 'GLOBAL_SITE_TAG',
+    name: format('Example Floodlight Activity #%s', SecureRandom.hex(3))
+  )
 
   # Insert the floodlight activity.
   result = service.insert_floodlight_activity(profile_id, activity)
 
   # Display results.
-  puts 'Created floodlight activity with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created floodlight activity with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :activity_group_id)
 

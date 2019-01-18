@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright (C) 2016 Google Inc.
 #
@@ -29,11 +29,11 @@ MAX_RETRY_ELAPSED_TIME = 60 * 60
 
 def run_report(profile_id, report_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Run the report.
   report_file = service.run_report(profile_id, report_id)
-  puts 'File with ID %s has been created.' % report_file.id
+  puts format('File with ID %s has been created.', report_file.id)
 
   # Wait for the report to finish processing.
   # An exponential backoff strategy is used to conserve request quota.
@@ -44,10 +44,10 @@ def run_report(profile_id, report_id)
 
     status = report_file.status
     if status == 'REPORT_AVAILABLE'
-      puts 'File status is %s, ready to download.' % status
+      puts format('File status is %s, ready to download.', status)
       break
     elsif status != 'PROCESSING'
-      puts 'File status is %s, processing failed.' % status
+      puts format('File status is %s, processing failed.', status)
       break
     elsif Time.now - start_time > MAX_RETRY_ELAPSED_TIME
       puts 'File processing deadline exceeded.'
@@ -55,7 +55,7 @@ def run_report(profile_id, report_id)
     end
 
     interval = next_sleep_interval(interval)
-    puts 'File status is %s, sleeping for %d seconds.' % [status, interval]
+    puts format('File status is %s, sleeping for %d seconds.', status, interval)
     sleep(interval)
   end
 end
@@ -63,10 +63,10 @@ end
 def next_sleep_interval(previous_interval)
   min_interval = [MIN_RETRY_INTERVAL, previous_interval].max
   max_interval = [MIN_RETRY_INTERVAL, previous_interval * 3].max
-  return [MAX_RETRY_INTERVAL, rand(min_interval..max_interval)].min
+  [MAX_RETRY_INTERVAL, rand(min_interval..max_interval)].min
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :report_id)
 

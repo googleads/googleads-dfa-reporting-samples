@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -26,36 +26,35 @@ require_relative '../dfareporting_utils'
 
 def create_placement_group(profile_id, campaign_id, site_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Look up the campaign.
   campaign = service.get_campaign(profile_id, campaign_id)
 
   # Create a new placement group resource to insert.
-  placement_group = DfareportingUtils::API_NAMESPACE::PlacementGroup.new({
-    :campaign_id => campaign_id,
-    :name => 'Example Placement Group',
-    :placement_group_type => 'PLACEMENT_PACKAGE',
-    :pricing_schedule => DfareportingUtils::API_NAMESPACE::PricingSchedule.new({
-      :start_date => campaign.start_date,
-      :end_date => campaign.end_date,
-      :pricing_type => 'PRICING_TYPE_CPM'
-    }),
-    :site_id => site_id
-  })
+  placement_group = DfareportingUtils::API_NAMESPACE::PlacementGroup.new(
+    campaign_id: campaign_id,
+    name: 'Example Placement Group',
+    placement_group_type: 'PLACEMENT_PACKAGE',
+    pricing_schedule: DfareportingUtils::API_NAMESPACE::PricingSchedule.new(
+      start_date: campaign.start_date,
+      end_date: campaign.end_date,
+      pricing_type: 'PRICING_TYPE_CPM'
+    ),
+    site_id: site_id
+  )
 
   # Insert the placement strategy.
   result = service.insert_placement_group(profile_id, placement_group)
 
   # Display results.
-  puts 'Created placement group with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created placement group with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id,
-      :site_id)
+    :site_id)
 
   create_placement_group(args[:profile_id], args[:campaign_id], args[:site_id])
 end

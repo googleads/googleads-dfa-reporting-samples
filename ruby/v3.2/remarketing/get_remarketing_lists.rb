@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2017, Google Inc. All Rights Reserved.
 #
@@ -27,20 +27,18 @@ require_relative '../dfareporting_utils'
 
 def get_remarketing_lists(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_remarketing_lists(profile_id, advertiser_id, {
-      :page_token => token,
-      :fields => 'nextPageToken,remarketingLists(id,name)'
-    })
+    result = service.list_remarketing_lists(profile_id, advertiser_id,
+      page_token: token,
+      fields: 'nextPageToken,remarketingLists(id,name)')
 
     # Display results.
     if result.remarketing_lists.any?
       result.remarketing_lists.each do |list|
-        puts 'Found remarketing list with ID %d and name "%s".' %
-            [list.id, list.name]
+        puts format('Found remarketing list with ID %d and name "%s".', list.id, list.name)
       end
 
       token = result.next_page_token
@@ -51,7 +49,7 @@ def get_remarketing_lists(profile_id, advertiser_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
 

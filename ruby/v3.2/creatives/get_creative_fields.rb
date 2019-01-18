@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,20 +22,18 @@ require_relative '../dfareporting_utils'
 
 def get_creative_fields(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_creative_fields(profile_id, {
-      :page_token => token,
-      :fields => 'nextPageToken,creativeFields(id,name)'
-    })
+    result = service.list_creative_fields(profile_id,
+      page_token: token,
+      fields: 'nextPageToken,creativeFields(id,name)')
 
     # Display results.
     if result.creative_fields.any?
       result.creative_fields.each do |field|
-        puts 'Found creative field with ID %d and name "%s".' %
-            [field.id, field.name]
+        puts format('Found creative field with ID %d and name "%s".', field.id, field.name)
       end
 
       token = result.next_page_token
@@ -46,7 +44,7 @@ def get_creative_fields(profile_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

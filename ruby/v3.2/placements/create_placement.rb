@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -26,45 +26,44 @@ require_relative '../dfareporting_utils'
 
 def create_placement(profile_id, campaign_id, site_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Look up the campaign.
   campaign = service.get_campaign(profile_id, campaign_id)
 
   # Create a new placement resource to insert.
-  placement = DfareportingUtils::API_NAMESPACE::Placement.new({
-    :campaign_id => campaign_id,
-    :compatibility => 'DISPLAY',
-    :name => 'Example Placement',
-    :payment_source => 'PLACEMENT_AGENCY_PAID',
-    :site_id => site_id,
-    :size => DfareportingUtils::API_NAMESPACE::Size.new({
-      :height => 1,
-      :width => 1
-    }),
-    :tag_formats => ['PLACEMENT_TAG_STANDARD']
-  })
+  placement = DfareportingUtils::API_NAMESPACE::Placement.new(
+    campaign_id: campaign_id,
+    compatibility: 'DISPLAY',
+    name: 'Example Placement',
+    payment_source: 'PLACEMENT_AGENCY_PAID',
+    site_id: site_id,
+    size: DfareportingUtils::API_NAMESPACE::Size.new(
+      height: 1,
+      width: 1
+    ),
+    tag_formats: ['PLACEMENT_TAG_STANDARD']
+  )
 
   # Set the pricing schedule for the placement.
   placement.pricing_schedule =
-      DfareportingUtils::API_NAMESPACE::PricingSchedule.new({
-        :end_date => campaign.end_date,
-        :pricing_type => 'PRICING_TYPE_CPM',
-        :start_date => campaign.start_date
-      })
+    DfareportingUtils::API_NAMESPACE::PricingSchedule.new(
+      end_date: campaign.end_date,
+      pricing_type: 'PRICING_TYPE_CPM',
+      start_date: campaign.start_date
+    )
 
   # Insert the placement strategy.
   result = service.insert_placement(profile_id, placement)
 
   # Display results.
-  puts 'Created placement with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created placement with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id,
-      :site_id)
+    :site_id)
 
   create_placement(args[:profile_id], args[:campaign_id], args[:site_id])
 end

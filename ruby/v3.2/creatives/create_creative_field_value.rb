@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -25,23 +25,22 @@ require 'securerandom'
 
 def create_creative_field_value(profile_id, field_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new creative field value resource to insert.
-  field_value = DfareportingUtils::API_NAMESPACE::CreativeFieldValue.new({
-    :value => 'Example Creative Field Value #%s' % SecureRandom.hex(3)
-  })
+  field_value = DfareportingUtils::API_NAMESPACE::CreativeFieldValue.new(
+    value: format('Example Creative Field Value #%s', SecureRandom.hex(3))
+  )
 
   # Insert the creative field value.
   result = service.insert_creative_field_value(profile_id, field_id,
-      field_value)
+    field_value)
 
   # Display results.
-  puts 'Created creative field value with ID %d and value "%s".' %
-      [result.id, result.value]
+  puts format('Created creative field value with ID %d and value "%s".', result.id, result.value)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :field_id)
 

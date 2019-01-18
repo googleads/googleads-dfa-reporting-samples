@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def get_compatible_fields(profile_id, report_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Get the report.
   report = service.get_report(profile_id, report_id)
@@ -33,29 +33,29 @@ def get_compatible_fields(profile_id, report_id)
   compatible_fields = result.report_compatible_fields
 
   # Display dimensions.
-  dimensions = compatible_fields.dimensions.map { |d| d.name }
+  dimensions = compatible_fields.dimensions.map(&:name)
   print_fields('Dimensions', dimensions)
 
   # Display metrics.
-  metrics = compatible_fields.metrics.map { |m| m.name }
+  metrics = compatible_fields.metrics.map(&:name)
   print_fields('Metrics', metrics)
 
   # Display dimension filters.
-  filters = compatible_fields.dimension_filters.map { |f| f.name }
+  filters = compatible_fields.dimension_filters.map(&:name)
   print_fields('Dimension Filers', filters)
 
   # Display pivoted activity metrics.
-  activities = compatible_fields.pivoted_activity_metrics.map { |a| a.name }
+  activities = compatible_fields.pivoted_activity_metrics.map(&:name)
   print_fields('Pivoted Activity Metrics', activities)
 end
 
 def print_fields(type, fields)
-  puts 'Compatible %s' % type
+  puts format('Compatible %s', type)
   puts fields.join(', ')
   puts
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :report_id)
 

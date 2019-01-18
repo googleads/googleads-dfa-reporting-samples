@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -24,28 +24,27 @@
 require_relative '../dfareporting_utils'
 
 def assign_advertiser_to_advertiser_group(profile_id, advertiser_id,
-    advertiser_group_id)
+  advertiser_group_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a the advertiser group association to patch.
-  advertiser = DfareportingUtils::API_NAMESPACE::Advertiser.new({
-    :advertiser_group_id => advertiser_group_id
-  })
+  advertiser = DfareportingUtils::API_NAMESPACE::Advertiser.new(
+    advertiser_group_id: advertiser_group_id
+  )
 
   # Patch the advertiser group association.
   result = service.patch_advertiser(profile_id, advertiser_id, advertiser)
 
   # Display results
-  puts 'Assigned advertiser with ID %d to advertiser group with ID %d.' %
-      [result.id, result.advertiser_group_id]
+  puts format('Assigned advertiser with ID %d to advertiser group with ID %d.', result.id, result.advertiser_group_id)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
-      :advertiser_group_id)
+    :advertiser_group_id)
 
   assign_advertiser_to_advertiser_group(args[:profile_id], args[:advertiser_id],
-      args[:advertiser_group_id])
+    args[:advertiser_group_id])
 end

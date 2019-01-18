@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -38,16 +38,16 @@ def authenticate_using_service_account(path_to_json_file, impersonation_email)
   # Note: application name should be replaced with a value that identifies
   # your application. Suggested format is "MyCompany-ProductName".
   service = API_NAMESPACE::DfareportingService.new
-  service.client_options.application_name = "Ruby service account sample"
+  service.client_options.application_name = 'Ruby service account sample'
   service.client_options.application_version = '1.0.0'
 
   # Generate an authorization object from the specified JSON file.
   File.open(path_to_json_file, 'r+') do |json|
     service.authorization =
-        Google::Auth::ServiceAccountCredentials.make_creds({
-          :json_key_io => json,
-          :scope => [API_NAMESPACE::AUTH_DFAREPORTING]
-        })
+      Google::Auth::ServiceAccountCredentials.make_creds(
+        json_key_io: json,
+        scope: [API_NAMESPACE::AUTH_DFAREPORTING]
+      )
   end
 
   # Configure impersonation (if applicable).
@@ -55,27 +55,26 @@ def authenticate_using_service_account(path_to_json_file, impersonation_email)
     service.authorization.sub = impersonation_email
   end
 
-  return service
+  service
 end
 
 def get_userprofiles(service)
   # Get all user profiles.
-  result = service.list_user_profiles()
+  result = service.list_user_profiles
 
   # Display results.
   result.items.each do |profile|
-    puts 'User profile with ID %d and name "%s" was found for account %d.' %
-        [profile.profile_id, profile.user_name, profile.account_id]
+    puts format('User profile with ID %d and name "%s" was found for account %d.', profile.profile_id, profile.user_name, profile.account_id)
   end
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   impersonation_email = nil
   optparse = OptionParser.new do |opts|
-    opts.banner = 'Usage: %s path_to_json_file [options]' % $0
+    opts.banner = format('Usage: %s path_to_json_file [options]', $PROGRAM_NAME)
     opts.on_tail('-i', '--impersonate EMAIL',
-                 'Google account email to impersonate') do |email|
+      'Google account email to impersonate') do |email|
       impersonation_email = email
     end
   end

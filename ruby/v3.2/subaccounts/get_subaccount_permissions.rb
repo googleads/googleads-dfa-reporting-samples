@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -25,23 +25,21 @@ require_relative '../dfareporting_utils'
 
 def get_subaccount_permissions(profile_id, subaccount_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Construct and execute the subaccount request.
   subaccount = service.get_subaccount(profile_id, subaccount_id)
 
   # Construct the user role permissions request.
-  result = service.list_user_role_permissions(profile_id, {
-    :ids => subaccount.available_permission_ids
-  })
+  result = service.list_user_role_permissions(profile_id,
+    ids: subaccount.available_permission_ids)
 
   result.user_role_permissions.each do |permission|
-    puts 'Found user role permission with ID %d and name "%s".' %
-        [permission.id, permission.name]
+    puts format('Found user role permission with ID %d and name "%s".', permission.id, permission.name)
   end
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :subaccount_id)
 

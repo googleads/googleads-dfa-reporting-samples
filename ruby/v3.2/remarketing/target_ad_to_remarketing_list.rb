@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2017, Google Inc. All Rights Reserved.
 #
@@ -27,34 +27,33 @@ require_relative '../dfareporting_utils'
 
 def target_ad_to_remarketing_list(profile_id, ad_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Retrieve the ad.
   ad = service.get_ad(profile_id, ad_id)
 
   # Retrieve a single targetable remarketing list for the ad.
   lists = service.list_targetable_remarketing_lists(profile_id,
-      ad.advertiser_id, {:max_results => 1})
+    ad.advertiser_id, max_results: 1)
 
   if lists.targetable_remarketing_lists.any?
     list = lists.targetable_remarketing_lists.first
 
     # Update the ad with a list targeting expression.
     ad.remarketing_list_expression =
-        DfareportingUtils::API_NAMESPACE::ListTargetingExpression.new({
-          :expression => list.id
-        })
+      DfareportingUtils::API_NAMESPACE::ListTargetingExpression.new(
+        expression: list.id
+      )
 
     ad = service.update_ad(profile_id, ad)
 
-    puts 'Ad %d updated to use remarketing list expression: "%s".' %
-        [ad.id, ad.remarketing_list_expression.expression]
+    puts format('Ad %d updated to use remarketing list expression: "%s".', ad.id, ad.remarketing_list_expression.expression)
   else
-    puts 'No targetable remarketing lists found for ad with ID %d.' % [ad_id]
+    puts format('No targetable remarketing lists found for ad with ID %d.', ad_id)
   end
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :ad_id)
 

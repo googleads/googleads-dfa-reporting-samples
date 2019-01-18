@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -24,21 +24,19 @@ require_relative '../dfareporting_utils'
 
 def get_targeting_templates(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_targeting_templates(profile_id, {
-      :page_token => token,
-      :fields => 'nextPageToken,targetingTemplates(advertiserId,id,name)'
-    })
+    result = service.list_targeting_templates(profile_id,
+      page_token: token,
+      fields: 'nextPageToken,targetingTemplates(advertiserId,id,name)')
 
     # Display results.
     if result.targeting_templates.any?
       result.targeting_templates.each do |template|
-        puts ('Found targeting template with ID %d and name "%s" associated ' +
-              'with advertiser ID %d.') % [template.id, template.name,
-                                           template.advertiser_id]
+        puts format('Found targeting template with ID %d and name "%s" associated ' \
+              'with advertiser ID %d.', template.id, template.name, template.advertiser_id)
       end
 
       token = result.next_page_token
@@ -49,7 +47,7 @@ def get_targeting_templates(profile_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

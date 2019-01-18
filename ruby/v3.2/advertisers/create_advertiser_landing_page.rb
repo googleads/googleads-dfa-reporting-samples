@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2017, Google Inc. All Rights Reserved.
 #
@@ -23,25 +23,24 @@ require 'securerandom'
 
 def create_advertiser_landing_page(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new landing page resource to insert.
-  landing_page = DfareportingUtils::API_NAMESPACE::LandingPage.new({
-    :advertiser_id => advertiser_id,
-    :archived => false,
-    :name => 'Example Advertiser Landing Page #%s' % SecureRandom.hex(3),
-    :url => 'https://www.google.com'
-  })
+  landing_page = DfareportingUtils::API_NAMESPACE::LandingPage.new(
+    advertiser_id: advertiser_id,
+    archived: false,
+    name: format('Example Advertiser Landing Page #%s', SecureRandom.hex(3)),
+    url: 'https://www.google.com'
+  )
 
   # Insert the advertiser landing page.
   result = service.insert_advertiser_landing_page(profile_id, landing_page)
 
   # Display results.
-  puts 'Created advertiser landing page with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created advertiser landing page with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
 

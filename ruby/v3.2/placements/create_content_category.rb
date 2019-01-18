@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -23,22 +23,21 @@ require 'securerandom'
 
 def create_content_category(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new content category resource to insert.
-  content_category = DfareportingUtils::API_NAMESPACE::ContentCategory.new({
-    :name => 'Example Content Category #%s' % SecureRandom.hex(3),
-  })
+  content_category = DfareportingUtils::API_NAMESPACE::ContentCategory.new(
+    name: format('Example Content Category #%s', SecureRandom.hex(3))
+  )
 
   # Insert the content category.
   result = service.insert_content_category(profile_id, content_category)
 
   # Display results.
-  puts 'Created content category with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created content category with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

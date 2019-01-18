@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2017, Google Inc. All Rights Reserved.
 #
@@ -22,33 +22,31 @@
 require_relative '../dfareporting_utils'
 
 def share_remarketing_list_to_advertiser(profile_id, advertiser_id,
-    remarketing_list_id)
+  remarketing_list_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Load the existing share info.
   share = service.get_remarketing_list_share(profile_id, remarketing_list_id)
   share.shared_advertiser_ids ||= []
 
   if share.shared_advertiser_ids.include?(advertiser_id)
-    puts 'Remarketing list %d is already shared to advertiser %d.' %
-        [remarketing_list_id, advertiser_id]
+    puts format('Remarketing list %d is already shared to advertiser %d.', remarketing_list_id, advertiser_id)
   else
     share.shared_advertiser_ids <<= advertiser_id
 
     # Update the share info with the newly added advertiser ID.
     share = service.update_remarketing_list_share(profile_id, share)
 
-    puts 'Remarketing list %d is now shared to advertiser ID(s): %s' %
-        [remarketing_list_id, share.shared_advertiser_ids.join(", ")]
+    puts format('Remarketing list %d is now shared to advertiser ID(s): %s', remarketing_list_id, share.shared_advertiser_ids.join(', '))
   end
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
-      :remarketing_list_id)
+    :remarketing_list_id)
 
   share_remarketing_list_to_advertiser(args[:profile_id], args[:advertiser_id],
-      args[:remarketing_list_id])
+    args[:remarketing_list_id])
 end

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,22 +22,20 @@
 
 require_relative '../dfareporting_utils'
 
-def get_creatives(profile_id, advertiser_id)
+def get_creatives(profile_id, _advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_creatives(profile_id, {
-      :page_token => token,
-      :fields => 'nextPageToken,creatives(id,name,type)'
-    })
+    result = service.list_creatives(profile_id,
+      page_token: token,
+      fields: 'nextPageToken,creatives(id,name,type)')
 
     # Display results.
     if result.creatives.any?
       result.creatives.each do |creative|
-        puts 'Found %s creative with ID %d and name "%s".' %
-            [creative.type, creative.id, creative.name]
+        puts format('Found %s creative with ID %d and name "%s".', creative.type, creative.id, creative.name)
       end
 
       token = result.next_page_token
@@ -48,7 +46,7 @@ def get_creatives(profile_id, advertiser_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
 

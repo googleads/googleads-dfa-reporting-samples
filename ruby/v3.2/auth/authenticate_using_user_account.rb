@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2017, Google Inc. All Rights Reserved.
 #
@@ -26,10 +26,10 @@ require 'googleauth/stores/file_token_store'
 API_NAMESPACE = Google::Apis::DfareportingV3_2
 
 # This redirect URI allows you to copy the token from the success screen.
-OAUTH_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
+OAUTH_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 
 # Location where authorization credentials will be cached.
-TOKEN_STORE_DIR = File.join(File.dirname(__FILE__), "auth-sample.yaml")
+TOKEN_STORE_DIR = File.join(File.dirname(__FILE__), 'auth-sample.yaml')
 
 def authenticate_using_user_account(path_to_json_file, token_store)
   # Load client ID from the specified file.
@@ -42,7 +42,8 @@ def authenticate_using_user_account(path_to_json_file, token_store)
   # authorization every time the access token expires, by remembering the
   # refresh token.
   authorizer = Google::Auth::UserAuthorizer.new(
-      client_id, [API_NAMESPACE::AUTH_DFAREPORTING], token_store)
+    client_id, [API_NAMESPACE::AUTH_DFAREPORTING], token_store
+  )
 
   # Authorize and persist credentials to the data store.
   #
@@ -51,14 +52,15 @@ def authenticate_using_user_account(path_to_json_file, token_store)
   # persist credentials for multiple users to the same token store.
   authorization = authorizer.get_credentials('user')
   if authorization.nil?
-    puts "Open this URL in your browser and authorize the application."
+    puts 'Open this URL in your browser and authorize the application.'
     puts
     puts authorizer.get_authorization_url(base_url: OAUTH_REDIRECT_URI)
     puts
-    puts "Enter the authorization code:"
+    puts 'Enter the authorization code:'
     code = STDIN.gets.chomp
     authorization = authorizer.get_and_store_credentials_from_code(
-        base_url: OAUTH_REDIRECT_URI, code: code, user_id: 'user')
+      base_url: OAUTH_REDIRECT_URI, code: code, user_id: 'user'
+    )
   end
 
   # Create a Dfareporting service object.
@@ -67,33 +69,33 @@ def authenticate_using_user_account(path_to_json_file, token_store)
   # your application. Suggested format is "MyCompany-ProductName".
   service = API_NAMESPACE::DfareportingService.new
   service.authorization = authorization
-  service.client_options.application_name = "Ruby installed app sample"
+  service.client_options.application_name = 'Ruby installed app sample'
   service.client_options.application_version = '1.0.0'
 
-  return service
+  service
 end
 
 def get_userprofiles(service)
   # Get all user profiles.
-  result = service.list_user_profiles()
+  result = service.list_user_profiles
 
   # Display results.
   result.items.each do |profile|
-    puts 'User profile with ID %d and name "%s" was found for account %d.' %
-        [profile.profile_id, profile.user_name, profile.account_id]
+    puts format('User profile with ID %d and name "%s" was found for account %d.', profile.profile_id, profile.user_name, profile.account_id)
   end
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   if ARGV.empty?
-    puts "Usage: %s path_to_json_file" % $0
+    puts format('Usage: %s path_to_json_file', $PROGRAM_NAME)
     exit -1
   end
 
   # Authenticate and initialize API service using service account.
   service = authenticate_using_user_account(
-      ARGV.shift,
-      Google::Auth::Stores::FileTokenStore.new(file: TOKEN_STORE_DIR))
+    ARGV.shift,
+    Google::Auth::Stores::FileTokenStore.new(file: TOKEN_STORE_DIR)
+  )
 
   get_userprofiles(service)
 end

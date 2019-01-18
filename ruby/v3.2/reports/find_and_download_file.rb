@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2018, Google Inc. All Rights Reserved.
 #
@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def find_and_download_file(profile_id, report_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # 1. Find a file to download.
   report_file = find_file(service, profile_id, report_id)
@@ -34,8 +34,7 @@ def find_and_download_file(profile_id, report_id)
     # 3. Directly download the file.
     direct_download_file(service, report_id, report_file.id)
   else
-    puts 'No file found for profile ID %d and report ID %d.' %
-        [profile_id, report_id]
+    puts format('No file found for profile ID %d and report ID %d.', profile_id, report_id)
   end
 end
 
@@ -44,9 +43,8 @@ def find_file(service, profile_id, report_id)
   target = nil
 
   begin
-    result = service.list_report_files(profile_id, report_id, {
-      :page_token => page_token
-    })
+    result = service.list_report_files(profile_id, report_id,
+      page_token: page_token)
 
     result.items.each do |file|
       if is_target_file(file)
@@ -55,34 +53,29 @@ def find_file(service, profile_id, report_id)
       end
     end
 
-    if target.nil? and result.items.any?
-      page_token = result.next_page_token
-    else
-      page_token = nil
-    end
+    page_token = (result.next_page_token if target.nil? && result.items.any?)
   end until page_token.to_s.empty?
 
   if target
-    puts 'Found file %s with filename "%s".' % [target.id, target.file_name]
+    puts format('Found file %s with filename "%s".', target.id, target.file_name)
     return target
   end
 
-  puts 'Unable to find file for profile ID %d and report ID %d.' %
-      [profile_id, report_id]
-  return nil
+  puts format('Unable to find file for profile ID %d and report ID %d.', profile_id, report_id)
+  nil
 end
 
 def is_target_file(file)
   # Provide custom validation logic here.
   # For example purposes, any available file is considered valid.
-  return file.status == 'REPORT_AVAILABLE'
+  file.status == 'REPORT_AVAILABLE'
 end
 
 def generate_browser_url(service, report_id, file_id)
   report_file = service.get_file(report_id, file_id)
   browser_url = report_file.urls.browser_url
 
-  puts 'File %s has browser URL: %s.' % [report_file.id, browser_url]
+  puts format('File %s has browser URL: %s.', report_file.id, browser_url)
 end
 
 def direct_download_file(service, report_id, file_id)
@@ -94,10 +87,9 @@ def direct_download_file(service, report_id, file_id)
     File.open(generate_file_name(report_file), 'w') do |out_file|
       # Execute the download request. Providing a download destination
       # retrieves the file contents rather than the file metadata.
-      service.get_file(report_id, file_id, {:download_dest => out_file})
+      service.get_file(report_id, file_id, download_dest: out_file)
 
-      puts 'File %s downloaded to %s' %
-          [file_id, File.absolute_path(out_file.path)]
+      puts format('File %s downloaded to %s', file_id, File.absolute_path(out_file.path))
     end
   end
 end
@@ -107,10 +99,10 @@ def generate_file_name(report_file)
   # If no filename is specified, use the file ID instead.
   file_name = report_file.id.to_s if file_name.empty?
   extension = report_file.format == 'CSV' ? '.csv' : '.xml'
-  return file_name + extension
+  file_name + extension
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :report_id)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,20 +22,19 @@ require_relative '../dfareporting_utils'
 
 def get_size(profile_id, width, height)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Construct and execute the size request.
-  result = service.list_sizes(profile_id, {
-    :height => height,
-    :width => width
-  })
+  result = service.list_sizes(profile_id,
+    height: height,
+    width: width)
 
   result.sizes.each do |size|
-    puts 'Found size with ID %d.' % size.id
+    puts format('Found size with ID %d.', size.id)
   end
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :width, :height)
 

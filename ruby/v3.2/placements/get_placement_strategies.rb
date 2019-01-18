@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,20 +22,18 @@ require_relative '../dfareporting_utils'
 
 def get_placement_strategies(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_placement_strategies(profile_id, {
-      :page_token => token,
-      :fields => 'nextPageToken,placementStrategies(id,name)'
-    })
+    result = service.list_placement_strategies(profile_id,
+      page_token: token,
+      fields: 'nextPageToken,placementStrategies(id,name)')
 
     # Display results.
     if result.placement_strategies.any?
       result.placement_strategies.each do |strategy|
-        puts 'Found placement strategy with ID %d and name "%s".' %
-            [strategy.id, strategy.name]
+        puts format('Found placement strategy with ID %d and name "%s".', strategy.id, strategy.name)
       end
 
       token = result.next_page_token
@@ -46,7 +44,7 @@ def get_placement_strategies(profile_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

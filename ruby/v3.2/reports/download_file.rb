@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def download_file(report_id, file_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Retrieve the file metadata.
   report_file = service.get_file(report_id, file_id)
@@ -32,10 +32,9 @@ def download_file(report_id, file_id)
     File.open(generate_file_name(report_file), 'w') do |out_file|
       # Execute the download request. Providing a download destination
       # retrieves the file contents rather than the file metadata.
-      service.get_file(report_id, file_id, {:download_dest => out_file})
+      service.get_file(report_id, file_id, download_dest: out_file)
 
-      puts 'File %s downloaded to %s' %
-          [file_id, File.absolute_path(out_file.path)]
+      puts format('File %s downloaded to %s', file_id, File.absolute_path(out_file.path))
     end
   end
 end
@@ -45,10 +44,10 @@ def generate_file_name(report_file)
   # If no filename is specified, use the file ID instead.
   file_name = report_file.id.to_s if file_name.empty?
   extension = report_file.format == 'CSV' ? '.csv' : '.xml'
-  return file_name + extension
+  file_name + extension
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :report_id, :file_id)
 

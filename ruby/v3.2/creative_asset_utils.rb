@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,7 +22,6 @@
 require_relative 'dfareporting_utils'
 
 class CreativeAssetUtils
-
   # Creates a new instance of CreativeAssetUtils.
   def initialize(service, profile_id)
     @service = service
@@ -34,40 +33,38 @@ class CreativeAssetUtils
     asset_name = File.basename(path_to_asset_file)
 
     # Construct the creative asset metadata
-    creative_asset = DfareportingUtils::API_NAMESPACE::CreativeAsset.new({
-      :asset_identifier =>
-          DfareportingUtils::API_NAMESPACE::CreativeAssetId.new({
-            :name => asset_name,
-            :type => asset_type
-          })
-    })
-
-    # Upload the asset.
-    mime_type = self.determine_mime_type(path_to_asset_file, asset_type)
-
-    result = @service.insert_creative_asset(
-        @profile_id,
-        advertiser_id,
-        creative_asset,
-        content_type: mime_type,
-        upload_source: path_to_asset_file
+    creative_asset = DfareportingUtils::API_NAMESPACE::CreativeAsset.new(
+      asset_identifier: DfareportingUtils::API_NAMESPACE::CreativeAssetId.new(
+        name: asset_name,
+        type: asset_type
+      )
     )
 
-    puts 'Creative asset was saved with name "%s".' %
-        result.asset_identifier.name
+    # Upload the asset.
+    mime_type = determine_mime_type(path_to_asset_file, asset_type)
 
-    return result
+    result = @service.insert_creative_asset(
+      @profile_id,
+      advertiser_id,
+      creative_asset,
+      content_type: mime_type,
+      upload_source: path_to_asset_file
+    )
+
+    puts format('Creative asset was saved with name "%s".', result.asset_identifier.name)
+
+    result
   end
 
   # Performs a naive mime-type lookup based on file name and asset type.
   def determine_mime_type(path_to_asset_file, asset_type)
     case asset_type
     when 'IMAGE', 'HTML_IMAGE'
-      return 'image/%s' % File.extname(path_to_asset_file)
+      return format('image/%s', File.extname(path_to_asset_file))
     when 'VIDEO'
-      return 'video/%s' % File.extname(path_to_asset_file)
+      format('video/%s', File.extname(path_to_asset_file))
     else
-      return 'application/octet-stream'
+      'application/octet-stream'
     end
   end
 end

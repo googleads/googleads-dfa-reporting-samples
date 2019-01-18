@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -27,15 +27,15 @@ require_relative '../creative_asset_utils'
 require_relative '../dfareporting_utils'
 
 def configure_dynamic_asset_selection(profile_id, creative_id, template_id,
-    path_to_video_file)
+  path_to_video_file)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Retrieve the specified creative.
   creative = service.get_creative(profile_id, creative_id)
 
-  if creative.nil? or creative.type != 'INSTREAM_VIDEO'
-    abort "Invalid creative specified"
+  if creative.nil? || (creative.type != 'INSTREAM_VIDEO')
+    abort 'Invalid creative specified'
   end
 
   unless creative.dynamic_asset_selection?
@@ -44,50 +44,48 @@ def configure_dynamic_asset_selection(profile_id, creative_id, template_id,
       asset.role == 'PARENT_VIDEO'
     end
 
-    if default_asset.nil?
-      abort "Default video asset could not be found."
-    end
+    abort 'Default video asset could not be found.' if default_asset.nil?
 
     # Enable dynamic asset selection for the creative.
     creative.dynamic_asset_selection = true
 
     # Create a new selection using the existing asset as a default.
     creative.creative_asset_selection =
-        DfareportingUtils::API_NAMESPACE::CreativeAssetSelection.new({
-          :default_asset_id => default_asset.id,
-          :rules => []
-        })
+      DfareportingUtils::API_NAMESPACE::CreativeAssetSelection.new(
+        default_asset_id: default_asset.id,
+        rules: []
+      )
   end
 
   # Upload the new video asset and add it to the creative.
   util = CreativeAssetUtils.new(service, profile_id)
   video_asset = util.upload_asset(creative.advertiser_id, path_to_video_file,
-      'VIDEO')
+    'VIDEO')
 
   creative.creative_assets <<=
-      DfareportingUtils::API_NAMESPACE::CreativeAsset.new({
-        :asset_identifier => video_asset.asset_identifier,
-        :role => 'PARENT_VIDEO'
-      })
+    DfareportingUtils::API_NAMESPACE::CreativeAsset.new(
+      asset_identifier: video_asset.asset_identifier,
+      role: 'PARENT_VIDEO'
+    )
 
   # Create a rule targeting the new video asset and add it to the creative.
   creative.creative_asset_selection.rules <<=
-      DfareportingUtils::API_NAMESPACE::Rule.new({
-        :asset_id => video_asset.id,
-        :name => 'Test rule for asset %d' %  video_asset.id,
-        :targeting_template_id => template_id
-      })
+    DfareportingUtils::API_NAMESPACE::Rule.new(
+      asset_id: video_asset.id,
+      name: format('Test rule for asset %d', video_asset.id),
+      targeting_template_id: template_id
+    )
 
   result = service.update_creative(profile_id, creative)
 
-  puts 'Dynamic asset selection enabled for creative with ID %d.' % result.id
+  puts format('Dynamic asset selection enabled for creative with ID %d.', result.id)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :creative_id,
-      :template_id, :path_to_video_file)
+    :template_id, :path_to_video_file)
 
   configure_dynamic_asset_selection(args[:profile_id], args[:creative_id],
-      args[:template_id], args[:path_to_video_file])
+    args[:template_id], args[:path_to_video_file])
 end

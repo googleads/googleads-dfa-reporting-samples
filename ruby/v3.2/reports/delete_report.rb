@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,15 +22,15 @@ require_relative '../dfareporting_utils'
 
 def delete_report(profile_id, report_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Delete the report.
   service.delete_report(profile_id, report_id)
 
-  puts 'Successfully deleted report with ID %d.' % [report_id]
+  puts format('Successfully deleted report with ID %d.', report_id)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :report_id)
 

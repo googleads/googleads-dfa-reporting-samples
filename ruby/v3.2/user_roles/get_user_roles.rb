@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,19 +22,18 @@ require_relative '../dfareporting_utils'
 
 def get_user_roles(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_user_roles(profile_id, {
-      :page_token => token,
-      :fields => 'nextPageToken,userRoles(id,name)'
-    })
+    result = service.list_user_roles(profile_id,
+      page_token: token,
+      fields: 'nextPageToken,userRoles(id,name)')
 
     # Display results.
     if result.user_roles.any?
       result.user_roles.each do |role|
-        puts 'Found user role with ID %d and name "%s".' % [role.id, role.name]
+        puts format('Found user role with ID %d and name "%s".', role.id, role.name)
       end
 
       token = result.next_page_token
@@ -45,7 +44,7 @@ def get_user_roles(profile_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

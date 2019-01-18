@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -24,21 +24,19 @@ require_relative '../dfareporting_utils'
 
 def get_floodlight_activities(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_floodlight_activities(profile_id, {
-      :advertiser_id => advertiser_id,
-      :page_token => token,
-      :fields => 'nextPageToken,floodlightActivities(id,name)'
-    })
+    result = service.list_floodlight_activities(profile_id,
+      advertiser_id: advertiser_id,
+      page_token: token,
+      fields: 'nextPageToken,floodlightActivities(id,name)')
 
     # Display results.
     if result.floodlight_activities.any?
       result.floodlight_activities.each do |activity|
-        puts 'Found floodlight activity with ID %d and name "%s".' %
-            [activity.id, activity.name]
+        puts format('Found floodlight activity with ID %d and name "%s".', activity.id, activity.name)
       end
 
       token = result.next_page_token
@@ -49,7 +47,7 @@ def get_floodlight_activities(profile_id, advertiser_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
 

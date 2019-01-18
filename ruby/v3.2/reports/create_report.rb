@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -23,10 +23,10 @@ require 'date'
 
 def create_report(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # 1. Create a report resource.
-  report = create_report_resource()
+  report = create_report_resource
 
   # 2. Define report criteria.
   define_report_criteria(report)
@@ -41,20 +41,19 @@ def create_report(profile_id)
   insert_report_resource(service, profile_id, report)
 end
 
-def create_report_resource()
-  report = DfareportingUtils::API_NAMESPACE::Report.new({
+def create_report_resource
+  report = DfareportingUtils::API_NAMESPACE::Report.new(
     # Set the required fields "name" and "type".
-    :name => 'Example Standard Report',
-    :type => 'STANDARD',
+    name: 'Example Standard Report',
+    type: 'STANDARD',
     # Set optional fields.
-    :file_name => 'example_report',
-    :format => 'CSV'
-  })
+    file_name: 'example_report',
+    format: 'CSV'
+  )
 
-  puts 'Creating %s report resource with name "%s".' %
-      [report.type, report.name]
+  puts format('Creating %s report resource with name "%s".', report.type, report.name)
 
-  return report
+  report
 end
 
 def define_report_criteria(report)
@@ -64,23 +63,23 @@ def define_report_criteria(report)
   end_date = DateTime.now.strftime('%Y-%m-%d')
 
   # Create a report criteria
-  criteria = DfareportingUtils::API_NAMESPACE::Report::Criteria.new({
-    :date_range => DfareportingUtils::API_NAMESPACE::DateRange.new({
-      :start_date => start_date,
-      :end_date => end_date
-    }),
-    :dimensions => [
-      DfareportingUtils::API_NAMESPACE::SortedDimension.new({
-        :name => 'dfa:advertiser'
-      })
+  criteria = DfareportingUtils::API_NAMESPACE::Report::Criteria.new(
+    date_range: DfareportingUtils::API_NAMESPACE::DateRange.new(
+      start_date: start_date,
+      end_date: end_date
+    ),
+    dimensions: [
+      DfareportingUtils::API_NAMESPACE::SortedDimension.new(
+        name: 'dfa:advertiser'
+      )
     ],
-    :metric_names => ['dfa:clicks', 'dfa:impressions']
-  })
+    metric_names: ['dfa:clicks', 'dfa:impressions']
+  )
 
   # Add the criteria to the report resource.
   report.criteria = criteria
 
-  puts "\nAdded report criteria:\n%s" % criteria.to_json
+  puts format("\nAdded report criteria:\n%s", criteria.to_json)
 end
 
 def find_compatible_fields(service, profile_id, report)
@@ -91,25 +90,24 @@ def find_compatible_fields(service, profile_id, report)
   if report_fields.dimensions.any?
     # Add a compatible dimension to the report.
     report.criteria.dimensions <<
-        DfareportingUtils::API_NAMESPACE::SortedDimension.new({
-          :name => report_fields.dimensions.first.name
-        })
+      DfareportingUtils::API_NAMESPACE::SortedDimension.new(
+        name: report_fields.dimensions.first.name
+      )
   elsif report_fields.metrics.any?
     # Add a compatible metric to the report.
     report.criteria.metric_names << report_fields.metrics.first.name
   end
 
-  puts "\nUpdated report criteria (with compatible fields):\n%s" %
-      report.criteria.to_json
+  puts format("\nUpdated report criteria (with compatible fields):\n%s", report.criteria.to_json)
 end
 
 def add_dimension_filters(service, profile_id, report)
   # Query advertiser dimension values for report run dates.
-  dimension = DfareportingUtils::API_NAMESPACE::DimensionValueRequest.new({
-    :dimension_name => 'dfa:advertiser',
-    :start_date => report.criteria.date_range.start_date,
-    :end_date => report.criteria.date_range.end_date
-  })
+  dimension = DfareportingUtils::API_NAMESPACE::DimensionValueRequest.new(
+    dimension_name: 'dfa:advertiser',
+    start_date: report.criteria.date_range.start_date,
+    end_date: report.criteria.date_range.end_date
+  )
 
   values = service.query_dimension_value(profile_id, dimension)
 
@@ -118,17 +116,16 @@ def add_dimension_filters(service, profile_id, report)
     report.criteria.dimension_filters = [values.items.first]
   end
 
-  puts "\nUpdated report criteria (with valid dimension filters):\n%s" %
-      report.criteria.to_json
+  puts format("\nUpdated report criteria (with valid dimension filters):\n%s", report.criteria.to_json)
 end
 
 def insert_report_resource(service, profile_id, report)
   report = service.insert_report(profile_id, report)
 
-  puts "\nSuccessfully inserted new report with ID %s." % report.id
+  puts format("\nSuccessfully inserted new report with ID %s.", report.id)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

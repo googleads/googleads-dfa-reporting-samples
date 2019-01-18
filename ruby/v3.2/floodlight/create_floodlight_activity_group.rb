@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -25,29 +25,28 @@ require 'securerandom'
 
 def create_floodlight_activity_group(profile_id, floodlight_config_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new floodlight activity group resource to insert.
   activity_group =
-      DfareportingUtils::API_NAMESPACE::FloodlightActivityGroup.new({
-        :floodlight_configuration_id => floodlight_config_id,
-        :name => 'Example Floodlight Activity Group #%s' % SecureRandom.hex(3),
-        :type => 'COUNTER'
-      })
+    DfareportingUtils::API_NAMESPACE::FloodlightActivityGroup.new(
+      floodlight_configuration_id: floodlight_config_id,
+      name: format('Example Floodlight Activity Group #%s', SecureRandom.hex(3)),
+      type: 'COUNTER'
+    )
 
   # Insert the floodlight activity group.
   result = service.insert_floodlight_activity_group(profile_id, activity_group)
 
   # Display results.
-  puts 'Created floodlight activity group with ID %d and name "%s".' %
-      [result.id, result.name]
+  puts format('Created floodlight activity group with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id,
-      :floodlight_config_id)
+    :floodlight_config_id)
 
   create_floodlight_activity_group(args[:profile_id],
-      args[:floodlight_config_id])
+    args[:floodlight_config_id])
 end

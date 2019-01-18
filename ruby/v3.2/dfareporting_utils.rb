@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -23,25 +23,25 @@ require 'googleauth'
 require 'googleauth/stores/file_token_store'
 
 module DfareportingUtils
-  API_NAME = 'dfareporting'
+  API_NAME = 'dfareporting'.freeze
   API_NAMESPACE = Google::Apis::DfareportingV3_2
   API_SCOPES = [
     API_NAMESPACE::AUTH_DDMCONVERSIONS,
     API_NAMESPACE::AUTH_DFAREPORTING,
     API_NAMESPACE::AUTH_DFATRAFFICKING
-  ]
+  ].freeze
 
-  CLIENT_SECRETS_FILE = "client_secrets.json"
-  CREDENTIAL_STORE_FILE = "#{API_NAME}-oauth2.yaml"
+  CLIENT_SECRETS_FILE = 'client_secrets.json'.freeze
+  CREDENTIAL_STORE_FILE = "#{API_NAME}-oauth2.yaml".freeze
   CREDENTIAL_STORE_PATH = File.dirname(__FILE__)
 
   # This redirect URI allows you to copy the token from the success screen.
-  OAUTH_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
+  OAUTH_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 
   # Handles validating command line arguments and returning them as a Hash
   def self.get_arguments(argument_values, *argument_names)
     validate_arguments(argument_values, *argument_names)
-    return generate_argument_map(argument_values, *argument_names)
+    generate_argument_map(argument_values, *argument_names)
   end
 
   # Validates the number of command line arguments matches what was expected
@@ -51,7 +51,7 @@ module DfareportingUtils
       formatted_arguments = argument_names.map { |a| '<' + a.to_s + '>' }
 
       # Display a message to the user and exit
-      puts 'Usage: %s %s' % [$0, formatted_arguments.join(' ')]
+      puts format('Usage: %s %s', $PROGRAM_NAME, formatted_arguments.join(' '))
       exit
     end
   end
@@ -60,15 +60,15 @@ module DfareportingUtils
   # Converts parallel arrays of argument names and values into a single map
   def self.generate_argument_map(argument_values, *argument_names)
     ret = {}
-    argument_names.each_with_index do |arg,index|
+    argument_names.each_with_index do |arg, index|
       ret[arg] = argument_values[index]
     end
-    return ret
+    ret
   end
   private_class_method :generate_argument_map
 
   # Handles authentication and loading of the API.
-  def self.get_service()
+  def self.get_service
     # Uncomment the following lines to enable logging.
     # log_file = File.open("#{$0}.log", 'a+')
     # log_file.sync = true
@@ -77,52 +77,50 @@ module DfareportingUtils
     # Google::Apis.logger = logger # Logging is set globally
 
     # Initialize API Service.
-    service = get_dfareporting_service_instance()
+    service = get_dfareporting_service_instance
 
     # Load application default credentials if they're available.
-    authorization = authorize_application_default_credentials()
+    authorization = authorize_application_default_credentials
 
     # Otherwise, load credentials from the provided client secrets file.
-    authorization = authorize_installed_application() if authorization.nil?
+    authorization = authorize_installed_application if authorization.nil?
 
     # If no credentials could be loaded, return an error.
     if authorization.nil?
-      puts 'Could not load credentials. Enter client ID and secret from ' +
+      puts 'Could not load credentials. Enter client ID and secret from ' \
            'https://console.developers.google.com/ into client_secrets.json.'
       exit
     end
 
     service.authorization = authorization
-    return service
+    service
   end
 
   # Returns an instance of the Dfareporting service without authentication.
-  def self.get_dfareporting_service_instance()
+  def self.get_dfareporting_service_instance
     service = API_NAMESPACE::DfareportingService.new
     service.client_options.application_name = "Ruby #{API_NAME} samples"
     service.client_options.application_version = '1.0.0'
 
-    return service
+    service
   end
   private_class_method :get_dfareporting_service_instance
 
   # Attempts to load application default credentials and return an authorization
   # object that can be used to make requests.
-  def self.authorize_application_default_credentials()
-    begin
-      return Google::Auth.get_application_default(API_SCOPES)
-    rescue
-      # No application default credentials, continue to try other options.
-      return nil
-    end
+  def self.authorize_application_default_credentials
+    Google::Auth.get_application_default(API_SCOPES)
+  rescue StandardError
+    # No application default credentials, continue to try other options.
+    nil
   end
   private_class_method :authorize_application_default_credentials
 
   # Handles authorizing a user via the OAuth installed application flow and
   # returns an authorization object that can be used to make requests.
-  def self.authorize_installed_application()
+  def self.authorize_installed_application
     # Load the client secrets.
-    client_id = load_client_secrets()
+    client_id = load_client_secrets
     return nil if client_id.nil?
 
     # FileTokenStore stores auth credentials in a file, so they survive
@@ -132,43 +130,44 @@ module DfareportingUtils
     #
     # Note: FileTokenStore is not suitable for multi-user applications.
     token_store = Google::Auth::Stores::FileTokenStore.new(
-        file: File.join(CREDENTIAL_STORE_PATH, CREDENTIAL_STORE_FILE))
+      file: File.join(CREDENTIAL_STORE_PATH, CREDENTIAL_STORE_FILE)
+    )
 
     authorizer = Google::Auth::UserAuthorizer.new(client_id, API_SCOPES,
-        token_store)
+      token_store)
 
     authorization = authorizer.get_credentials('default')
     if authorization.nil?
-      puts "Open this URL in your browser and authorize the application."
+      puts 'Open this URL in your browser and authorize the application.'
       puts
       puts authorizer.get_authorization_url(base_url: OAUTH_REDIRECT_URI)
       puts
-      puts "Enter the authorization code:"
+      puts 'Enter the authorization code:'
       code = STDIN.gets.chomp
       authorization = authorizer.get_and_store_credentials_from_code(
-          base_url: OAUTH_REDIRECT_URI, code: code, user_id: 'default')
+        base_url: OAUTH_REDIRECT_URI, code: code, user_id: 'default'
+      )
     end
 
-    return authorization
+    authorization
   end
   private_class_method :authorize_installed_application
 
-  def self.load_client_secrets()
-    begin
-      # Load client ID from the specified file.
-      client_id = Google::Auth::ClientId.from_file(
-          File.join(CREDENTIAL_STORE_PATH, CLIENT_SECRETS_FILE))
+  def self.load_client_secrets
+    # Load client ID from the specified file.
+    client_id = Google::Auth::ClientId.from_file(
+      File.join(CREDENTIAL_STORE_PATH, CLIENT_SECRETS_FILE)
+    )
 
-      if client_id.id.start_with?('[[INSERT') or
-          client_id.secret.start_with?('[[INSERT')
-        return nil
-      end
-
-      return client_id
-    rescue
-      # Unable to load client_secrets.json.
+    if client_id.id.start_with?('[[INSERT') ||
+       client_id.secret.start_with?('[[INSERT')
       return nil
     end
+
+    client_id
+  rescue StandardError
+    # Unable to load client_secrets.json.
+    nil
   end
   private_class_method :load_client_secrets
 end

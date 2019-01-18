@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2017, Google Inc. All Rights Reserved.
 #
@@ -27,52 +27,51 @@ require 'securerandom'
 
 def create_remarketing_list(profile_id, advertiser_id, floodlight_activity_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a list population term.
   # This term matches all visitors with a U1 value exactly matching
   # "test_value"
-  term = DfareportingUtils::API_NAMESPACE::ListPopulationTerm.new({
-    :operator => 'STRING_EQUALS',
-    :type => 'CUSTOM_VARIABLE_TERM',
-    :value => 'test_value',
-    :variable_name => 'U1'
-  })
+  term = DfareportingUtils::API_NAMESPACE::ListPopulationTerm.new(
+    operator: 'STRING_EQUALS',
+    type: 'CUSTOM_VARIABLE_TERM',
+    value: 'test_value',
+    variable_name: 'U1'
+  )
 
   # Add the term to a clause and the clause to a population rule.
   # This rule will target all visitors who trigger the specified floodlight
   # activity and satisfy the custom rule defined in the list population term.
-  rule = DfareportingUtils::API_NAMESPACE::ListPopulationRule.new({
-    :floodlight_activity_id => floodlight_activity_id,
-    :list_population_clauses => [
-      DfareportingUtils::API_NAMESPACE::ListPopulationClause.new({
-        :terms => [term]
-      })
+  rule = DfareportingUtils::API_NAMESPACE::ListPopulationRule.new(
+    floodlight_activity_id: floodlight_activity_id,
+    list_population_clauses: [
+      DfareportingUtils::API_NAMESPACE::ListPopulationClause.new(
+        terms: [term]
+      )
     ]
-  })
+  )
 
   # Create the remarketing list.
-  list = DfareportingUtils::API_NAMESPACE::RemarketingList.new({
-    :name => 'Test remarketing list #%s' % SecureRandom.hex(3),
-    :active => true,
-    :advertiser_id => advertiser_id,
-    :life_span => 30,
-    :list_population_rule => rule
-  })
+  list = DfareportingUtils::API_NAMESPACE::RemarketingList.new(
+    name: format('Test remarketing list #%s', SecureRandom.hex(3)),
+    active: true,
+    advertiser_id: advertiser_id,
+    life_span: 30,
+    list_population_rule: rule
+  )
 
   # Insert the remarketing list.
   list = service.insert_remarketing_list(profile_id, list)
 
   # Display results.
-  puts 'Remarketing list with ID %d and name "%s" was created.' %
-      [list.id, list.name]
+  puts format('Remarketing list with ID %d and name "%s" was created.', list.id, list.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
-      :floodlight_activity_id)
+    :floodlight_activity_id)
 
   create_remarketing_list(args[:profile_id], args[:advertiser_id],
-      args[:floodlight_activity_id])
+    args[:floodlight_activity_id])
 end

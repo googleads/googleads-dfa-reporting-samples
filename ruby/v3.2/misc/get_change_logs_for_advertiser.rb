@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -25,22 +25,20 @@ require_relative '../dfareporting_utils'
 
 def get_change_logs_for_advertiser(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_change_logs(profile_id, {
-      :object_ids => [advertiser_id],
-      :object_type => 'OBJECT_ADVERTISER',
-      :page_token => token,
-      :fields => 'nextPageToken,changeLogs(action,fieldName,oldValue,newValue)'
-    })
+    result = service.list_change_logs(profile_id,
+      object_ids: [advertiser_id],
+      object_type: 'OBJECT_ADVERTISER',
+      page_token: token,
+      fields: 'nextPageToken,changeLogs(action,fieldName,oldValue,newValue)')
 
     # Display results.
     if result.change_logs.any?
       result.change_logs.each do |log|
-        puts '%s: Field "%s" from "%s" to "%s".' %
-            [log.action, log.field_name, log.old_value, log.new_value]
+        puts format('%s: Field "%s" from "%s" to "%s".', log.action, log.field_name, log.old_value, log.new_value)
       end
 
       token = result.next_page_token
@@ -51,7 +49,7 @@ def get_change_logs_for_advertiser(profile_id, advertiser_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
 

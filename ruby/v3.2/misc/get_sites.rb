@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -22,20 +22,18 @@ require_relative '../dfareporting_utils'
 
 def get_subaccounts(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   token = nil
   begin
-    result = service.list_sites(profile_id, {
-      :page_token => token,
-      :fields => 'nextPageToken,sites(id,keyName)'
-    })
+    result = service.list_sites(profile_id,
+      page_token: token,
+      fields: 'nextPageToken,sites(id,keyName)')
 
     # Display results.
     if result.sites.any?
       result.sites.each do |site|
-        puts 'Found site with ID %d and key name "%s".' % [site.id,
-            site.key_name]
+        puts format('Found site with ID %d and key name "%s".', site.id, site.key_name)
       end
 
       token = result.next_page_token
@@ -46,7 +44,7 @@ def get_subaccounts(profile_id)
   end until token.to_s.empty?
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

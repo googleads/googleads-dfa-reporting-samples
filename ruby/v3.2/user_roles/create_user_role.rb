@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -26,26 +26,26 @@ require 'securerandom'
 
 def create_user_role(profile_id, account_id, parent_role_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new user role resource to insert.
-  user_role = DfareportingUtils::API_NAMESPACE::UserRole.new({
-    :account_id => account_id,
-    :name => 'Example User Role #%s' % SecureRandom.hex(3),
-    :parent_user_role_id => parent_role_id
-  })
+  user_role = DfareportingUtils::API_NAMESPACE::UserRole.new(
+    account_id: account_id,
+    name: format('Example User Role #%s', SecureRandom.hex(3)),
+    parent_user_role_id: parent_role_id
+  )
 
   # Insert the user role.
   result = service.insert_user_role(profile_id, user_role)
 
   # Display results.
-  puts 'Created user role with ID %d and name "%s".' % [result.id, result.name]
+  puts format('Created user role with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :account_id,
-      :parent_role_id)
+    :parent_role_id)
 
   create_user_role(args[:profile_id], args[:account_id], args[:parent_role_id])
 end

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -23,22 +23,22 @@ require 'securerandom'
 
 def create_advertiser(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new advertiser resource to insert.
-  advertiser = DfareportingUtils::API_NAMESPACE::Advertiser.new({
-    :name => 'Example Advertiser #%s' % SecureRandom.hex(3),
-    :status => 'APPROVED'
-  })
+  advertiser = DfareportingUtils::API_NAMESPACE::Advertiser.new(
+    name: format('Example Advertiser #%s', SecureRandom.hex(3)),
+    status: 'APPROVED'
+  )
 
   # Insert the advertiser.
   result = service.insert_advertiser(profile_id, advertiser)
 
   # Display results.
-  puts 'Created advertiser with ID %d and name "%s".' % [result.id, result.name]
+  puts format('Created advertiser with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id)
 

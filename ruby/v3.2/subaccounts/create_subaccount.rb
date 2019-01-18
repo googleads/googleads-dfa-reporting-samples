@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -26,26 +26,26 @@ require 'securerandom'
 
 def create_subaccount(profile_id, account_id, permission_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Create a new subaccount resource to insert.
-  subaccount = DfareportingUtils::API_NAMESPACE::Subaccount.new({
-    :account_id => account_id,
-    :available_permission_ids => [permission_id],
-    :name => 'Example Subaccount #%s' % SecureRandom.hex(3),
-  })
+  subaccount = DfareportingUtils::API_NAMESPACE::Subaccount.new(
+    account_id: account_id,
+    available_permission_ids: [permission_id],
+    name: format('Example Subaccount #%s', SecureRandom.hex(3))
+  )
 
   # Insert the subaccount.
   result = service.insert_subaccount(profile_id, subaccount)
 
   # Display results.
-  puts 'Created subaccount with ID %d and name "%s".' % [result.id, result.name]
+  puts format('Created subaccount with ID %d and name "%s".', result.id, result.name)
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :account_id,
-      :permission_id)
+    :permission_id)
 
   create_subaccount(args[:profile_id], args[:account_id], args[:permission_id])
 end

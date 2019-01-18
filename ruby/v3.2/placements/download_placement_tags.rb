@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+
 #
 # Copyright:: Copyright 2016, Google Inc. All Rights Reserved.
 #
@@ -25,28 +25,27 @@ require_relative '../dfareporting_utils'
 
 def download_placement_tags(profile_id, campaign_id, placement_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service()
+  service = DfareportingUtils.get_service
 
   # Construct the request.
-  result = service.generate_placement_tags(profile_id, {
-    :campaign_id => campaign_id,
-    :placement_ids => [placement_id]
-  })
+  result = service.generate_placement_tags(profile_id,
+    campaign_id: campaign_id,
+    placement_ids: [placement_id])
 
   result.placement_tags.each do |tag|
     tag.tag_datas.each do |data|
-      puts "%s - %s\n\n" % [tag.placement_id, data.format]
-      puts "%s\n\n" % data.impression_tag unless data.impression_tag.nil?
-      puts "%s\n\n" % data.click_tag unless data.click_tag.nil?
+      puts format("%s - %s\n\n", tag.placement_id, data.format)
+      puts format("%s\n\n", data.impression_tag) unless data.impression_tag.nil?
+      puts format("%s\n\n", data.click_tag) unless data.click_tag.nil?
     end
   end
 end
 
-if __FILE__ == $0
+if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
   args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id,
-      :placement_id)
+    :placement_id)
 
   download_placement_tags(args[:profile_id], args[:campaign_id],
-      args[:placement_id])
+    args[:placement_id])
 end
