@@ -37,29 +37,14 @@ def configure_dynamic_asset_selection(profile_id, creative_id, template_id,
   abort 'Invalid creative specified' if
     creative.nil? || (creative.type != 'INSTREAM_VIDEO')
 
-  unless creative.dynamic_asset_selection?
-    # Locate an existing video asset to use as a default.
-    default_asset = creative.creative_assets.find do |asset|
-      asset.role == 'PARENT_VIDEO'
-    end
-
-    abort 'Default video asset could not be found.' if default_asset.nil?
-
-    # Enable dynamic asset selection for the creative.
-    creative.dynamic_asset_selection = true
-
-    # Create a new selection using the existing asset as a default.
-    creative.creative_asset_selection =
-      DfareportingUtils::API_NAMESPACE::CreativeAssetSelection.new(
-        default_asset_id: default_asset.id,
-        rules: []
-      )
-  end
+  # Enable dynamic asset selection for the creative if necessary.
+  enable_dynamic_asset_selection(creative) unless
+    creative.dynamic_asset_selection?
 
   # Upload the new video asset and add it to the creative.
-  util = CreativeAssetUtils.new(service, profile_id)
-  video_asset = util.upload_asset(creative.advertiser_id, path_to_video_file,
-    'VIDEO')
+  video_asset = CreativeAssetUtils.new(service, profile_id).upload_asset(
+    creative.advertiser_id, path_to_video_file, 'VIDEO'
+  )
 
   creative.creative_assets <<=
     DfareportingUtils::API_NAMESPACE::CreativeAsset.new(
@@ -79,6 +64,25 @@ def configure_dynamic_asset_selection(profile_id, creative_id, template_id,
 
   puts format('Dynamic asset selection enabled for creative with ID %d.',
     result.id)
+end
+
+def enable_dynamic_asset_selection(creative)
+  # Locate an existing video asset to use as a default.
+  default_asset = creative.creative_assets.find do |asset|
+    asset.role == 'PARENT_VIDEO'
+  end
+
+  abort 'Default video asset could not be found.' if default_asset.nil?
+
+  # Enable dynamic asset selection for the creative.
+  creative.dynamic_asset_selection = true
+
+  # Create a new selection using the existing asset as a default.
+  creative.creative_asset_selection =
+    DfareportingUtils::API_NAMESPACE::CreativeAssetSelection.new(
+      default_asset_id: default_asset.id,
+      rules: []
+    )
 end
 
 if $PROGRAM_NAME == __FILE__

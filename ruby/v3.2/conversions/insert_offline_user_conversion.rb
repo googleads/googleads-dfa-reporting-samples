@@ -74,6 +74,10 @@ def insert_offline_user_conversion(profile_id, encrypted_user_id,
   # Insert the conversion.
   result = service.batchinsert_conversion(profile_id, batch_insert_request)
 
+  process_response(result)
+end
+
+def process_response(result)
   if result.has_failures
     puts format('Error(s) inserting conversion for encrypted user ID %s.',
       encrypted_user_id)

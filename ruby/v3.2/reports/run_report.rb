@@ -36,11 +36,15 @@ def run_report(profile_id, report_id)
   puts format('File with ID %s has been created.', report_file.id)
 
   # Wait for the report to finish processing.
+  wait_for_report_file(service, report_id, report_file.id)
+end
+
+def wait_for_report_file(service, report_id, file_id)
   # An exponential backoff strategy is used to conserve request quota.
   interval = 0
   start_time = Time.now
   loop do
-    report_file = service.get_file(report_id, report_file.id)
+    report_file = service.get_file(report_id, file_id)
 
     status = report_file.status
     if status == 'REPORT_AVAILABLE'

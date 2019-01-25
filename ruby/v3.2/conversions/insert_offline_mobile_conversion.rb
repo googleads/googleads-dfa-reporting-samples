@@ -51,15 +51,21 @@ def insert_offline_mobile_conversion(profile_id, mobile_device_id,
   # Insert the conversion.
   result = service.batchinsert_conversion(profile_id, batch_insert_request)
 
+  process_response(result)
+end
+
+def process_response(result)
   if result.has_failures
-    puts format('Error(s) inserting conversion for mobile device ID %s.', mobile_device_id)
+    puts format('Error(s) inserting conversion for mobile device ID %s.',
+      mobile_device_id)
 
     status = result.status[0]
     status.errors.each do |error|
       puts format("\t[%s]: %s", error.code, error.message)
     end
   else
-    puts format('Successfully inserted conversion for mobile device ID %s.', mobile_device_id)
+    puts format('Successfully inserted conversion for mobile device ID %s.',
+      mobile_device_id)
   end
 end
 

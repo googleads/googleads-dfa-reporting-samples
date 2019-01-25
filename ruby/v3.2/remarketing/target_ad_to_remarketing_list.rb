@@ -47,9 +47,11 @@ def target_ad_to_remarketing_list(profile_id, ad_id)
 
     ad = service.update_ad(profile_id, ad)
 
-    puts format('Ad %d updated to use remarketing list expression: "%s".', ad.id, ad.remarketing_list_expression.expression)
+    puts format('Ad %d updated to use remarketing list expression: "%s".',
+      ad.id, ad.remarketing_list_expression.expression)
   else
-    puts format('No targetable remarketing lists found for ad with ID %d.', ad_id)
+    puts format('No targetable remarketing lists found for ad with ID %d.',
+      ad_id)
   end
 end
 

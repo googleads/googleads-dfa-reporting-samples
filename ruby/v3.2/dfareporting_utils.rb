@@ -139,11 +139,11 @@ module DfareportingUtils
 
     authorization = authorizer.get_credentials('default')
     if authorization.nil?
-      puts 'Open this URL in your browser and authorize the application.'
-      puts
-      puts authorizer.get_authorization_url(base_url: OAUTH_REDIRECT_URI)
-      puts
-      puts 'Enter the authorization code:'
+      puts format(
+        "Open this URL in your browser and authorize the application.\n\n%s" \
+        "\n\nEnter the authorization code:",
+        authorizer.get_authorization_url(base_url: OAUTH_REDIRECT_URI)
+      )
       code = STDIN.gets.chomp
       authorization = authorizer.get_and_store_credentials_from_code(
         base_url: OAUTH_REDIRECT_URI, code: code, user_id: 'default'

@@ -52,17 +52,21 @@ def authenticate_using_user_account(path_to_json_file, token_store)
   # persist credentials for multiple users to the same token store.
   authorization = authorizer.get_credentials('user')
   if authorization.nil?
-    puts 'Open this URL in your browser and authorize the application.'
-    puts
-    puts authorizer.get_authorization_url(base_url: OAUTH_REDIRECT_URI)
-    puts
-    puts 'Enter the authorization code:'
+    puts format(
+      "Open this URL in your browser and authorize the application.\n\n%s" \
+      "\n\nEnter the authorization code:",
+      authorizer.get_authorization_url(base_url: OAUTH_REDIRECT_URI)
+    )
     code = STDIN.gets.chomp
     authorization = authorizer.get_and_store_credentials_from_code(
       base_url: OAUTH_REDIRECT_URI, code: code, user_id: 'user'
     )
   end
 
+  authorization
+end
+
+def create_dfareporting_service_instance(authorization)
   # Create a Dfareporting service object.
   #
   # Note: application name should be replaced with a value that identifies
@@ -94,11 +98,14 @@ if $PROGRAM_NAME == __FILE__
     exit(-1)
   end
 
-  # Authenticate and initialize API service using service account.
-  service = authenticate_using_user_account(
+  # Authenticate using user account.
+  authorization = authenticate_using_user_account(
     ARGV.shift,
     Google::Auth::Stores::FileTokenStore.new(file: TOKEN_STORE_DIR)
   )
+
+  # Initialize API service,
+  service = create_dfareporting_service_instance(authorization)
 
   get_userprofiles(service)
 end

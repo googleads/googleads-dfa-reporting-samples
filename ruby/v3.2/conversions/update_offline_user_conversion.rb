@@ -34,18 +34,20 @@ require_relative '../dfareporting_utils'
 # @param existing_conversion [Object] A hash containing values that identify
 #   an existing offline user conversion. The expected format is:
 #      {
-#        encryption: {
-#          source: <The encryption source>,
-#          entity_id: <The encryption entity ID>,
-#          entity_type: <The encryption entity type>
-#        },
 #        encrypted_user_id: <The encrypted user ID>,
 #        floodlight_activity_id: <The Floodlight activity ID>,
 #        ordinal: <The conversion ordinal value>,
 #        timestamp: <The conversion timestamp>
 #      }
+# @param encryption [Object] A hash containing the values used to encrypt the
+#   existing user conversion. The expected format is:
+#      {
+#        source: <The encryption source>,
+#        entity_id: <The encryption entity ID>,
+#        entity_type: <The encryption entity type>
+#      }
 def update_offline_user_conversion(profile_id, new_quantity, new_value,
-  existing_conversion = {})
+  existing_conversion = {}, encryption = {})
   # Authenticate and initialize API service.
   service = DfareportingUtils.get_service
 
@@ -71,9 +73,9 @@ def update_offline_user_conversion(profile_id, new_quantity, new_value,
 
   # Construct the encryption info.
   encryption_info = DfareportingUtils::API_NAMESPACE::EncryptionInfo.new(
-    encryption_entity_id: existing_conversion[:encryption][:entity_id],
-    encryption_entity_type: existing_conversion[:encryption][:entity_type],
-    encryption_source: existing_conversion[:encryption][:source]
+    encryption_entity_id: encryption[:entity_id],
+    encryption_entity_type: encryption[:entity_type],
+    encryption_source: encryption[:source]
   )
 
   # Construct the batch update request.
@@ -86,6 +88,10 @@ def update_offline_user_conversion(profile_id, new_quantity, new_value,
   # Update the conversion.
   result = service.batchupdate_conversion(profile_id, batch_update_request)
 
+  process_response(result)
+end
+
+def process_response(result)
   if result.has_failures
     puts format('Error(s) updating conversion for encrypted user ID %s.',
       existing_conversion[:encrypted_user_id])
@@ -108,14 +114,14 @@ if $PROGRAM_NAME == __FILE__
 
   update_offline_user_conversion(
     args[:profile_id], args[:new_quantity], args[:new_value],
-    encryption: {
-      source: args[:encryption_source],
-      entity_id: args[:encryption_entity_id],
-      entity_type: args[:encryption_entity_type]
+    {
+      encrypted_user_id: args[:encrypted_user_id],
+      floodlight_activity_id: args[:floodlight_activity_id],
+      ordinal: args[:ordinal],
+      timestamp: args[:timestamp]
     },
-    encrypted_user_id: args[:encrypted_user_id],
-    floodlight_activity_id: args[:floodlight_activity_id],
-    ordinal: args[:ordinal],
-    timestamp: args[:timestamp]
+    source: args[:encryption_source],
+    entity_id: args[:encryption_entity_id],
+    entity_type: args[:encryption_entity_type]
   )
 end

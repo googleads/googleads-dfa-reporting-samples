@@ -72,6 +72,10 @@ def update_offline_mobile_conversion(profile_id, new_quantity, new_value,
   # Update the conversion.
   result = service.batchupdate_conversion(profile_id, batch_update_request)
 
+  process_response(result)
+end
+
+def process_response(result)
   if result.has_failures
     puts format('Error(s) updating conversion for mobile device ID %s.',
       existing_conversion[:mobile_device_id])
