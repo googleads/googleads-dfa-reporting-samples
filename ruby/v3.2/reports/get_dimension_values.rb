@@ -23,7 +23,7 @@ require 'date'
 
 def get_dimension_values(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create the dimension to query.
   dimension = DfareportingUtils::API_NAMESPACE::DimensionValueRequest.new(
@@ -59,7 +59,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id)
 
   get_dimension_values(args[:profile_id])
 end

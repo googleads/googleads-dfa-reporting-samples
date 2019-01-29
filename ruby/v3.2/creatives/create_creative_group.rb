@@ -26,7 +26,7 @@ require 'securerandom'
 
 def create_creative_group(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new creative group resource to insert.
   creative_group = DfareportingUtils::API_NAMESPACE::CreativeGroup.new(
@@ -44,7 +44,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id)
 
   create_creative_group(args[:profile_id], args[:advertiser_id])
 end

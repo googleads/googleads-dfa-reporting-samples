@@ -23,7 +23,7 @@ require 'securerandom'
 
 def create_advertiser(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new advertiser resource to insert.
   advertiser = DfareportingUtils::API_NAMESPACE::Advertiser.new(
@@ -40,7 +40,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id)
 
   create_advertiser(args[:profile_id])
 end

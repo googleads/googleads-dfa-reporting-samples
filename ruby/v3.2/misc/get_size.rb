@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def get_size(profile_id, width, height)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Construct and execute the size request.
   result = service.list_sizes(profile_id,
@@ -36,7 +36,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :width, :height)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :width, :height)
 
-  get_size(args[:profile_id],  args[:width], args[:height])
+  get_size(args[:profile_id], args[:width], args[:height])
 end

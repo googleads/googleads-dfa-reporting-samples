@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def get_placement_strategies(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   token = nil
   loop do
@@ -49,7 +49,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id)
 
   get_placement_strategies(args[:profile_id])
 end

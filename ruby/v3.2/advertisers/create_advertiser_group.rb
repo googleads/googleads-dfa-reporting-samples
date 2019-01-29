@@ -23,7 +23,7 @@ require 'securerandom'
 
 def create_advertiser_group(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new advertiser group resource to insert.
   advertiser_group = DfareportingUtils::API_NAMESPACE::AdvertiserGroup.new(
@@ -39,7 +39,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id)
 
   create_advertiser_group(args[:profile_id])
 end

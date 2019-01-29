@@ -26,7 +26,7 @@ require_relative '../dfareporting_utils'
 def assign_advertiser_to_advertiser_group(profile_id, advertiser_id,
   advertiser_group_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a the advertiser group association to patch.
   advertiser = DfareportingUtils::API_NAMESPACE::Advertiser.new(
@@ -42,7 +42,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id,
     :advertiser_group_id)
 
   assign_advertiser_to_advertiser_group(args[:profile_id], args[:advertiser_id],

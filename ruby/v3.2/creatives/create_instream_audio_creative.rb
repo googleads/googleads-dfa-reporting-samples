@@ -27,7 +27,7 @@ require_relative '../dfareporting_utils'
 def create_instream_audio_creative(profile_id, advertiser_id,
   path_to_audio_file)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Upload the creative asset.
   util = CreativeAssetUtils.new(service, profile_id)
@@ -55,7 +55,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id,
     :path_to_audio_file)
 
   create_instream_audio_creative(args[:profile_id], args[:advertiser_id],

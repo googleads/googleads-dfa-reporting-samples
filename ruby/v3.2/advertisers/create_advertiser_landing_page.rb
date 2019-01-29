@@ -23,7 +23,7 @@ require 'securerandom'
 
 def create_advertiser_landing_page(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new landing page resource to insert.
   landing_page = DfareportingUtils::API_NAMESPACE::LandingPage.new(
@@ -42,7 +42,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id)
 
   create_advertiser_landing_page(args[:profile_id], args[:advertiser_id])
 end

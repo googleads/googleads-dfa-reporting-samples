@@ -23,7 +23,7 @@ require 'date'
 
 def create_report(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # 1. Create a report resource.
   report = create_report_resource
@@ -127,7 +127,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id)
 
   create_report(args[:profile_id])
 end

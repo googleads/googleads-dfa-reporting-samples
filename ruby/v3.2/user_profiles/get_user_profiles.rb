@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def get_user_profiles
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Get all user profiles.
   result = service.list_user_profiles

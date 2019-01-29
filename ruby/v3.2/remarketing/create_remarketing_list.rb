@@ -27,7 +27,7 @@ require 'securerandom'
 
 def create_remarketing_list(profile_id, advertiser_id, floodlight_activity_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a list population term.
   # This term matches all visitors with a U1 value exactly matching
@@ -69,7 +69,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id,
     :floodlight_activity_id)
 
   create_remarketing_list(args[:profile_id], args[:advertiser_id],

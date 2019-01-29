@@ -25,7 +25,7 @@ require_relative '../dfareporting_utils'
 
 def download_placement_tags(profile_id, campaign_id, placement_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Construct the request.
   result = service.generate_placement_tags(profile_id,
@@ -43,7 +43,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :campaign_id,
     :placement_id)
 
   download_placement_tags(args[:profile_id], args[:campaign_id],

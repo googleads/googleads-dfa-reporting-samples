@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def get_compatible_fields(profile_id, report_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Get the report.
   report = service.get_report(profile_id, report_id)
@@ -57,7 +57,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :report_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :report_id)
 
   get_compatible_fields(args[:profile_id], args[:report_id])
 end

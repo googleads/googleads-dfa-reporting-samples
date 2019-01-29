@@ -26,7 +26,7 @@ require_relative '../dfareporting_utils'
 
 def create_placement(profile_id, campaign_id, site_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Look up the campaign.
   campaign = service.get_campaign(profile_id, campaign_id)
@@ -62,7 +62,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :campaign_id,
     :site_id)
 
   create_placement(args[:profile_id], args[:campaign_id], args[:site_id])

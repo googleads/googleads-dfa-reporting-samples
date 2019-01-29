@@ -25,7 +25,7 @@ require_relative '../dfareporting_utils'
 
 def create_tracking_creative(profile_id, advertiser_id, image_url, size_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new creative resource to insert.
   creative = DfareportingUtils::API_NAMESPACE::Creative.new(
@@ -45,7 +45,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id,
     :image_url, :size_id)
 
   create_tracking_creative(args[:profile_id], args[:advertiser_id],

@@ -29,7 +29,7 @@ require_relative '../dfareporting_utils'
 def configure_dynamic_asset_selection(profile_id, creative_id, template_id,
   path_to_video_file)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Retrieve the specified creative.
   creative = service.get_creative(profile_id, creative_id)
@@ -87,7 +87,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :creative_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :creative_id,
     :template_id, :path_to_video_file)
 
   configure_dynamic_asset_selection(args[:profile_id], args[:creative_id],

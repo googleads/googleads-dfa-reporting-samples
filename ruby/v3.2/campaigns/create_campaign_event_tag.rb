@@ -25,7 +25,7 @@ require 'securerandom'
 
 def create_campaign_event_tag(profile_id, campaign_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new event tag resource to insert.
   event_tag = DfareportingUtils::API_NAMESPACE::EventTag.new(
@@ -45,7 +45,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :campaign_id)
 
   create_campaign_event_tag(args[:profile_id], args[:campaign_id])
 end

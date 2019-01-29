@@ -49,7 +49,7 @@ require_relative '../dfareporting_utils'
 def update_offline_user_conversion(profile_id, new_quantity, new_value,
   existing_conversion = {}, encryption = {})
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Look up the Floodlight configuration ID based on activity ID.
   floodlight_activity = service.get_floodlight_activity(profile_id,
@@ -108,7 +108,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :encrypted_user_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :encrypted_user_id,
     :encryption_source, :encryption_entity_id, :encryption_entity_type,
     :floodlight_activity_id, :ordinal, :timestamp, :new_quantity, :new_value)
 

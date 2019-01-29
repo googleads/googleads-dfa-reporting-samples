@@ -25,7 +25,7 @@ require 'securerandom'
 
 def create_floodlight_activity(profile_id, activity_group_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new floodlight activity resource to insert.
   activity = DfareportingUtils::API_NAMESPACE::FloodlightActivity.new(
@@ -45,7 +45,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :activity_group_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :activity_group_id)
 
   create_floodlight_activity(args[:profile_id], args[:activity_group_id])
 end

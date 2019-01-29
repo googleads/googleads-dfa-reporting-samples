@@ -25,7 +25,7 @@ require_relative '../dfareporting_utils'
 
 def get_subaccount_permissions(profile_id, subaccount_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Construct and execute the subaccount request.
   subaccount = service.get_subaccount(profile_id, subaccount_id)
@@ -41,7 +41,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :subaccount_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :subaccount_id)
 
   get_subaccount_permissions(args[:profile_id], args[:subaccount_id])
 end

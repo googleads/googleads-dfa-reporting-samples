@@ -24,7 +24,7 @@ require_relative '../dfareporting_utils'
 def share_remarketing_list_to_advertiser(profile_id, advertiser_id,
   remarketing_list_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Load the existing share info.
   share = service.get_remarketing_list_share(profile_id, remarketing_list_id)
@@ -44,7 +44,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id,
     :remarketing_list_id)
 
   share_remarketing_list_to_advertiser(args[:profile_id], args[:advertiser_id],

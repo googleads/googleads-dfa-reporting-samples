@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def create_rotation_group(profile_id, campaign_id, placement_id, creative_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Retrieve the campaign (to get end date).
   campaign = service.get_campaign(profile_id, campaign_id)
@@ -77,7 +77,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :campaign_id,
     :placement_id, :creative_id)
 
   create_rotation_group(args[:profile_id], args[:campaign_id],

@@ -23,7 +23,7 @@ require 'securerandom'
 
 def create_content_category(profile_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new content category resource to insert.
   content_category = DfareportingUtils::API_NAMESPACE::ContentCategory.new(
@@ -39,7 +39,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id)
 
   create_content_category(args[:profile_id])
 end

@@ -22,7 +22,7 @@ require_relative '../dfareporting_utils'
 
 def download_file(report_id, file_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Retrieve the file metadata.
   report_file = service.get_file(report_id, file_id)
@@ -48,7 +48,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :report_id, :file_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :report_id, :file_id)
 
   download_file(args[:report_id], args[:file_id])
 end

@@ -40,7 +40,7 @@ module DfareportingUtils
   OAUTH_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 
   # Handles validating command line arguments and returning them as a Hash
-  def self.get_arguments(argument_values, *argument_names)
+  def self.parse_arguments(argument_values, *argument_names)
     validate_arguments(argument_values, *argument_names)
     generate_argument_map(argument_values, *argument_names)
   end
@@ -69,7 +69,7 @@ module DfareportingUtils
   private_class_method :generate_argument_map
 
   # Handles authentication and loading of the API.
-  def self.get_service
+  def self.initialize_service
     # Uncomment the following lines to enable logging.
     # log_file = File.open("#{$0}.log", 'a+')
     # log_file.sync = true
@@ -77,8 +77,8 @@ module DfareportingUtils
     # logger.level = Logger::DEBUG
     # Google::Apis.logger = logger # Logging is set globally
 
-    # Initialize API Service.
-    service = get_dfareporting_service_instance
+    # Create an API Service object.
+    service = create_service_object
 
     # Load application default credentials if they're available.
     authorization = authorize_application_default_credentials
@@ -98,14 +98,14 @@ module DfareportingUtils
   end
 
   # Returns an instance of the Dfareporting service without authentication.
-  def self.get_dfareporting_service_instance
+  def self.create_service_object
     service = API_NAMESPACE::DfareportingService.new
     service.client_options.application_name = "Ruby #{API_NAME} samples"
     service.client_options.application_version = '1.0.0'
 
     service
   end
-  private_class_method :get_dfareporting_service_instance
+  private_class_method :create_service_object
 
   # Attempts to load application default credentials and return an
   # authorization object that can be used to make requests.

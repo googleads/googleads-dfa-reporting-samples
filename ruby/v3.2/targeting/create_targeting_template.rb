@@ -25,7 +25,7 @@ require 'securerandom'
 
 def create_targeting_template(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new targeting template resource to insert.
   # This template will be configured to serve ads on Monday, Wednesday, and
@@ -50,7 +50,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id)
 
   create_targeting_template(args[:profile_id], args[:advertiser_id])
 end

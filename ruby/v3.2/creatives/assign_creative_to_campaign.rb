@@ -25,7 +25,7 @@ require_relative '../dfareporting_utils'
 
 def assign_creative_to_campaign(profile_id, campaign_id, creative_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new creative-campaign association to insert
   association =
@@ -43,7 +43,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :campaign_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :campaign_id,
     :creative_id)
 
   assign_creative_to_campaign(args[:profile_id], args[:campaign_id],

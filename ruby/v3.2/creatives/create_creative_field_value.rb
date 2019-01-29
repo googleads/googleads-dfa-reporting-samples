@@ -25,7 +25,7 @@ require 'securerandom'
 
 def create_creative_field_value(profile_id, field_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new creative field value resource to insert.
   field_value = DfareportingUtils::API_NAMESPACE::CreativeFieldValue.new(
@@ -42,7 +42,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :field_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :field_id)
 
   create_creative_field_value(args[:profile_id], args[:field_id])
 end

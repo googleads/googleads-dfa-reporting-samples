@@ -29,7 +29,7 @@ MAX_RETRY_ELAPSED_TIME = 60 * 60
 
 def run_report(profile_id, report_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Run the report.
   report_file = service.run_report(profile_id, report_id)
@@ -72,7 +72,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :report_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :report_id)
 
   run_report(args[:profile_id], args[:report_id])
 end

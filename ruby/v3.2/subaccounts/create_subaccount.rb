@@ -26,7 +26,7 @@ require 'securerandom'
 
 def create_subaccount(profile_id, account_id, permission_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new subaccount resource to insert.
   subaccount = DfareportingUtils::API_NAMESPACE::Subaccount.new(
@@ -44,7 +44,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :account_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :account_id,
     :permission_id)
 
   create_subaccount(args[:profile_id], args[:account_id], args[:permission_id])

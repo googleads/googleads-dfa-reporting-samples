@@ -25,7 +25,7 @@ require 'securerandom'
 
 def create_campaign(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Locate an advertiser landing page to use as a default.
   default_landing_page = get_advertiser_landing_page(service, profile_id,
@@ -65,7 +65,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id)
 
   create_campaign(args[:profile_id], args[:advertiser_id])
 end

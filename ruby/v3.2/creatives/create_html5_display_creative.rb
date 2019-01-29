@@ -27,7 +27,7 @@ require_relative '../dfareporting_utils'
 def create_html5_banner_creative(profile_id, advertiser_id, size_id,
   path_to_html5_asset_file, path_to_backup_image_file)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   util = CreativeAssetUtils.new(service, profile_id)
 
@@ -99,7 +99,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id,
     :size_id, :path_to_html5_asset_file, :path_to_backup_image_file)
 
   create_html5_banner_creative(args[:profile_id], args[:advertiser_id],

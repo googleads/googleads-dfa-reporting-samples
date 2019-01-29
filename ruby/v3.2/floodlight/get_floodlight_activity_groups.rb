@@ -24,7 +24,7 @@ require_relative '../dfareporting_utils'
 
 def get_floodlight_activity_groups(profile_id, advertiser_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   token = nil
   loop do
@@ -54,7 +54,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :advertiser_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id)
 
   get_floodlight_activity_groups(args[:profile_id], args[:advertiser_id])
 end

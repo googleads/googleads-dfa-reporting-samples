@@ -26,7 +26,7 @@ require 'securerandom'
 
 def create_user_role(profile_id, account_id, parent_role_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Create a new user role resource to insert.
   user_role = DfareportingUtils::API_NAMESPACE::UserRole.new(
@@ -44,7 +44,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :account_id,
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :account_id,
     :parent_role_id)
 
   create_user_role(args[:profile_id], args[:account_id], args[:parent_role_id])

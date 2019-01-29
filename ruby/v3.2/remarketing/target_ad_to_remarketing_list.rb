@@ -27,7 +27,7 @@ require_relative '../dfareporting_utils'
 
 def target_ad_to_remarketing_list(profile_id, ad_id)
   # Authenticate and initialize API service.
-  service = DfareportingUtils.get_service
+  service = DfareportingUtils.initialize_service
 
   # Retrieve the ad.
   ad = service.get_ad(profile_id, ad_id)
@@ -57,7 +57,7 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.get_arguments(ARGV, :profile_id, :ad_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :ad_id)
 
   target_ad_to_remarketing_list(args[:profile_id], args[:ad_id])
 end
