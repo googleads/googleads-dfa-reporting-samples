@@ -35,7 +35,8 @@ def create_advertiser(profile_id)
   result = service.insert_advertiser(profile_id, advertiser)
 
   # Display results.
-  puts format('Created advertiser with ID %d and name "%s".', result.id, result.name)
+  puts format('Created advertiser with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

@@ -40,12 +40,14 @@ def create_floodlight_activity(profile_id, activity_group_id)
   result = service.insert_floodlight_activity(profile_id, activity)
 
   # Display results.
-  puts format('Created floodlight activity with ID %d and name "%s".', result.id, result.name)
+  puts format('Created floodlight activity with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :activity_group_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id,
+    :activity_group_id)
 
   create_floodlight_activity(args[:profile_id], args[:activity_group_id])
 end

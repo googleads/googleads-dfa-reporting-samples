@@ -31,14 +31,16 @@ def share_remarketing_list_to_advertiser(profile_id, advertiser_id,
   share.shared_advertiser_ids ||= []
 
   if share.shared_advertiser_ids.include?(advertiser_id)
-    puts format('Remarketing list %d is already shared to advertiser %d.', remarketing_list_id, advertiser_id)
+    puts format('Remarketing list %d is already shared to advertiser %d.',
+      remarketing_list_id, advertiser_id)
   else
     share.shared_advertiser_ids <<= advertiser_id
 
     # Update the share info with the newly added advertiser ID.
     share = service.update_remarketing_list_share(profile_id, share)
 
-    puts format('Remarketing list %d is now shared to advertiser ID(s): %s', remarketing_list_id, share.shared_advertiser_ids.join(', '))
+    puts format('Remarketing list %d is now shared to advertiser ID(s): %s',
+      remarketing_list_id, share.shared_advertiser_ids.join(', '))
   end
 end
 

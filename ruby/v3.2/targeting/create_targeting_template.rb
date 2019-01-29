@@ -45,7 +45,8 @@ def create_targeting_template(profile_id, advertiser_id)
   result = service.insert_targeting_template(profile_id, targeting_template)
 
   # Display results.
-  puts format('Created targeting template with ID %d and name "%s".', result.id, result.name)
+  puts format('Created targeting template with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

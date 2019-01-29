@@ -51,7 +51,8 @@ def create_report_resource
     format: 'CSV'
   )
 
-  puts format('Creating %s report resource with name "%s".', report.type, report.name)
+  puts format('Creating %s report resource with name "%s".', report.type,
+    report.name)
 
   report
 end
@@ -98,7 +99,8 @@ def find_compatible_fields(service, profile_id, report)
     report.criteria.metric_names << report_fields.metrics.first.name
   end
 
-  puts format("\nUpdated report criteria (with compatible fields):\n%s", report.criteria.to_json)
+  puts format("\nUpdated report criteria (with compatible fields):\n%s",
+    report.criteria.to_json)
 end
 
 def add_dimension_filters(service, profile_id, report)
@@ -116,7 +118,8 @@ def add_dimension_filters(service, profile_id, report)
     report.criteria.dimension_filters = [values.items.first]
   end
 
-  puts format("\nUpdated report criteria (with valid dimension filters):\n%s", report.criteria.to_json)
+  puts format("\nUpdated report criteria (with valid dimension filters):\n%s",
+    report.criteria.to_json)
 end
 
 def insert_report_resource(service, profile_id, report)

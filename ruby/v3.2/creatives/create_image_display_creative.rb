@@ -51,7 +51,8 @@ def create_image_display_creative(profile_id, advertiser_id, size_id,
   # Insert the creative.
   result = service.insert_creative(profile_id, creative)
 
-  puts format('Created image display creative with ID %d and name "%s".', result.id, result.name)
+  puts format('Created image display creative with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

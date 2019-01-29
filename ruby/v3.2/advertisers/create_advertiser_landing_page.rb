@@ -37,7 +37,8 @@ def create_advertiser_landing_page(profile_id, advertiser_id)
   result = service.insert_advertiser_landing_page(profile_id, landing_page)
 
   # Display results.
-  puts format('Created advertiser landing page with ID %d and name "%s".', result.id, result.name)
+  puts format('Created advertiser landing page with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

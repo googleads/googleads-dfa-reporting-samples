@@ -30,11 +30,14 @@ def download_floodlight_tag(profile_id, activity_id)
 
   if result.global_site_tag_global_snippet.nil?
     # This is an image or iframe tag.
-    puts format("Floodlight activity tag:\n\n%s", result.floodlight_activity_tag)
+    puts format("Floodlight activity tag:\n\n%s",
+      result.floodlight_activity_tag)
   else
     # This is a global site tag, display both the global and event snippets.
-    puts format("Global site tag global snippet:\n\n%s", result.global_site_tag_global_snippet)
-    puts format("\n\nGlobal site tag event snippet:\n\n%s", result.floodlight_activity_tag)
+    puts format("Global site tag global snippet:\n\n%s",
+      result.global_site_tag_global_snippet)
+    puts format("\n\nGlobal site tag event snippet:\n\n%s",
+      result.floodlight_activity_tag)
   end
 end
 

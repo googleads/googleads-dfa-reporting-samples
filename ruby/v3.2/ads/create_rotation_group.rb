@@ -72,7 +72,8 @@ def create_rotation_group(profile_id, campaign_id, placement_id, creative_id)
 
   result = service.insert_ad(profile_id, ad)
 
-  puts format('Created rotation group with ID %d and name "%s".', result.id, result.name)
+  puts format('Created rotation group with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

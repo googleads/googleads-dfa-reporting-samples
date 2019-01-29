@@ -40,7 +40,8 @@ def create_tracking_creative(profile_id, advertiser_id, image_url, size_id)
   result = service.insert_creative(profile_id, creative)
 
   # Display results.
-  puts format('Created display redirect creative with ID %d and name "%s".', result.id, result.name)
+  puts format('Created display redirect creative with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

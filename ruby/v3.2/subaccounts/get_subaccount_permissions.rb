@@ -35,7 +35,8 @@ def get_subaccount_permissions(profile_id, subaccount_id)
     ids: subaccount.available_permission_ids)
 
   result.user_role_permissions.each do |permission|
-    puts format('Found user role permission with ID %d and name "%s".', permission.id, permission.name)
+    puts format('Found user role permission with ID %d and name "%s".',
+      permission.id, permission.name)
   end
 end
 

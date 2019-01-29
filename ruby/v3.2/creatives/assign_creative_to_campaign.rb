@@ -38,7 +38,8 @@ def assign_creative_to_campaign(profile_id, campaign_id, creative_id)
     association)
 
   # Display results.
-  puts format('Creative with ID %d is now associated with campaign %d.', result.creative_id, campaign_id)
+  puts format('Creative with ID %d is now associated with campaign %d.',
+    result.creative_id, campaign_id)
 end
 
 if $PROGRAM_NAME == __FILE__

@@ -94,9 +94,9 @@ end
 
 if $PROGRAM_NAME == __FILE__
   # Retrieve command line arguments.
-  args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :encrypted_user_id,
-    :encryption_source, :encryption_entity_id, :encryption_entity_type,
-    :floodlight_activity_id)
+  args = DfareportingUtils.parse_arguments(ARGV, :profile_id,
+    :encrypted_user_id, :encryption_source, :encryption_entity_id,
+    :encryption_entity_type, :floodlight_activity_id)
 
   insert_offline_user_conversion(args[:profile_id], args[:encrypted_user_id],
     args[:floodlight_activity_id],

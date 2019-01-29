@@ -37,7 +37,8 @@ def assign_advertiser_to_advertiser_group(profile_id, advertiser_id,
   result = service.patch_advertiser(profile_id, advertiser_id, advertiser)
 
   # Display results
-  puts format('Assigned advertiser with ID %d to advertiser group with ID %d.', result.id, result.advertiser_group_id)
+  puts format('Assigned advertiser with ID %d to advertiser group with ID %d.',
+    result.id, result.advertiser_group_id)
 end
 
 if $PROGRAM_NAME == __FILE__
@@ -45,6 +46,6 @@ if $PROGRAM_NAME == __FILE__
   args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :advertiser_id,
     :advertiser_group_id)
 
-  assign_advertiser_to_advertiser_group(args[:profile_id], args[:advertiser_id],
-    args[:advertiser_group_id])
+  assign_advertiser_to_advertiser_group(args[:profile_id],
+    args[:advertiser_id], args[:advertiser_group_id])
 end

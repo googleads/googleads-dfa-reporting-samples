@@ -39,7 +39,8 @@ def create_creative_group(profile_id, advertiser_id)
   result = service.insert_creative_group(profile_id, creative_group)
 
   # Display results.
-  puts format('Created creative group with ID %d and name "%s".', result.id, result.name)
+  puts format('Created creative group with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

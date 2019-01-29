@@ -40,7 +40,8 @@ def create_campaign_event_tag(profile_id, campaign_id)
   result = service.insert_event_tag(profile_id, event_tag)
 
   # Display results.
-  puts format('Created campaign event tag with ID %d and name "%s".', result.id, result.name)
+  puts format('Created campaign event tag with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

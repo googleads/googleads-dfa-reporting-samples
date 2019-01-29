@@ -50,7 +50,8 @@ def create_instream_video_creative(profile_id, advertiser_id,
   # Insert the creative.
   result = service.insert_creative(profile_id, creative)
 
-  puts format('Created in-stream video creative with ID %d and name "%s".', result.id, result.name)
+  puts format('Created in-stream video creative with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

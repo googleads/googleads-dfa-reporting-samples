@@ -31,7 +31,8 @@ def create_floodlight_activity_group(profile_id, floodlight_config_id)
   activity_group =
     DfareportingUtils::API_NAMESPACE::FloodlightActivityGroup.new(
       floodlight_configuration_id: floodlight_config_id,
-      name: format('Example Floodlight Activity Group #%s', SecureRandom.hex(3)),
+      name:
+        format('Example Floodlight Activity Group #%s', SecureRandom.hex(3)),
       type: 'COUNTER'
     )
 
@@ -39,7 +40,8 @@ def create_floodlight_activity_group(profile_id, floodlight_config_id)
   result = service.insert_floodlight_activity_group(profile_id, activity_group)
 
   # Display results.
-  puts format('Created floodlight activity group with ID %d and name "%s".', result.id, result.name)
+  puts format('Created floodlight activity group with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

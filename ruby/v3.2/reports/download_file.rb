@@ -34,7 +34,8 @@ def download_file(report_id, file_id)
     # retrieves the file contents rather than the file metadata.
     service.get_file(report_id, file_id, download_dest: out_file)
 
-    puts format('File %s downloaded to %s', file_id, File.absolute_path(out_file.path))
+    puts format('File %s downloaded to %s', file_id,
+      File.absolute_path(out_file.path))
   end
 end
 

@@ -46,20 +46,23 @@ def create_html5_banner_creative(profile_id, advertiser_id, size_id,
   # Construct the creative structure.
   creative = DfareportingUtils::API_NAMESPACE::Creative.new(
     advertiser_id: advertiser_id,
-    backup_image_click_through_url: DfareportingUtils::API_NAMESPACE::CreativeClickThroughUrl.new(
-      landing_page_id: default_landing_page.id
-    ),
+    backup_image_click_through_url:
+      DfareportingUtils::API_NAMESPACE::CreativeClickThroughUrl.new(
+        landing_page_id: default_landing_page.id
+      ),
     backup_image_reporting_label: 'backup',
-    backup_image_target_window: DfareportingUtils::API_NAMESPACE::TargetWindow.new(
-      target_window_option: 'NEW_WINDOW'
-    ),
+    backup_image_target_window:
+      DfareportingUtils::API_NAMESPACE::TargetWindow.new(
+        target_window_option: 'NEW_WINDOW'
+      ),
     click_tags: [
       DfareportingUtils::API_NAMESPACE::ClickTag.new(
         event_name: 'exit',
         name: 'click_tag',
-        click_through_url: DfareportingUtils::API_NAMESPACE::CreativeClickThroughUrl.new(
-          landing_page_id: default_landing_page.id
-        )
+        click_through_url:
+          DfareportingUtils::API_NAMESPACE::CreativeClickThroughUrl.new(
+            landing_page_id: default_landing_page.id
+          )
       )
     ],
     creative_assets: [
@@ -80,7 +83,8 @@ def create_html5_banner_creative(profile_id, advertiser_id, size_id,
   # Insert the creative.
   result = service.insert_creative(profile_id, creative)
 
-  puts format('Created HTML5 display creative with ID %d and name "%s".', result.id, result.name)
+  puts format('Created HTML5 display creative with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 def get_advertiser_landing_page(service, profile_id, advertiser_id)

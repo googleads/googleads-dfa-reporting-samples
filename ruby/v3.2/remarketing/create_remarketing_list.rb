@@ -64,7 +64,8 @@ def create_remarketing_list(profile_id, advertiser_id, floodlight_activity_id)
   list = service.insert_remarketing_list(profile_id, list)
 
   # Display results.
-  puts format('Remarketing list with ID %d and name "%s" was created.', list.id, list.name)
+  puts format('Remarketing list with ID %d and name "%s" was created.',
+    list.id, list.name)
 end
 
 if $PROGRAM_NAME == __FILE__

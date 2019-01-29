@@ -34,7 +34,8 @@ def create_advertiser_group(profile_id)
   result = service.insert_advertiser_group(profile_id, advertiser_group)
 
   # Display results.
-  puts format('Created advertiser group with ID %d and name "%s".', result.id, result.name)
+  puts format('Created advertiser group with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

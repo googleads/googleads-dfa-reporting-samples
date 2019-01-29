@@ -34,7 +34,8 @@ def create_content_category(profile_id)
   result = service.insert_content_category(profile_id, content_category)
 
   # Display results.
-  puts format('Created content category with ID %d and name "%s".', result.id, result.name)
+  puts format('Created content category with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

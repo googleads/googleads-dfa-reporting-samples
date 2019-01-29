@@ -34,7 +34,8 @@ def create_placement_strategy(profile_id)
   result = service.insert_placement_strategy(profile_id, strategy)
 
   # Display results.
-  puts format('Created placement strategy with ID %d and name "%s".', result.id, result.name)
+  puts format('Created placement strategy with ID %d and name "%s".',
+    result.id, result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

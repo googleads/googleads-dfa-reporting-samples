@@ -37,7 +37,8 @@ def create_creative_field_value(profile_id, field_id)
     field_value)
 
   # Display results.
-  puts format('Created creative field value with ID %d and value "%s".', result.id, result.value)
+  puts format('Created creative field value with ID %d and value "%s".',
+    result.id, result.value)
 end
 
 if $PROGRAM_NAME == __FILE__

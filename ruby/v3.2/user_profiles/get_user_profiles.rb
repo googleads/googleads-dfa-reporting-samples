@@ -29,7 +29,10 @@ def get_user_profiles
 
   # Display results.
   result.items.each do |profile|
-    puts format('User profile with ID %d and name "%s" was found for account %d.', profile.profile_id, profile.user_name, profile.account_id)
+    puts format(
+      'User profile with ID %d and name "%s" was found for account %d.',
+      profile.profile_id, profile.user_name, profile.account_id
+    )
   end
 end
 

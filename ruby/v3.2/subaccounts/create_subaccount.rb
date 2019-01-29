@@ -39,7 +39,8 @@ def create_subaccount(profile_id, account_id, permission_id)
   result = service.insert_subaccount(profile_id, subaccount)
 
   # Display results.
-  puts format('Created subaccount with ID %d and name "%s".', result.id, result.name)
+  puts format('Created subaccount with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

@@ -53,7 +53,8 @@ class CreativeAssetUtils
       upload_source: path_to_asset_file
     )
 
-    puts format('Creative asset was saved with name "%s".', result.asset_identifier.name)
+    puts format('Creative asset was saved with name "%s".',
+      result.asset_identifier.name)
 
     result
   end

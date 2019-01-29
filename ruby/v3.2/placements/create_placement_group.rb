@@ -48,7 +48,8 @@ def create_placement_group(profile_id, campaign_id, site_id)
   result = service.insert_placement_group(profile_id, placement_group)
 
   # Display results.
-  puts format('Created placement group with ID %d and name "%s".', result.id, result.name)
+  puts format('Created placement group with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__

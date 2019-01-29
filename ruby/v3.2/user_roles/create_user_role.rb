@@ -39,7 +39,8 @@ def create_user_role(profile_id, account_id, parent_role_id)
   result = service.insert_user_role(profile_id, user_role)
 
   # Display results.
-  puts format('Created user role with ID %d and name "%s".', result.id, result.name)
+  puts format('Created user role with ID %d and name "%s".', result.id,
+    result.name)
 end
 
 if $PROGRAM_NAME == __FILE__
@@ -47,5 +48,6 @@ if $PROGRAM_NAME == __FILE__
   args = DfareportingUtils.parse_arguments(ARGV, :profile_id, :account_id,
     :parent_role_id)
 
-  create_user_role(args[:profile_id], args[:account_id], args[:parent_role_id])
+  create_user_role(args[:profile_id], args[:account_id],
+    args[:parent_role_id])
 end
