@@ -1,4 +1,0 @@
-source 'https://rubygems.org'
-
-gem 'google-api-client', '0.23.5'
-gem 'googleauth', '>= 0.5', '< 0.7.0'
