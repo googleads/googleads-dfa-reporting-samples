@@ -36,37 +36,37 @@ argparser.add_argument(
 
 
 def main(argv):
-  # Retrieve command line arguments.
-  flags = dfareporting_utils.get_arguments(argv, __doc__, parents=[argparser])
+    # Retrieve command line arguments.
+    flags = dfareporting_utils.get_arguments(argv, __doc__, parents=[argparser])
 
-  # Authenticate and construct service.
-  service = dfareporting_utils.setup(flags)
+    # Authenticate and construct service.
+    service = dfareporting_utils.setup(flags)
 
-  profile_id = flags.profile_id
-  advertiser_id = flags.advertiser_id
+    profile_id = flags.profile_id
+    advertiser_id = flags.advertiser_id
 
-  try:
-    # Construct the request.
-    request = service.floodlightActivities().list(
-        profileId=profile_id, advertiserId=advertiser_id)
+    try:
+        # Construct the request.
+        request = service.floodlightActivities().list(
+            profileId=profile_id, advertiserId=advertiser_id)
 
-    while True:
-      # Execute request and print response.
-      response = request.execute()
+        # Execute request and print response.
+        response = request.execute()
+        while response['floodlightActivities'] and response['nextPageToken']:
+            for activity in response['floodlightActivities']:
+                print(f"Found floodlight activity with ID "
+                      f"{activity['id']} and name {activity['name']}")
 
-      for activity in response['floodlightActivities']:
-        print ('Found floodlight activity with ID %s and name "%s".'
-               % (activity['id'], activity['name']))
+            request = service.floodlightActivities().list_next(request, response)
+            response = request.execute()
 
-      if response['floodlightActivities'] and response['nextPageToken']:
-        request = service.floodlightActivities().list_next(request, response)
-      else:
-        break
+    except client.AccessTokenRefreshError:
+        print('The credentials have been revoked or expired, please re-run the '
+              'application to re-authorize')
 
-  except client.AccessTokenRefreshError:
-    print ('The credentials have been revoked or expired, please re-run the '
-           'application to re-authorize')
+    except Exception as exception:
+        print(exception)
 
 
 if __name__ == '__main__':
-  main(sys.argv)
+    main(sys.argv)
