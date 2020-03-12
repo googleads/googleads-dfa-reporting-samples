@@ -72,7 +72,7 @@ public class CreateRotationGroup {
     deliverySchedule.setPriority("AD_PRIORITY_01");
 
     DateTime startDate = new DateTime(new Date());
-    DateTime endDate = campaign.getEndDate();
+    DateTime endDate = new DateTime(campaign.getEndDate().getValue());
 
     // Create a rotation group.
     Ad rotationGroup = new Ad();
