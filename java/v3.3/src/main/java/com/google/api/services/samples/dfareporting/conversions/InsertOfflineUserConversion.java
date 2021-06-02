@@ -95,3 +95,4 @@ public class InsertOfflineUserConversion {
         ENCRYPTION_ENTITY_TYPE, ENCRYPTION_SOURCE);
   }
 }
+

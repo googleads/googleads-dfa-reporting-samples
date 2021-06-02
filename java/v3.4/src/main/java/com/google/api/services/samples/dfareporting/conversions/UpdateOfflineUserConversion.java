@@ -113,3 +113,4 @@ public class UpdateOfflineUserConversion {
         ENCRYPTION_ENTITY_TYPE, ENCRYPTION_SOURCE, ORDINAL, timestampMicros, newQuantity, newValue);
   }
 }
+
