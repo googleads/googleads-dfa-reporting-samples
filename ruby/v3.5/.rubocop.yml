@@ -1,0 +1,11 @@
+inherit_from: .rubocop_todo.yml
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Metrics/AbcSize:
+  Max: 25
+
+Naming/AccessorMethodName:
+  Exclude:
+    - 'user_profiles/get_user_profiles.rb'
