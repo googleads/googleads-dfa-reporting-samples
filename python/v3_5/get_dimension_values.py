@@ -41,7 +41,7 @@ def main(argv):
   try:
     # Create the dimension to query
     dimension = {
-        'dimensionName': 'dfa:advertiser',
+        'dimensionName': 'advertiser',
         'startDate': '2012-01-01',
         'endDate': '2013-12-31'
     }

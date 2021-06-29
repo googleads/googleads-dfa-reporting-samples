@@ -91,9 +91,9 @@ def define_report_criteria(report):
           'endDate': end_date.strftime('%Y-%m-%d')
       },
       'dimensions': [{
-          'name': 'dfa:advertiser'
+          'name': 'advertiser'
       }],
-      'metricNames': ['dfa:clicks', 'dfa:impressions']
+      'metricNames': ['clicks', 'impressions']
   }
 
   # Add the criteria to the report resource.
@@ -127,7 +127,7 @@ def add_dimension_filters(service, profile_id, report):
   """Finds and adds a valid dimension filter to the report."""
   # Query advertiser dimension values for report run dates.
   request = {
-      'dimensionName': 'dfa:advertiser',
+      'dimensionName': 'advertiser',
       'endDate': report['criteria']['dateRange']['endDate'],
       'startDate': report['criteria']['dateRange']['startDate']
   }

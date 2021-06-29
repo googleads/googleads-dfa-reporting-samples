@@ -90,8 +90,8 @@ public class CreateReportGuide {
     // Create a report criteria.
     Report.Criteria criteria = new Report.Criteria();
     criteria.setDateRange(dateRange);
-    criteria.setDimensions(Lists.newArrayList(new SortedDimension().setName("dfa:advertiser")));
-    criteria.setMetricNames(Lists.newArrayList("dfa:clicks", "dfa:impressions"));
+    criteria.setDimensions(Lists.newArrayList(new SortedDimension().setName("advertiser")));
+    criteria.setMetricNames(Lists.newArrayList("clicks", "impressions"));
 
     // Add the criteria to the report resource.
     report.setCriteria(criteria);
@@ -127,7 +127,7 @@ public class CreateReportGuide {
     DimensionValueRequest request = new DimensionValueRequest();
     request.setStartDate(report.getCriteria().getDateRange().getStartDate());
     request.setEndDate(report.getCriteria().getDateRange().getEndDate());
-    request.setDimensionName("dfa:advertiser");
+    request.setDimensionName("advertiser");
 
     DimensionValueList values = reporting.dimensionValues().query(profileId, request).execute();
 

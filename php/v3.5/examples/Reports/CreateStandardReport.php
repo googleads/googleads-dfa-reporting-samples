@@ -93,12 +93,12 @@ class CreateStandardReport extends BaseExample
 
         // Create a report criteria.
         $dimension = new Google_Service_Dfareporting_SortedDimension();
-        $dimension->setName('dfa:advertiser');
+        $dimension->setName('advertiser');
 
         $criteria = new Google_Service_Dfareporting_ReportCriteria();
         $criteria->setDateRange($dateRange);
         $criteria->setDimensions([$dimension]);
-        $criteria->setMetricNames(['dfa:clicks', 'dfa:impressions']);
+        $criteria->setMetricNames(['clicks', 'impressions']);
 
         // Add the criteria to the report resource.
         $report->setCriteria($criteria);
@@ -146,7 +146,7 @@ class CreateStandardReport extends BaseExample
         $request->setEndDate(
             $report->getCriteria()->getDateRange()->getEndDate()
         );
-        $request->setDimensionName('dfa:advertiser');
+        $request->setDimensionName('advertiser');
 
         $values =
             $this->service->dimensionValues->query($userProfileId, $request);

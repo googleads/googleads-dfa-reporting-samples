@@ -57,7 +57,7 @@ namespace DfaReporting.Samples {
 
       // Construct the dimension value request.
       DimensionValueRequest request = new DimensionValueRequest();
-      request.DimensionName = "dfa:advertiser";
+      request.DimensionName = "advertiser";
 
       // Set the date range from 1 year ago until today.
       request.StartDate =

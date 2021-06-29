@@ -36,7 +36,7 @@ public class GetDimensionValues {
 
     // Construct the dimension value request.
     DimensionValueRequest request = new DimensionValueRequest();
-    request.setDimensionName("dfa:advertiser");
+    request.setDimensionName("advertiser");
 
     // Set the date range from 1 year ago until today.
     Calendar today = Calendar.getInstance();

@@ -71,10 +71,10 @@ def define_report_criteria(report)
     ),
     dimensions: [
       DfareportingUtils::API_NAMESPACE::SortedDimension.new(
-        name: 'dfa:advertiser'
+        name: 'advertiser'
       )
     ],
-    metric_names: ['dfa:clicks', 'dfa:impressions']
+    metric_names: ['clicks', 'impressions']
   )
 
   # Add the criteria to the report resource.
@@ -106,7 +106,7 @@ end
 def add_dimension_filters(service, profile_id, report)
   # Query advertiser dimension values for report run dates.
   dimension = DfareportingUtils::API_NAMESPACE::DimensionValueRequest.new(
-    dimension_name: 'dfa:advertiser',
+    dimension_name: 'advertiser',
     start_date: report.criteria.date_range.start_date,
     end_date: report.criteria.date_range.end_date
   )

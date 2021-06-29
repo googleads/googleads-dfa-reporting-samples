@@ -97,14 +97,14 @@ namespace DfaReporting.Samples {
 
       // Create a report criteria.
       SortedDimension dimension = new SortedDimension();
-      dimension.Name = "dfa:advertiser";
+      dimension.Name = "advertiser";
 
       Report.CriteriaData criteria = new Report.CriteriaData();
       criteria.DateRange = dateRange;
       criteria.Dimensions = new List<SortedDimension>() { dimension };
       criteria.MetricNames = new List<string>() {
-        "dfa:clicks",
-        "dfa:impressions"
+        "clicks",
+        "impressions"
       };
 
       // Add the criteria to the report resource.
@@ -144,7 +144,7 @@ namespace DfaReporting.Samples {
       DimensionValueRequest request = new DimensionValueRequest();
       request.StartDate = report.Criteria.DateRange.StartDate;
       request.EndDate = report.Criteria.DateRange.EndDate;
-      request.DimensionName = "dfa:advertiser";
+      request.DimensionName = "advertiser";
 
       DimensionValueList values =
           service.DimensionValues.Query(request, profileId).Execute();

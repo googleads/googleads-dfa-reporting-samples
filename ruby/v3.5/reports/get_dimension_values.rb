@@ -27,7 +27,7 @@ def get_dimension_values(profile_id)
 
   # Create the dimension to query.
   dimension = DfareportingUtils::API_NAMESPACE::DimensionValueRequest.new(
-    dimension_name: 'dfa:advertiser',
+    dimension_name: 'advertiser',
     start_date: DateTime.now.prev_year.strftime('%Y-%m-%d'),
     end_date: DateTime.now.strftime('%Y-%m-%d')
   )

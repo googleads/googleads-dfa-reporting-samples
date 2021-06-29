@@ -38,13 +38,13 @@ public class CreateReport {
 
     // Create a dimension to report on.
     SortedDimension dimension = new SortedDimension();
-    dimension.setName("dfa:campaign");
+    dimension.setName("campaign");
 
     // Create the criteria for the report.
     Criteria criteria = new Criteria();
     criteria.setDateRange(dateRange);
     criteria.setDimensions(ImmutableList.of(dimension));
-    criteria.setMetricNames(ImmutableList.of("dfa:clicks"));
+    criteria.setMetricNames(ImmutableList.of("clicks"));
 
     // Create the report.
     Report report = new Report();

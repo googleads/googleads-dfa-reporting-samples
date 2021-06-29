@@ -23,8 +23,8 @@ require_once dirname(__DIR__) . '/BaseExample.php';
  * for reporting in the given date range. You can use a similar workflow to
  * retrieve the values for any dimension.
  *
- * For our examples, you need a "dfa:advertiser" to create a standard report and
- * a "dfa:floodlightConfigId" to create a Floodlight report.
+ * For our examples, you need a "advertiser" to create a standard report and
+ * a "floodlightConfigId" to create a Floodlight report.
  */
 class GetDimensionValues extends BaseExample
 {
