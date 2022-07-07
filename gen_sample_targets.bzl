@@ -30,13 +30,16 @@ def gen_java_targets(name):
         # Parse API version from the pom file path (ex: .../v2.5/pom.xml)
         version = pom_file.rsplit("/", 2)[0]
 
+        # Generate internal Java client version (ex: v3p5)
+        java_client_version = version.replace(".", "p")
+
         versioned_rule_name = "%s-%s-build" % (name, version)
 
         library_args = {
             "name": versioned_rule_name,
             "srcs": native.glob(["%s/**/*.java" % version]),
             "deps": COMMON_JAVA_SAMPLE_DEPS + [
-                "//apiserving/discoverydata/dfareporting:dfareporting-%s" % version,
+                "//google/ads/xfa/dfareporting:dfareporting-java-client-%s" % java_client_version,
             ],
         }
 
