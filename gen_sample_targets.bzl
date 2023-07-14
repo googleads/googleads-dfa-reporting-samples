@@ -39,7 +39,7 @@ def gen_java_targets(name):
             "name": versioned_rule_name,
             "srcs": native.glob(["%s/**/*.java" % version]),
             "deps": COMMON_JAVA_SAMPLE_DEPS + [
-                "//google/ads/xfa/dfareporting:dfareporting-java-client-%s" % java_client_version,
+                "//google/ads/xfa/dfareporting/op:dfareporting-java-client-%s" % java_client_version,
             ],
         }
 
