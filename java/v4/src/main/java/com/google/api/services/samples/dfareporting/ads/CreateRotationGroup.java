@@ -25,7 +25,6 @@ import com.google.api.services.dfareporting.model.DeliverySchedule;
 import com.google.api.services.dfareporting.model.PlacementAssignment;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 import com.google.common.collect.ImmutableList;
-
 import java.util.Date;
 
 /**
@@ -72,7 +71,7 @@ public class CreateRotationGroup {
     deliverySchedule.setPriority("AD_PRIORITY_01");
 
     DateTime startDate = new DateTime(new Date());
-    DateTime endDate = campaign.getEndDate();
+    DateTime endDate = new DateTime(campaign.getEndDate().getValue());
 
     // Create a rotation group.
     Ad rotationGroup = new Ad();
