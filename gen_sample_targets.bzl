@@ -1,5 +1,6 @@
 """Build extensions to simplify generating sample build/test targets."""
 
+load("//third_party/bazel_rules/rules_java/java:java_library.bzl", "java_library")
 load("//tools/build_defs/build_test:build_test.bzl", "build_test")
 
 COMMON_JAVA_SAMPLE_DEPS = [
@@ -42,8 +43,7 @@ def gen_java_targets(name):
                 "//google/ads/xfa/dfareporting/op:dfareporting-java-client-%s" % java_client_version,
             ],
         }
-
-        native.java_library(**library_args)
+        java_library(**library_args)
         build_test(
             name = "%s-test" % versioned_rule_name,
             targets = [":%s" % versioned_rule_name],
