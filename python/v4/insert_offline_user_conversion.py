@@ -101,7 +101,7 @@ def main(argv):
 
       status = response['status'][0]
       for error in status['errors']:
-        print '\t[%s]: %s' % (error['code'], error['message'])
+        print ('\t[%s]: %s' % (error['code'], error['message']))
 
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '

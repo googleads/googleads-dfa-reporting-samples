@@ -55,7 +55,7 @@ def main(argv):
     result = request.execute()
 
     for size in result['sizes']:
-      print 'Found size with ID %s.' % (size['id'])
+      print ('Found size with ID %s.' % (size['id']))
 
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '

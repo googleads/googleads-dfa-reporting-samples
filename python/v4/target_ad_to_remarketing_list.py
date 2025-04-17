@@ -67,7 +67,7 @@ def main(argv):
             % (response['id'],
                response['remarketingListExpression']['expression']))
     else:
-      print 'No targetable remarketing lists found for ad with ID %d.' % ad_id
+      print ('No targetable remarketing lists found for ad with ID %d.' % ad_id)
   except client.AccessTokenRefreshError:
     print('The credentials have been revoked or expired, please re-run the '
           'application to re-authorize')

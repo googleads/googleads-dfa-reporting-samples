@@ -73,9 +73,9 @@ def print_placement_tag(placement_tag):
            % (placement_tag['placementId'], tag_data['format']))
 
     if 'impressionTag' in tag_data:
-      print '%s\n\n' % (tag_data['impressionTag'])
+      print ('%s\n\n' % (tag_data['impressionTag']))
     if 'clickTag' in tag_data:
-      print '%s\n\n' % (tag_data['clickTag'])
+      print ('%s\n\n' % (tag_data['clickTag']))
 
 
 if __name__ == '__main__':

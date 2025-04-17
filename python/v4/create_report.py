@@ -71,8 +71,8 @@ def create_report_resource():
       'format': 'CSV'
   }
 
-  print 'Creating %s report resource with name "%s".' % (report['type'],
-                                                         report['name'])
+  print ('Creating %s report resource with name "%s".' % (report['type'],
+                                                         report['name']))
 
   return report
 
@@ -99,7 +99,7 @@ def define_report_criteria(report):
   # Add the criteria to the report resource.
   report['criteria'] = criteria
 
-  print '\nAdded report criteria:\n%s' % criteria
+  print ('\nAdded report criteria:\n%s' % criteria)
 
 
 def find_compatible_fields(service, profile_id, report):
