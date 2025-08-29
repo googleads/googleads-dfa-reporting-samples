@@ -57,8 +57,8 @@ def main(argv):
       # 3. Directly download the file.
       direct_download_file(service, report_id, report_file['id'])
     else:
-      print 'No file found for profile ID %d and report ID %d.' % (profile_id,
-                                                                   report_id)
+      print ('No file found for profile ID %d and report ID %d.' % (profile_id,
+                                                                   report_id))
 
   except client.AccessTokenRefreshError:
     print('The credentials have been revoked or expired, please re-run the '
@@ -86,12 +86,11 @@ def find_file(service, profile_id, report_id):
       break
 
   if target:
-    print 'Found file %s with filename "%s".' % (target['id'],
-                                                 target['fileName'])
+    print ('Found file %s with filename "%s".' % (target['id'],
+                                                 target['fileName']))
     return target
 
-  print 'Unable to find file for profile ID %d and report ID %d.' % (profile_id,
-                                                                     report_id)
+  print ('Unable to find file for profile ID %d and report ID %d.' % (profile_id,report_id))
   return None
 
 
@@ -107,7 +106,7 @@ def generate_browser_url(service, report_id, file_id):
       reportId=report_id, fileId=file_id).execute()
   browser_url = report_file['urls']['browserUrl']
 
-  print 'File %s has browser URL: %s.' % (report_file['id'], browser_url)
+  print ('File %s has browser URL: %s.' % (report_file['id'], browser_url))
 
 
 def direct_download_file(service, report_id, file_id):

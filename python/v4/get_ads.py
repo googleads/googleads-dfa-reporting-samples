@@ -50,7 +50,7 @@ def main(argv):
       response = request.execute()
 
       for ad in response['ads']:
-        print 'Found ad with ID %s and name "%s".' % (ad['id'], ad['name'])
+        print ('Found ad with ID %s and name "%s".' % (ad['id'], ad['name']))
 
       if response['ads'] and response['nextPageToken']:
         request = service.ads().list_next(request, response)
