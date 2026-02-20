@@ -19,26 +19,44 @@ import com.google.api.services.dfareporting.model.TvCampaignSummariesListRespons
 import com.google.api.services.dfareporting.model.TvCampaignSummary;
 import com.google.api.services.samples.dfareporting.DfaReportingFactory;
 
-/** This example illustrates how to get a list of all TvCampaignSummaries. */
+/**
+ * This example illustrates how to get a list of all TvCampaignSummaries.
+ *
+ * <p>When listing TV campaign summaries, name and accountId are required, while countryDartId and
+ * tvDataProvider are optional.
+ */
 public class ListTvCampaignSummaries {
   private static final String USER_PROFILE_ID = "INSERT_USER_PROFILE_ID_HERE";
   private static final String ACCOUNT_ID = "INSERT_ACCOUNT_ID_HERE";
-  private static final String NAME = "INSERT_TV_CAMPAIGN_SUMMARY_NAME_HERE";
+  private static final String NAME = "INSERT_NAME_HERE";
+  private static final String COUNTRY_DART_ID = "INSERT_COUNTRY_DART_ID_HERE";
+  private static final String TV_DATA_PROVIDER = "INSERT_TV_DATA_PROVIDER_HERE";
 
-  public static void runExample(Dfareporting reporting, long profileId, long accountId, String name)
+  public static void runExample(
+      Dfareporting reporting,
+      long profileId,
+      long accountId,
+      String name,
+      long countryDartId,
+      String tvDataProvider)
       throws Exception {
 
-    TvCampaignSummariesListResponse tvCampaignSummaries = null;
+    System.out.printf(
+        "Searching for TV campaign summaries with name: %s, countryDartId: %d, and tvDataProvider:"
+            + " %s%n",
+        name, countryDartId, tvDataProvider);
 
-    System.out.printf("Searching for TV campaign summaries with name: %s", name);
     // Create and execute the TV campaign summaries list request.
-    tvCampaignSummaries =
+    TvCampaignSummariesListResponse tvCampaignSummaries =
         reporting
             .tvCampaignSummaries()
             .list(profileId)
             .setAccountId(accountId)
             .setName(name)
+            .setCountryDartId(countryDartId)
+            .setTvDataProvider(tvDataProvider)
             .execute();
+
     for (TvCampaignSummary tvCampaignSummary : tvCampaignSummaries.getTvCampaignSummaries()) {
       System.out.printf(
           "TV campaign summary with ID %s and name \"%s\" found",
@@ -51,7 +69,8 @@ public class ListTvCampaignSummaries {
 
     long profileId = Long.parseLong(USER_PROFILE_ID);
     long accountId = Long.parseLong(ACCOUNT_ID);
+    long countryDartId = Long.parseLong(COUNTRY_DART_ID);
 
-    runExample(reporting, profileId, accountId, NAME);
+    runExample(reporting, profileId, accountId, NAME, countryDartId, TV_DATA_PROVIDER);
   }
 }

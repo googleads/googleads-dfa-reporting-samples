@@ -71,7 +71,7 @@
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-dfareporting</artifactId>
-      <version>v5-rev20250828-2.0.0</version>
+      <version>v5-rev20260213-2.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.guava</groupId>
