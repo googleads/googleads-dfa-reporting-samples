@@ -1,24 +1,25 @@
 # DCM/DFA Reporting and Trafficking API Java Samples
 
 This is a collection of samples written in Java which provide a starting place
-for your experimentation into the DCM/DFA Reporting and Trafficking API.
+for your experimentation into the [Campaign Manager 360 API](https://developers.google.com/doubleclick-advertisers/getting_started).
 
 ## Prerequisites
 
-Please make sure that you're running Java 7+ and have maven installed.
+Please make sure that you're running Java 7+ and have Maven installed.
 
 ## Setup Authentication
 
-This API uses OAuth 2.0. Learn more about Google APIs and OAuth 2.0 here:
-https://developers.google.com/accounts/docs/OAuth2
+This API uses OAuth 2.0. Learn more about [Google APIs and OAuth 2.0](https://developers.google.com/accounts/docs/OAuth2).
 
 Or, if you'd like to dive right in, follow these steps.
- - Visit https://console.developers.google.com to register your application.
- - From the API Manager -> Google APIs screen, activate access to "DCM/DFA Reporting and Trafficking API".
- - Click on "Credentials" in the left navigation menu
- - Click the button labeled "Create credentials" and select "OAuth Client ID"
- - Select "Other" as the "Application type", then "Create"
- - From the Credentials page, click "Download JSON" next to the client ID you just created and save the file as `client_secrets.json` in the samples project directory
+
+1. Visit the [Google Cloud Console](https://console.developers.google.com) to register your application.
+2. From the APIs and Services menu, [enable](https://support.google.com/googleapi/answer/6158841?hl=en) the "Campaign Manager 360 API".
+3. Create Credentials
+    - Click on **Credentials** in the left navigation menu
+    - Click **+ Create Credentials** and select OAuth client ID.
+    - Select "Desktop app" as the "Application type", then **Create**
+6. Click **Download JSON** and save the file as `client_secrets.json` in the samples project directory.
 
 ## Set up your environment ##
 ### Via the command line ###
