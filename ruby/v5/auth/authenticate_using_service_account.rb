@@ -26,11 +26,11 @@
 # within that domain. Using this flag will not allow you to impersonate a
 # user from a domain you don't own (e.g., gmail.com).
 
-require 'google/apis/dfareporting_v4'
+require 'google/apis/dfareporting_v5'
 require 'googleauth'
 require 'optparse'
 
-API_NAMESPACE = Google::Apis::DfareportingV4
+API_NAMESPACE = Google::Apis::DfareportingV5
 
 def authenticate_using_service_account(path_to_json_file, impersonation_email)
   # Create a Dfareporting service object.

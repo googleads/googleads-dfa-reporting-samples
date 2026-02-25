@@ -19,14 +19,18 @@
 # This example demonstrates how to authenticate using a user account, via the
 # OAuth 2.0 installed application flow.
 
-require 'google/apis/dfareporting_v4'
+require 'google/apis/dfareporting_v5'
 require 'googleauth'
 require 'googleauth/stores/file_token_store'
 
-API_NAMESPACE = Google::Apis::DfareportingV4
+API_NAMESPACE = Google::Apis::DfareportingV5
 
 # This redirect URI allows you to copy the token from the success screen.
-OAUTH_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
+# Note: The OOB URI (urn:ietf:wg:oauth:2.0:oob) is deprecated.
+# We will use localhost to display the code in the address bar.
+# See https://developers.google.com/identity/protocols/oauth2/resources/oob-migration
+# for more details.
+OAUTH_REDIRECT_URI = 'http://localhost'.freeze
 
 # Location where authorization credentials will be cached.
 TOKEN_STORE_DIR = File.join(File.dirname(__FILE__), 'auth-sample.yaml')

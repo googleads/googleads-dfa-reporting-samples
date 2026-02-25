@@ -37,7 +37,11 @@ module DfareportingUtils
   CREDENTIAL_STORE_PATH = File.dirname(__FILE__)
 
   # This redirect URI allows you to copy the token from the success screen.
-  OAUTH_REDIRECT_URI = 'localhost'.freeze
+  # Note: The OOB URI (urn:ietf:wg:oauth:2.0:oob) is deprecated.
+  # We will use localhost to display the code in the address bar.
+  # See https://developers.google.com/identity/protocols/oauth2/resources/oob-migration
+  # for more details.
+  OAUTH_REDIRECT_URI = 'http://localhost'.freeze
 
   # Handles validating command line arguments and returning them as a Hash
   def self.parse_arguments(argument_values, *argument_names)
