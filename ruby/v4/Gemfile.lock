@@ -71,7 +71,7 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    webrick (1.7.0)
+    webrick (1.8.2)
 
 PLATFORMS
   universal-darwin-20
