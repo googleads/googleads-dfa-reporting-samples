@@ -49,7 +49,7 @@ def main(argv):
     # Execute request and print response.
     request.execute()
 
-    print 'Successfully deleted report with ID %s.' % report_id
+    print ('Successfully deleted report with ID %s.' % report_id)
 
   except client.AccessTokenRefreshError:
     print ('The credentials have been revoked or expired, please re-run the '

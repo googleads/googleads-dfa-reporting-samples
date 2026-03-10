@@ -80,7 +80,7 @@ def get_compatible_fields_type(report_type):
 
 def print_fields(field_type, fields):
   field_names = [field['name'] for field in fields]
-  print 'Compatible %s\n%s\n\n' % (field_type, ','.join(field_names))
+  print ('Compatible %s\n%s\n\n' % (field_type, ','.join(field_names)))
 
 
 if __name__ == '__main__':

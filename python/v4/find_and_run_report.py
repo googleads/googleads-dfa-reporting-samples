@@ -58,7 +58,7 @@ def main(argv):
       # 3. Wait for the report file to be ready.
       wait_for_report_file(service, report['id'], report_file['id'])
     else:
-      print 'No report found for profile ID %d.\n' % profile_id
+      print ('No report found for profile ID %d.\n' % profile_id)
 
   except client.AccessTokenRefreshError:
     print('The credentials have been revoked or expired, please re-run the '
@@ -86,10 +86,10 @@ def find_report(service, profile_id):
       break
 
   if target:
-    print 'Found report %s with name "%s".' % (target['id'], target['name'])
+    print ('Found report %s with name "%s".' % (target['id'], target['name']))
     return target
 
-  print 'Unable to find report for profile ID %d.' % profile_id
+  print ('Unable to find report for profile ID %d.' % profile_id)
   return None
 
 
@@ -105,8 +105,8 @@ def run_report(service, profile_id, report_id):
   report_file = service.reports().run(
       profileId=profile_id, reportId=report_id).execute()
 
-  print 'Running report %s, current file status is %s.' % (
-      report_id, report_file['status'])
+  print ('Running report %s, current file status is %s.' % (
+      report_id, report_file['status']))
   return report_file
 
 
@@ -122,17 +122,17 @@ def wait_for_report_file(service, report_id, file_id):
 
     status = report_file['status']
     if status == 'REPORT_AVAILABLE':
-      print 'File status is %s, ready to download.' % status
+      print ('File status is %s, ready to download.' % status)
       return
     elif status != 'PROCESSING':
-      print 'File status is %s, processing failed.' % status
+      print ('File status is %s, processing failed.' % status)
       return
     elif time.time() - start_time > MAX_RETRY_ELAPSED_TIME:
-      print 'File processing deadline exceeded.'
+      print ('File processing deadline exceeded.')
       return
 
     sleep = next_sleep_interval(sleep)
-    print 'File status is %s, sleeping for %d seconds.' % (status, sleep)
+    print ('File status is %s, sleeping for %d seconds.' % (status, sleep))
     time.sleep(sleep)
 
 

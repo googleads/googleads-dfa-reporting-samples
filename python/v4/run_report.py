@@ -56,7 +56,7 @@ def main(argv):
     # Run the report.
     report_file = service.reports().run(profileId=profile_id,
                                         reportId=report_id).execute()
-    print 'File with ID %s has been created.' % report_file['id']
+    print ('File with ID %s has been created.' % report_file['id'])
 
     # Wait for the report file to finish processing.
     # An exponential backoff strategy is used to conserve request quota.
@@ -68,17 +68,17 @@ def main(argv):
 
       status = report_file['status']
       if status == 'REPORT_AVAILABLE':
-        print 'File status is %s, ready to download.' % status
+        print ('File status is %s, ready to download.' % status)
         return
       elif status != 'PROCESSING':
-        print 'File status is %s, processing failed.' % status
+        print ('File status is %s, processing failed.' % status)
         return
       elif time.time() - start_time > MAX_RETRY_ELAPSED_TIME:
-        print 'File processing deadline exceeded.'
+        print ('File processing deadline exceeded.')
         return
 
       sleep = next_sleep_interval(sleep)
-      print 'File status is %s, sleeping for %d seconds.' % (status, sleep)
+      print ('File status is %s, sleeping for %d seconds.' % (status, sleep))
       time.sleep(sleep)
 
   except client.AccessTokenRefreshError:
